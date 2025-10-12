@@ -1,0 +1,62 @@
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+cores-microservices/prospect/src/main/webapp/WEB-INF/keycloak.json
+### IntelliJ IDEA ###
+*.idea
+*.iws
+*.iml
+*.ipr
+*.jar
+*.log
+**/logs/**
+### Maven ###
+**/target/**
+!.mvn/wrapper/maven-wrapper.jar
+
+### Eclipse ###
+*.pydevproject
+.project
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+manifest.yml
+
+### External tool builders ###
+.externalToolBuilders/
+
+### Locally stored "Eclipse launch configurations" ###
+*.launch
+
+### OSX ###
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+
+
+# Exclude Folder List #
+.gradle/
+.metadata
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/

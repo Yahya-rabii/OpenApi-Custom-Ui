@@ -1,0 +1,164 @@
+springdoc:
+  swagger-ui:
+    enabled: false
+  packagesToScan: apidocs
+  api-docs:
+    path: /api
+
+
+info:
+  component: API Docs
+
+server:
+  port: 8000
+
+
+spring:
+  cloud:
+    kubernetes:
+      enabled: false
+      discovery:
+        enabled: false
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origin-patterns: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+
+      routes:
+        - id: account-core
+          metadata:
+            domain: tiers
+            version: v1
+            service: alpha
+          uri: lb://alpha-service
+          predicates:
+            - Path=/api/tiers/account/v1/**
+          filters:
+            - RewritePath=/api/tiers/account/v1/(?<uri>.*), /$\{uri}
+        - id: audit-core
+          metadata:
+            domain: cloud
+            version: v1
+            service: bravo
+          uri: lb://bravo-service
+          predicates:
+            - Path=/api/cloud/audit/v1/**
+          filters:
+            - RewritePath=/api/cloud/audit/v1/(?<uri>.*), /$\{uri}
+        # Tiers domain
+        - id: prospect-core
+          metadata:
+            domain: tiers
+            version: v1
+            service: charlie
+          uri: lb://charlie-service
+          predicates:
+            - Path=/api/tiers/prospect/v1/**
+          filters:
+            - RewritePath=/api/tiers/prospect/v1/(?<uri>.*), /$\{uri}
+        # support domain
+        - id: geoloc-core
+          metadata:
+            domain: support
+            version: v1
+            service: delta
+          uri: lb://delta-service
+          predicates:
+            - Path=/api/support/geoloc/v1/**
+          filters:
+            - RewritePath=/api/support/geoloc/v1/(?<uri>.*), /$\{uri}
+        - id: document-core
+          metadata:
+            domain: support
+            version: v1
+            service: echo
+          uri: lb://echo-service
+          predicates:
+            - Path=/api/support/document/v1/**
+          filters:
+            - RewritePath=/api/support/document/v1/(?<uri>.*), /$\{uri}
+        - id: otp-core
+          metadata:
+            domain: support
+            version: v1
+            service: foxtrot
+          uri: lb://foxtrot-service
+          predicates:
+            - Path=/api/support/otp/v1/**
+          filters:
+            - RewritePath=/api/support/otp/v1/(?<uri>.*), /$\{uri}
+        - id: notification-core
+          metadata:
+            domain: support
+            version: v1
+            service: golf
+          uri: lb://golf-service
+          predicates:
+            - Path=/api/support/notification/v1/**
+          filters:
+            - RewritePath=/api/support/notification/v1/(?<uri>.*), /$\{uri}
+          # transaction domain
+        - id: card-core
+          metadata:
+            domain: transaction
+            version: v1
+            service: hotel
+          uri: lb://hotel-service
+          predicates:
+            - Path=/api/transaction/card/v1/**
+          filters:
+            - RewritePath=/api/transaction/card/v1/(?<uri>.*), /$\{uri}
+        - id: payment-core
+          metadata:
+            domain: transaction
+            version: v1
+            service: india
+          uri: lb://india-service
+          predicates:
+            - Path=/api/transaction/payment/v1/**
+          filters:
+            - RewritePath=/api/transaction/payment/v1/(?<uri>.*), /$\{uri}
+        - id: offer-core
+          metadata:
+            domain: product
+            version: v1
+            service: juliet
+          uri: lb://juliet-service
+          predicates:
+            - Path=/api/product/offer/v1/**
+          filters:
+            - RewritePath=/api/product/offer/v1/(?<uri>.*), /$\{uri}
+        # contract domain
+        - id: bancassurance-core
+          metadata:
+            domain: cloud
+            version: v1
+            service: kilo
+          uri: lb://kilo-service
+          predicates:
+            - Path=/api/contract/bancassurance/v1/**
+          filters:
+            - RewritePath=/api/contract/bancassurance/v1/(?<uri>.*), /$\{uri}
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 30
+    preferIpAddress: true
+  client:
+    registryFetchIntervalSeconds: 15
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVICE_URL:http://localhost:8761/eureka/}
+    register-with-eureka: false
+    enabled: false
+logging:
+  file: /data/logs/api-docs.log
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

@@ -1,0 +1,214 @@
+[
+    {
+        "url": "/api/cloud/audit/v1/api-docs",
+        "name": "cloud/audit/v1"
+    },
+    {
+        "url": "/api/insurance/policy/v1/api-docs",
+        "name": "insurance/policy/v1"
+    },
+    {
+        "url": "/api/data/user-profile/v1/api-docs",
+        "name": "data/user-profile/v1"
+    },
+    {
+        "url": "/api/booking/scheduler/v1/api-docs",
+        "name": "booking/scheduler/v1"
+    },
+    {
+        "url": "/api/identity/cardholder/v1/api-docs",
+        "name": "identity/cardholder/v1"
+    },
+    {
+        "url": "/api/logistics/delivery/v1/api-docs",
+        "name": "logistics/delivery/v1"
+    },
+    {
+        "url": "/api/workflow/taskmanager/v1/api-docs",
+        "name": "workflow/taskmanager/v1"
+    },
+    {
+        "url": "/api/security/warranty/v1/api-docs",
+        "name": "security/warranty/v1"
+    },
+    {
+        "url": "/api/finance/lending/v1/api-docs",
+        "name": "finance/lending/v1"
+    },
+    {
+        "url": "/api/catalog/products/v1/api-docs",
+        "name": "catalog/products/v1"
+    },
+    {
+        "url": "/api/savings/deposits/v1/api-docs",
+        "name": "savings/deposits/v1"
+    },
+    {
+        "url": "/api/portfolio/securities/v1/api-docs",
+        "name": "portfolio/securities/v1"
+    },
+    {
+        "url": "/api/compliance/regulations/v1/api-docs",
+        "name": "compliance/regulations/v1"
+    },
+    {
+        "url": "/api/advisory/consulting/v1/api-docs",
+        "name": "advisory/consulting/v1"
+    },
+    {
+        "url": "/api/support/postsale/v1/api-docs",
+        "name": "support/postsale/v1"
+    },
+    {
+        "url": "/api/analysis/feasibility/v1/api-docs",
+        "name": "analysis/feasibility/v1"
+    },
+    {
+        "url": "/api/leads/opportunities/v1/api-docs",
+        "name": "leads/opportunities/v1"
+    },
+    {
+        "url": "/api/commerce/transactions/v1/api-docs",
+        "name": "commerce/transactions/v1"
+    },
+    {
+        "url": "/api/enterprise/corporate/v1/api-docs",
+        "name": "enterprise/corporate/v1"
+    },
+    {
+        "url": "/api/calendar/booking/v1/api-docs",
+        "name": "calendar/booking/v1"
+    },
+    {
+        "url": "/api/security/scanner/v1/api-docs",
+        "name": "security/scanner/v1"
+    },
+    {
+        "url": "/api/identity/verification/v1/api-docs",
+        "name": "identity/verification/v1"
+    },
+    {
+        "url": "/api/ai/chatbot/v1/api-docs",
+        "name": "ai/chatbot/v1"
+    },
+    {
+        "url": "/api/files/storage/v1/api-docs",
+        "name": "files/storage/v1"
+    },
+    {
+        "url": "/api/currency/exchange/v1/api-docs",
+        "name": "currency/exchange/v1"
+    },
+    {
+        "url": "/api/config/features/v1/api-docs",
+        "name": "config/features/v1"
+    },
+    {
+        "url": "/api/maps/location/v1/api-docs",
+        "name": "maps/location/v1"
+    },
+    {
+        "url": "/api/directory/listings/v1/api-docs",
+        "name": "directory/listings/v1"
+    },
+    {
+        "url": "/api/messaging/alerts/v1/api-docs",
+        "name": "messaging/alerts/v1"
+    },
+    {
+        "url": "/api/auth/tokens/v1/api-docs",
+        "name": "auth/tokens/v1"
+    },
+    {
+        "url": "/api/journey/workflows/v1/api-docs",
+        "name": "journey/workflows/v1"
+    },
+    {
+        "url": "/api/analytics/dashboard/v1/api-docs",
+        "name": "analytics/dashboard/v1"
+    },
+    {
+        "url": "/api/feedback/complaints/v1/api-docs",
+        "name": "feedback/complaints/v1"
+    },
+    {
+        "url": "/api/hr/personnel/v1/api-docs",
+        "name": "hr/personnel/v1"
+    },
+    {
+        "url": "/api/workflow/tasks/v1/api-docs",
+        "name": "workflow/tasks/v1"
+    },
+    {
+        "url": "/api/documents/contracts/v1/api-docs",
+        "name": "documents/contracts/v1"
+    },
+    {
+        "url": "/api/banking/accounts/v1/api-docs",
+        "name": "banking/accounts/v1"
+    },
+    {
+        "url": "/api/crm/customers/v1/api-docs",
+        "name": "crm/customers/v1"
+    },
+    {
+        "url": "/api/bookmarks/favorites/v1/api-docs",
+        "name": "bookmarks/favorites/v1"
+    },
+    {
+        "url": "/api/leads/prospects/v1/api-docs",
+        "name": "leads/prospects/v1"
+    },
+    {
+        "url": "/api/rewards/points/v1/api-docs",
+        "name": "rewards/points/v1"
+    },
+    {
+        "url": "/api/payments/cards/v1/api-docs",
+        "name": "payments/cards/v1"
+    },
+    {
+        "url": "/api/banking/checkbooks/v1/api-docs",
+        "name": "banking/checkbooks/v1"
+    },
+    {
+        "url": "/api/transfers/instant/v1/api-docs",
+        "name": "transfers/instant/v1"
+    },
+    {
+        "url": "/api/credit/facilities/v1/api-docs",
+        "name": "credit/facilities/v1"
+    },
+    {
+        "url": "/api/transactions/core/v1/api-docs",
+        "name": "transactions/core/v1"
+    },
+    {
+        "url": "/api/billing/payments/v1/api-docs",
+        "name": "billing/payments/v1"
+    },
+    {
+        "url": "/api/reserves/provisions/v1/api-docs",
+        "name": "reserves/provisions/v1"
+    },
+    {
+        "url": "/api/auth/security/v1/api-docs",
+        "name": "auth/security/v1"
+    },
+    {
+        "url": "/api/market/trading/v1/api-docs",
+        "name": "market/trading/v1"
+    },
+    {
+        "url": "/api/banking/transfers/v1/api-docs",
+        "name": "banking/transfers/v1"
+    },
+    {
+        "url": "/api/digital/wallet/v1/api-docs",
+        "name": "digital/wallet/v1"
+    },
+    {
+        "url": "/api/atm/withdrawal/v1/api-docs",
+        "name": "atm/withdrawal/v1"
+    }
+]
