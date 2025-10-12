@@ -171,14 +171,14 @@ public class SwaggerConfigController {
 
 Navigate to: `http://your-app-url/swagger-ui/index.html`
 
-## Running the included Spring Boot demo (Windows / PowerShell)
+## Running the included Spring Boot demo
 
 If you want to run the demo Spring Boot application included in `api-docs/`, make sure you have the following prerequisites installed on your machine:
 
 - Java 17 (or later) installed and available on your PATH (java -version should report a Java 17 runtime)
 - Maven installed and available on your PATH (mvn -v should report Maven)
 
-Then open PowerShell, change into the `api-docs` folder and run the Maven build and the generated jar. Example commands:
+Then open your terminal, change into the `api-docs` folder and run the Maven build and the generated jar. Example commands:
 
 ```powershell
 mvn clean compile package
