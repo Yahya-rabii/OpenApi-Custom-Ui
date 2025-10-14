@@ -215,6 +215,7 @@ Feel free to use and modify for your API documentation needs.
 
 ## Demo Video
 
-https://github.com/user-attachments/assets/7150c46b-478c-44b0-8c61-d40d20f0a635
+https://github.com/user-attachments/assets/384e3a7d-fe28-49a4-836a-b53192771146
+
 
 
