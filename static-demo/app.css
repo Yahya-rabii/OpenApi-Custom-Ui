@@ -1,0 +1,15 @@
+/* App-specific styles: domain groups, filter bar, navbar morph animation */
+:root{--navbar-expanded-height:72px;--navbar-collapsed-height:56px}
+.filter-bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:12px 0;padding:8px 16px;background:rgba(255,255,255,0.6);border-radius:12px;backdrop-filter:blur(6px)}
+.domain-chip{padding:8px 12px;border-radius:999px;background:linear-gradient(90deg,#eef2ff,#fff);border:1px solid rgba(0,0,0,0.06);cursor:pointer;font-weight:600;color:#0f172a;transition:all .22s}
+.domain-chip.active{background:linear-gradient(90deg,#0ea5e9,#06b6d4);color:white;transform:translateY(-2px);box-shadow:0 6px 18px rgba(6,182,212,0.12)}
+.domain-section{width:100%;margin:20px 0}
+.domain-header{display:flex;align-items:center;gap:12px;margin:8px 24px}
+.domain-title{font-size:1.25rem;font-weight:700;color:#0f172a}
+.domain-sub{color:#475569;font-weight:500}
+.hexagon-grid{transition:all .25s ease}
+.navbar-morph{transition:all .32s ease;will-change:height,background,box-shadow}
+.header-content.shrunk{padding:10px 24px}
+.brand img.shrunk{height:36px;width:36px}
+/* small helpers for hidden/visible */
+.visually-hidden{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px)}

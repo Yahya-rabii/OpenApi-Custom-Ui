@@ -10,10 +10,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="./server.js"></script>
-    <style>        :root {
-        --primary-gradient: linear-gradient(135deg, #010409 0%, #85ea2d 100%);
-        --secondary-gradient: linear-gradient(135deg, #c83626 0%, #e15645 100%);
+    <style>        
+    
+    :root {
+        --primary-gradient: linear-gradient(135deg, #0f766e 0%, #115e59 100%);
+        --secondary-gradient: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
         --glass-bg: rgba(255, 255, 255, 0.95);
         --glass-border: rgba(255, 255, 255, 0.2);
         --shadow-primary: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
@@ -274,6 +275,35 @@
         z-index: 1000;
         box-shadow: 0 8px 32px rgba(15, 118, 110, 0.2);
         animation: slideInDown 0.8s ease-out;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: visible;
+    }
+
+    /* Scroll progress indicator */
+    header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 3px;
+        width: var(--scroll-progress, 0%);
+        background: linear-gradient(90deg, #14b8a6, #06b6d4, #0ea5e9);
+        transition: width 0.1s ease-out;
+        z-index: 10;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    header.scrolled::before {
+        opacity: 1;
+    }
+
+    /* Scrolled state - compact and elevated */
+    header.scrolled {
+        background: linear-gradient(135deg, rgba(15, 118, 110, 0.98) 0%, rgba(17, 94, 89, 0.98) 100%);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        box-shadow: 0 12px 40px rgba(15, 118, 110, 0.35);
     }
 
     .header-content {
@@ -284,20 +314,38 @@
         justify-content: space-between;
         padding: 20px 32px;
         gap: 32px;
+        transition: padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Compact header when scrolled */
+    header.scrolled .header-content {
+        padding: 12px 32px;
     }
 
     .brand {
         display: flex;
         align-items: center;
         gap: 16px;
+        transition: gap 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    header.scrolled .brand {
+        gap: 12px;
     }
 
     .brand img {
         height: 48px;
         width: 48px;
         border-radius: 12px;
-        transition: all 0.3s ease;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Smaller logo when scrolled */
+    header.scrolled .brand img {
+        height: 38px;
+        width: 38px;
+        border-radius: 10px;
     }
 
     .brand img:hover {
@@ -311,6 +359,12 @@
         font-size: 1.5rem;
         letter-spacing: -0.025em;
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: font-size 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Smaller text when scrolled */
+    header.scrolled .brand-text {
+        font-size: 1.3rem;
     }
 
     /* Controls section */
@@ -318,11 +372,19 @@
         display: flex;
         align-items: center;
         gap: 20px;
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Subtle lift effect when scrolled */
+    header.scrolled .controls {
+        transform: translateY(-1px);
     }
 
     /* Search input container */
     .search-container {
         position: relative;
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 9999;
     }
 
     .search-icon {
@@ -365,8 +427,14 @@
         color: #1e293b;
         font-size: 15px;
         font-weight: 500;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Enhanced glow when header is scrolled */
+    header.scrolled input#apiSearch {
+        border-color: rgba(255, 255, 255, 0.35);
+        box-shadow: 0 4px 16px rgba(14, 165, 233, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     input#apiSearch:focus {
@@ -389,7 +457,7 @@
     /* Dropdown container */
     .dropdown-container {
         position: relative;
-        z-index: 1000;
+        z-index: 9999;
     }
 
     .dropdown-icon {
@@ -439,6 +507,12 @@
         text-align: left;
     }
 
+    /* Enhanced glow when header is scrolled */
+    header.scrolled .dropdown-button {
+        border-color: rgba(255, 255, 255, 0.35);
+        box-shadow: 0 4px 16px rgba(14, 165, 233, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    }
+
     .dropdown-button:hover {
         background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(248, 250, 252, 0.98) 100%);
         border-color: rgba(14, 165, 233, 0.3);
@@ -473,7 +547,7 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.8);
         max-height: 400px;
         overflow-y: auto;
-        z-index: 2000;
+        z-index: 10000;
         display: none;
         animation: listSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         border: 1px solid rgba(226, 232, 240, 0.6);
@@ -518,7 +592,7 @@
 
     .dropdown-item:hover {
         background: linear-gradient(135deg, rgba(240, 249, 255, 0.8) 0%, rgba(224, 242, 254, 0.6) 100%);
-        color: #010409;
+        color: #0f766e;
         padding-left: 28px;
         transform: translateX(4px);
         box-shadow: 0 4px 12px rgba(15, 118, 110, 0.1);
@@ -541,7 +615,7 @@
 
     .dropdown-item.focused {
         background: linear-gradient(135deg, rgba(240, 249, 255, 0.8) 0%, rgba(224, 242, 254, 0.6) 100%);
-        color: #010409;
+        color: #0f766e;
         outline: 2px solid rgba(14, 165, 233, 0.3);
         outline-offset: -2px;
     }
@@ -638,7 +712,7 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.8);
         max-height: 300px;
         overflow-y: auto;
-        z-index: 2000;
+        z-index: 10000;
         animation: listSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         border: 1px solid rgba(226, 232, 240, 0.6);
     }
@@ -693,7 +767,7 @@
 
     .autocomplete-item:hover {
         background: linear-gradient(135deg, rgba(240, 249, 255, 0.8) 0%, rgba(224, 242, 254, 0.6) 100%);
-        color: #010409;
+        color: #0f766e;
         padding-left: 28px;
         transform: translateX(4px);
         box-shadow: 0 4px 12px rgba(15, 118, 110, 0.1);
@@ -789,6 +863,36 @@
         .brand-text {
             font-size: 1.25rem;
         }
+        
+        /* Filter bar responsive */
+        .filter-bar {
+            flex-direction: column;
+            align-items: stretch;
+            padding: 12px 16px;
+            gap: 12px;
+        }
+        
+        .filter-label {
+            justify-content: center;
+            margin-right: 0;
+        }
+        
+        #domainFilters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+        
+        .domain-chip {
+            font-size: 0.8rem;
+            padding: 8px 14px;
+        }
+        
+        .clear-filters-btn {
+            margin-left: 0;
+            width: 100%;
+        }
     }
 
     @media (max-width: 480px) {
@@ -840,9 +944,13 @@
         height: 173.2px;
         margin: 20px 0;
         cursor: pointer;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                    filter 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                    box-shadow 0.3s ease;
         animation: fadeInScale 0.6s ease-out;
         animation-fill-mode: both;
+        will-change: opacity, transform, filter;
     }
 
     /* Search filtering animations */
@@ -857,6 +965,26 @@
         opacity: 1;
         transform: scale(1);
         filter: none;
+    }
+
+    /* Domain filtering - smoother transitions */
+    .hexagon-item.domain-filtered-out {
+        opacity: 0 !important;
+        transform: scale(0.85) translateY(-10px) !important;
+        filter: blur(2px) !important;
+        pointer-events: none;
+        transition: opacity 0.3s cubic-bezier(0.4, 0, 0.6, 1),
+                    transform 0.3s cubic-bezier(0.4, 0, 0.6, 1),
+                    filter 0.3s cubic-bezier(0.4, 0, 0.6, 1);
+    }
+
+    .hexagon-item.domain-filtered-in {
+        opacity: 1 !important;
+        transform: scale(1) translateY(0) !important;
+        filter: none !important;
+        transition: opacity 0.4s cubic-bezier(0.175, 0.885, 0.32, 1),
+                    transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1),
+                    filter 0.4s cubic-bezier(0.175, 0.885, 0.32, 1);
     }
 
     .hexagon-item:nth-child(1) { animation-delay: 0.1s; }
@@ -931,14 +1059,205 @@
         font-size: 0.9rem;
         font-weight: 700;
         color: #1e293b;
-        margin-bottom: 8px;
+        margin-bottom: 4px;
         line-height: 1.2;
         max-height: 2.4em;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
         -webkit-line-clamp: 2;
+        line-clamp: 2;
         -webkit-box-orient: vertical;
+    }
+
+    .domain-badge {
+        position: absolute;
+        top: 15px;
+        right: -5px;
+        padding: 6px 12px 6px 10px;
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        background: linear-gradient(135deg, rgba(14, 165, 233, 0.95), rgba(6, 182, 212, 0.95));
+        color: white;
+        border: none;
+        transition: all 0.3s ease;
+        z-index: 15;
+        box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+        transform: rotate(30deg);
+        transform-origin: center;
+        backdrop-filter: blur(4px);
+        min-width: 60px;
+        text-align: center;
+    }
+
+    .domain-badge::before {
+        content: '';
+        position: absolute;
+        bottom: -6px;
+        left: 0;
+        width: 0;
+        height: 0;
+        border-left: 8px solid transparent;
+        border-top: 6px solid rgba(6, 182, 212, 0.7);
+        filter: brightness(0.7);
+    }
+
+    .domain-badge::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, transparent 100%);
+        pointer-events: none;
+    }
+
+    .hexagon-item:hover .domain-badge {
+        background: linear-gradient(135deg, rgba(14, 165, 233, 1), rgba(6, 182, 212, 1));
+        box-shadow: 0 6px 18px rgba(14, 165, 233, 0.6);
+        transform: rotate(30deg) scale(1.08);
+    }
+
+    .hexagon-item.active .domain-badge {
+        background: linear-gradient(135deg, #f59e0b, #f97316);
+        color: white;
+        box-shadow: 0 6px 20px rgba(245, 158, 11, 0.6);
+    }
+
+    .hexagon-item.active .domain-badge::before {
+        border-top-color: rgba(234, 88, 12, 0.8);
+    }
+
+    /* Filter Bar Styles */
+    .filter-bar {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        flex-wrap: nowrap;
+        justify-content: center;
+        margin: 15px auto;
+        padding: 0;
+        width: 95%;
+        max-width: 100%;
+        background: transparent;
+        border: none;
+        animation: slideInDown 0.6s ease-out;
+    }
+
+    .filter-label {
+        font-weight: 700;
+        color: #0f766e;
+        font-size: 0.9rem;
+        margin-right: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    .filter-label i {
+        color: #0f766e;
+        font-size: 1rem;
+    }
+
+    #domainFilters {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        flex-wrap: nowrap;
+        flex: 1;
+        justify-content: center;
+    }
+
+    .domain-chip {
+        padding: 6px 12px;
+        border-radius: 20px;
+        background: rgba(15, 118, 110, 0.3);
+        border: 1.5px solid rgba(15, 118, 110, 0.4);
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.75rem;
+        color: #0f766e;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        text-transform: capitalize;
+        box-shadow: 0 2px 6px rgba(15, 118, 110, 0.15);
+        white-space: nowrap;
+        backdrop-filter: blur(4px);
+        will-change: transform, background, box-shadow;
+    }
+
+    .domain-chip::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .domain-chip:hover::before {
+        left: 100%;
+    }
+
+    .domain-chip:hover {
+        background: rgba(15, 118, 110, 0.4);
+        border-color: rgba(15, 118, 110, 0.6);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(15, 118, 110, 0.25);
+        color: #0d5d56;
+    }
+
+    .domain-chip.active {
+        background: var(--primary-gradient);
+        color: white;
+        border-color: #0f766e;
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 6px 16px rgba(15, 118, 110, 0.4);
+    }
+
+    .domain-chip.active:hover {
+        background: linear-gradient(135deg, #0d5d56, #0f766e);
+        box-shadow: 0 8px 20px rgba(15, 118, 110, 0.5);
+    }
+
+    .domain-chip .chip-count {
+        display: inline-block;
+        margin-left: 5px;
+        padding: 1px 5px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 8px;
+        font-size: 0.65rem;
+        font-weight: 700;
+    }
+
+    .domain-chip.active .chip-count {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Smooth transitions for filtered hexagons */
+    .hexagon-item {
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                    opacity 0.3s ease, 
+                    transform 0.3s ease,
+                    filter 0.3s ease;
+    }
+
+    .hexagon-item.domain-filtered-out {
+        opacity: 0;
+        transform: scale(0.8);
+        filter: grayscale(0.8) blur(2px);
+        pointer-events: none;
+        position: absolute;
+        visibility: hidden;
     }
 
 
@@ -959,7 +1278,7 @@
     }
 
     .hexagon-item:hover .hexagon-title {
-        color: #010409;
+        color: #0f766e;
     }
 
     /* Active state for selected hexagon */
@@ -1058,7 +1377,7 @@
     }
 
     .api-counter .count {
-        color: #010409;
+        color: #0f766e;
         font-weight: 700;
         font-size: 1.2rem;
     }
@@ -1146,6 +1465,11 @@
         .hexagon-title {
             font-size: 0.8rem;
         }
+        
+        .domain-badge {
+            font-size: 0.6rem;
+            padding: 2px 6px;
+        }
 
 
 
@@ -1197,6 +1521,15 @@
         .hexagon-icon {
             font-size: 1.8rem;
         }
+        
+        .hexagon-title {
+            font-size: 0.75rem;
+        }
+        
+        .domain-badge {
+            font-size: 0.55rem;
+            padding: 2px 5px;
+        }
 
         .landing-title h1 {
             font-size: 2rem;
@@ -1244,12 +1577,18 @@
     <div class="landing-title">
         <h1>API Documentation Portal</h1>
         <p>Explore API-CORE Documentation, learn fast, integrate easily!</p>
-    </div>
+
 
     <div class="api-counter">
         <span class="count" id="apiCount">0</span> APIs Available
     </div>
 
+    <!-- Domain Filter Bar -->
+    <div id="filterBar" class="filter-bar" style="display: none;">
+        <div id="domainFilters">
+        </div>
+    </div>
+    </div>
     <div id="hexagonGrid" class="hexagon-grid">
         <!-- Hexagons will be dynamically generated here -->
     </div>
@@ -1263,6 +1602,8 @@
 <script>    let allApis = [];
 let ui;
 let isLandingPage = true;
+let activeDomains = new Set(); // Track active domain filters
+let apisByDomain = {}; // Cache APIs grouped by domain
 
 // Enhanced API icons mapping based on actual API categories
 const apiIcons = {
@@ -1390,6 +1731,183 @@ function getApiIcon(apiName) {
     return 'fas fa-cog'; // default icon
 }
 
+// Extract domain from API name (e.g., "cloud/audit/v1" -> "cloud")
+function extractDomain(apiName) {
+    const parts = apiName.split('/');
+    return parts[0] || 'other';
+}
+
+// Extract API service name (e.g., "cloud/audit/v1" -> "audit")
+function extractServiceName(apiName) {
+    const parts = apiName.split('/');
+    // Remove version (v1, v2, etc.) from the end
+    const filtered = parts.filter(part => !part.match(/^v\d+$/));
+    // Return the last non-version part (the service name)
+    return filtered[filtered.length - 1] || apiName;
+}
+
+// Get domain color scheme
+function getDomainColor(domain) {
+    const colors = {
+        'cloud': { bg: 'rgba(59, 130, 246, 0.15)', border: 'rgba(59, 130, 246, 0.4)', text: '#1d4ed8' },
+        'contract': { bg: 'rgba(168, 85, 247, 0.15)', border: 'rgba(168, 85, 247, 0.4)', text: '#7e22ce' },
+        'data': { bg: 'rgba(34, 197, 94, 0.15)', border: 'rgba(34, 197, 94, 0.4)', text: '#15803d' },
+        'distribution': { bg: 'rgba(249, 115, 22, 0.15)', border: 'rgba(249, 115, 22, 0.4)', text: '#c2410c' },
+        'garantie': { bg: 'rgba(236, 72, 153, 0.15)', border: 'rgba(236, 72, 153, 0.4)', text: '#be185d' },
+        'product': { bg: 'rgba(14, 165, 233, 0.15)', border: 'rgba(14, 165, 233, 0.4)', text: '#0369a1' },
+        'riskandcompliance': { bg: 'rgba(239, 68, 68, 0.15)', border: 'rgba(239, 68, 68, 0.4)', text: '#b91c1c' },
+        'sales': { bg: 'rgba(245, 158, 11, 0.15)', border: 'rgba(245, 158, 11, 0.4)', text: '#b45309' },
+        'soge': { bg: 'rgba(99, 102, 241, 0.15)', border: 'rgba(99, 102, 241, 0.4)', text: '#4338ca' },
+        'support': { bg: 'rgba(20, 184, 166, 0.15)', border: 'rgba(20, 184, 166, 0.4)', text: '#0f766e' },
+        'template': { bg: 'rgba(139, 92, 246, 0.15)', border: 'rgba(139, 92, 246, 0.4)', text: '#6b21a8' },
+        'tiers': { bg: 'rgba(244, 63, 94, 0.15)', border: 'rgba(244, 63, 94, 0.4)', text: '#be123c' },
+        'transaction': { bg: 'rgba(16, 185, 129, 0.15)', border: 'rgba(16, 185, 129, 0.4)', text: '#047857' },
+    };
+    return colors[domain.toLowerCase()] || { bg: 'rgba(100, 116, 139, 0.15)', border: 'rgba(100, 116, 139, 0.4)', text: '#475569' };
+}
+
+// Group APIs by domain
+function groupApisByDomain(apis) {
+    const grouped = {};
+    apis.forEach(api => {
+        const domain = extractDomain(api.name);
+        if (!grouped[domain]) {
+            grouped[domain] = [];
+        }
+        grouped[domain].push(api);
+    });
+    return grouped;
+}
+
+// Generate domain filter chips
+function generateDomainFilters(apis) {
+    apisByDomain = groupApisByDomain(apis);
+    const domains = Object.keys(apisByDomain).sort();
+    
+    const filterContainer = document.getElementById('domainFilters');
+    const filterBar = document.getElementById('filterBar');
+    
+    if (domains.length <= 1) {
+        filterBar.style.display = 'none';
+        return;
+    }
+    
+    filterBar.style.display = 'flex';
+    filterContainer.innerHTML = '';
+    
+    domains.forEach(domain => {
+        const count = apisByDomain[domain].length;
+        const chip = document.createElement('div');
+        chip.className = 'domain-chip';
+        chip.dataset.domain = domain;
+        chip.innerHTML = `${domain} <span class="chip-count">${count}</span>`;
+        
+        chip.addEventListener('click', function() {
+            toggleDomainFilter(domain);
+        });
+        
+        filterContainer.appendChild(chip);
+    });
+}
+
+// Toggle domain filter
+function toggleDomainFilter(domain) {
+    // Add micro-interaction feedback
+    const chip = document.querySelector(`.domain-chip[data-domain="${domain}"]`);
+    if (chip) {
+        chip.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            chip.style.transform = '';
+        }, 100);
+    }
+    
+    if (activeDomains.has(domain)) {
+        activeDomains.delete(domain);
+    } else {
+        activeDomains.add(domain);
+    }
+    
+    updateDomainFilterUI();
+    
+    // Use RAF for smoother transitions
+    requestAnimationFrame(() => {
+        applyDomainFilter();
+    });
+}
+
+// Update domain filter UI
+function updateDomainFilterUI() {
+    const chips = document.querySelectorAll('.domain-chip');
+    
+    chips.forEach(chip => {
+        const domain = chip.dataset.domain;
+        if (activeDomains.has(domain)) {
+            chip.classList.add('active');
+        } else {
+            chip.classList.remove('active');
+        }
+    });
+}
+
+// Apply domain filter to hexagons
+function applyDomainFilter() {
+    const hexagons = document.querySelectorAll('.hexagon-item');
+    const apiCounter = document.getElementById('apiCount');
+    let visibleCount = 0;
+    let visibleIndex = 0;
+    
+    // Use RAF for smooth rendering
+    requestAnimationFrame(() => {
+        hexagons.forEach((hexagon, index) => {
+            const api = allApis[index];
+            if (!api) return;
+            
+            const domain = extractDomain(api.name);
+            const shouldShow = activeDomains.size === 0 || activeDomains.has(domain);
+            
+            if (shouldShow) {
+                hexagon.classList.remove('domain-filtered-out');
+                hexagon.classList.add('domain-filtered-in');
+                hexagon.style.display = 'block';
+                hexagon.style.visibility = 'visible';
+                hexagon.style.position = 'relative';
+                
+                // Staggered animation for smooth appearance
+                hexagon.style.transitionDelay = `${visibleIndex * 0.03}s`;
+                visibleIndex++;
+                visibleCount++;
+            } else {
+                hexagon.classList.remove('domain-filtered-in');
+                hexagon.classList.add('domain-filtered-out');
+                hexagon.style.transitionDelay = '0s';
+                
+                // Hide after animation completes
+                setTimeout(() => {
+                    if (hexagon.classList.contains('domain-filtered-out')) {
+                        hexagon.style.display = 'none';
+                        hexagon.style.visibility = 'hidden';
+                    }
+                }, 300);
+            }
+        });
+        
+        // Reset transition delays after animation
+        setTimeout(() => {
+            hexagons.forEach(hexagon => {
+                hexagon.style.transitionDelay = '0s';
+            });
+        }, visibleIndex * 30 + 400);
+        
+        // Update counter
+        if (activeDomains.size > 0) {
+            const domainList = Array.from(activeDomains).join(', ');
+            apiCounter.innerHTML = `<span class="count">${visibleCount}</span> of ${allApis.length} APIs in ${domainList}`;
+        } else {
+            apiCounter.innerHTML = `<span class="count">${allApis.length}</span> APIs Available`;
+        }
+    });
+}
+
 async function loadApis() {
     try {
         const res = await fetch("/api/swagger-config");
@@ -1415,16 +1933,25 @@ async function loadApis() {
             // Hidden select option
             const option = document.createElement("option");
             option.value = api.url;
-            option.text = api.name.replace(/\/v\d+$/, '');
+            const serviceName = extractServiceName(api.name);
+            const domain = extractDomain(api.name);
+            option.text = `${serviceName} (${domain})`;
             dropdown.appendChild(option);
 
             // Custom dropdown item
-            const displayName = api.name.replace(/\/v\d+$/, '');
             const dropdownItem = document.createElement("div");
             dropdownItem.className = "dropdown-item";
-            dropdownItem.textContent = displayName;
+            const domainColors = getDomainColor(domain);
+            dropdownItem.innerHTML = `
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                    <span style="font-weight: 600;">${serviceName}</span>
+                    <span style="font-size: 0.75rem; padding: 2px 8px; border-radius: 10px; background: ${domainColors.bg}; color: ${domainColors.text}; border: 1px solid ${domainColors.border}; font-weight: 600;">
+                        ${domain}
+                    </span>
+                </div>
+            `;
             dropdownItem.dataset.value = api.url;
-            dropdownItem.dataset.name = displayName;
+            dropdownItem.dataset.name = `${serviceName} (${domain})`;
 
             dropdownItem.addEventListener("click", function() {
                 selectDropdownItem(this, api);
@@ -1458,11 +1985,59 @@ async function loadApis() {
 
         // Generate hexagonal grid
         generateHexagonGrid(urls);
+        
+        // Generate domain filters
+        generateDomainFilters(urls);
+        
         setupAutocomplete();
         setupBackButton();
+        
+        // Restore previous state if exists (after page refresh)
+        restoreSessionState();
 
     } catch (err) {
         console.error("Failed to load API list:", err);
+    }
+}
+
+// Restore session state after page refresh
+function restoreSessionState() {
+    const savedViewState = sessionStorage.getItem('viewState');
+    const savedApiUrl = sessionStorage.getItem('currentApiUrl');
+    
+    if (savedViewState === 'api-documentation' && savedApiUrl) {
+        // Find the API in the loaded list to get full details
+        const savedApi = allApis.find(api => api.url === savedApiUrl);
+        
+        if (savedApi) {
+            // Restore the API documentation view
+            setTimeout(() => {
+                // Update dropdown selection
+                const dropdown = document.getElementById("apiDropdown");
+                const dropdownText = document.getElementById("dropdownText");
+                const dropdownItems = document.querySelectorAll('.dropdown-item');
+                
+                dropdown.value = savedApiUrl;
+                
+                // Update custom dropdown
+                dropdownItems.forEach(item => {
+                    item.classList.remove('selected');
+                    if (item.dataset.value === savedApiUrl) {
+                        const serviceName = extractServiceName(savedApi.name);
+                        const domain = extractDomain(savedApi.name);
+                        dropdownText.textContent = `${serviceName} (${domain})`;
+                        item.classList.add('selected');
+                    }
+                });
+                
+                // Navigate to the API
+                navigateToApi(savedApiUrl);
+            }, 100);
+        } else {
+            // API not found, clear invalid state
+            sessionStorage.removeItem('currentApiUrl');
+            sessionStorage.removeItem('viewState');
+        }
     }
 }
 
@@ -1511,9 +2086,11 @@ function createHexagon(api, index) {
     hexagonItem.style.animationDelay = `${(index + 1) * 0.1}s`;
 
     const icon = getApiIcon(api.name);
-
-    // Remove version numbers from display name (e.g., "v1", "v2", etc.)
-    const displayName = api.name.replace(/\/v\d+$/, '');
+    
+    // Extract domain and service name
+    const domain = extractDomain(api.name);
+    const serviceName = extractServiceName(api.name);
+    const domainColors = getDomainColor(domain);
 
     hexagonItem.innerHTML = `
         <div class="hexagon-shape">
@@ -1521,8 +2098,11 @@ function createHexagon(api, index) {
                 <div class="hexagon-icon">
                     <i class="${icon}"></i>
                 </div>
-                <div class="hexagon-title">${displayName}</div>
+                <div class="hexagon-title">${serviceName}</div>
             </div>
+        </div>
+        <div class="domain-badge" style="background: ${domainColors.bg}; color: ${domainColors.text};">
+            ${domain}
         </div>
     `;
 
@@ -1578,6 +2158,12 @@ function updateDropdownSelection(url) {
 
 function showLandingPage() {
     isLandingPage = true;
+    
+    // Clear saved state when returning to landing page
+    sessionStorage.removeItem('currentApiUrl');
+    sessionStorage.removeItem('currentApiName');
+    sessionStorage.removeItem('viewState');
+    
     document.getElementById('hexagonContainer').style.display = 'flex';
     document.getElementById('swagger-ui').classList.remove('show');
     document.getElementById('backButton').classList.remove('show');
@@ -1604,11 +2190,13 @@ function showLandingPage() {
     // Clear any active hexagons and reset filtering
     document.querySelectorAll('.hexagon-item').forEach(item => {
         item.classList.remove('active');
+        item.classList.remove('domain-filtered-out');
         item.style.display = 'block';
         item.style.visibility = 'visible';
         item.style.opacity = '1';
         item.style.transform = 'scale(1)';
         item.style.filter = 'none';
+        item.style.position = 'relative';
     });
 
     // Reset API counter
@@ -1637,6 +2225,14 @@ function setupBackButton() {
 
 function navigateToApi(url) {
     if (!url) return;
+
+    // Save current state to sessionStorage for restoration after page refresh
+    const currentApi = allApis.find(api => api.url === url);
+    if (currentApi) {
+        sessionStorage.setItem('currentApiUrl', url);
+        sessionStorage.setItem('currentApiName', currentApi.name);
+        sessionStorage.setItem('viewState', 'api-documentation');
+    }
 
     // Show Swagger UI and hide landing page
     showSwaggerUI();
@@ -1800,24 +2396,31 @@ function setupAutocomplete() {
     const list = document.getElementById("autocomplete-list");
     const dropdown = document.getElementById("apiDropdown");
     let searchTimeout;
+    let rafId;
 
     input.addEventListener("input", function () {
         clearTimeout(searchTimeout);
+        if (rafId) cancelAnimationFrame(rafId);
+        
         const query = this.value.toLowerCase().trim();
 
-        // Real-time hexagon filtering (no delay)
+        // Instant visual feedback for hexagon filtering using RAF
         if (isLandingPage) {
-            filterHexagons(query);
+            rafId = requestAnimationFrame(() => {
+                filterHexagons(query);
+            });
         }
 
-        // Autocomplete suggestions (with delay)
+        // Autocomplete suggestions with minimal delay
         if (!query) {
             hideAutocomplete();
             return;
         }
+        
+        // Reduced delay for faster response
         searchTimeout = setTimeout(() => {
             performSearch(query);
-        }, 200);
+        }, 100);
     });
 
     // Clear search when input is cleared
@@ -1848,39 +2451,65 @@ function setupAutocomplete() {
     }
 
     function performSearch(query) {
+        // Clear existing items immediately
         list.innerHTML = "";
-        const matches = allApis.filter(api => {
-            const displayName = api.name.replace(/\/v\d+$/, '');
-            return displayName.toLowerCase().includes(query) ||
-                api.name.toLowerCase().includes(query);
-        });
-        if (matches.length > 0) {
-            matches.slice(0, 8).forEach((api, index) => {
-                const item = document.createElement("div");
-                item.classList.add("autocomplete-item");
-                const displayName = api.name.replace(/\/v\d+$/, '');
-                const nameHighlighted = highlightMatch(displayName, query);
-                item.innerHTML = `        <div style="font-weight: 600; margin-bottom: 2px;">${nameHighlighted}</div>      `;
-                item.onclick = () => {
-                    selectApi(api);
-                };
-                item.style.opacity = "0";
-                item.style.transform = "translateY(10px)";
-                setTimeout(() => {
-                    item.style.opacity = "1";
-                    item.style.transform = "translateY(0)";
-                }, index * 50);
-                list.appendChild(item);
+        
+        // Use RAF for smoother rendering
+        requestAnimationFrame(() => {
+            const matches = allApis.filter(api => {
+                const serviceName = extractServiceName(api.name);
+                const domain = extractDomain(api.name);
+                return serviceName.toLowerCase().includes(query) ||
+                    api.name.toLowerCase().includes(query) ||
+                    domain.toLowerCase().includes(query);
             });
-            showAutocomplete();
-        } else {
-            const noResults = document.createElement("div");
-            noResults.classList.add("autocomplete-item");
-            noResults.innerHTML = `      <div style="color: #64748b; text-align: center; font-style: italic;">        <i class="fas fa-search" style="margin-right: 8px;"></i>        No APIs found matching "${query}"      </div>    `;
-            noResults.style.cursor = "default";
-            list.appendChild(noResults);
-            showAutocomplete();
-        }
+            
+            if (matches.length > 0) {
+                // Create a document fragment for better performance
+                const fragment = document.createDocumentFragment();
+                
+                matches.slice(0, 8).forEach((api, index) => {
+                    const item = document.createElement("div");
+                    item.classList.add("autocomplete-item");
+                    const serviceName = extractServiceName(api.name);
+                    const domain = extractDomain(api.name);
+                    const nameHighlighted = highlightMatch(serviceName, query);
+                    const domainColors = getDomainColor(domain);
+                    item.innerHTML = `
+                        <div style="font-weight: 600; margin-bottom: 2px;">${nameHighlighted}</div>
+                        <div style="font-size: 0.75rem; color: ${domainColors.text}; font-weight: 500;">
+                            <i class="fas fa-tag" style="margin-right: 4px; font-size: 0.7rem;"></i>${domain}
+                        </div>
+                    `;
+                    item.onclick = () => {
+                        selectApi(api);
+                    };
+                    item.style.opacity = "0";
+                    item.style.transform = "translateY(10px)";
+                    item.style.transition = "opacity 0.2s ease, transform 0.2s ease";
+                    
+                    fragment.appendChild(item);
+                    
+                    // Stagger animations with RAF
+                    requestAnimationFrame(() => {
+                        setTimeout(() => {
+                            item.style.opacity = "1";
+                            item.style.transform = "translateY(0)";
+                        }, index * 30);
+                    });
+                });
+                
+                list.appendChild(fragment);
+                showAutocomplete();
+            } else {
+                const noResults = document.createElement("div");
+                noResults.classList.add("autocomplete-item");
+                noResults.innerHTML = `      <div style="color: #64748b; text-align: center; font-style: italic;">        <i class="fas fa-search" style="margin-right: 8px;"></i>        No APIs found matching "${query}"      </div>    `;
+                noResults.style.cursor = "default";
+                list.appendChild(noResults);
+                showAutocomplete();
+            }
+        });
     }
 
     function highlightMatch(text, query) {
@@ -1924,54 +2553,75 @@ function setupAutocomplete() {
         const apiCounter = document.getElementById('apiCount');
         let visibleCount = 0;
 
-        hexagons.forEach((hexagon, index) => {
-            const api = allApis[index];
-            if (!api) return;
+        // Use RAF for smooth rendering
+        requestAnimationFrame(() => {
+            hexagons.forEach((hexagon, index) => {
+                const api = allApis[index];
+                if (!api) return;
 
-            const displayName = api.name.replace(/\/v\d+$/, '');
+                const serviceName = extractServiceName(api.name);
+                const domain = extractDomain(api.name);
 
-            const matchesQuery = !query ||
-                displayName.toLowerCase().includes(query) ||
-                api.name.toLowerCase().includes(query);
+                // Check if matches search query
+                const matchesQuery = !query ||
+                    serviceName.toLowerCase().includes(query) ||
+                    api.name.toLowerCase().includes(query) ||
+                    domain.toLowerCase().includes(query);
+                
+                // Check if matches domain filter
+                const matchesDomain = activeDomains.size === 0 || activeDomains.has(domain);
+                
+                // Show only if matches both conditions
+                const shouldShow = matchesQuery && matchesDomain;
 
-            if (matchesQuery) {
-                // Show matching hexagons with smooth fade-in
-                hexagon.style.display = 'block';
-                hexagon.style.opacity = '1';
-                hexagon.style.transform = 'scale(1)';
-                hexagon.style.filter = 'none';
-                hexagon.style.visibility = 'visible';
-                visibleCount++;
+                if (shouldShow) {
+                    // Show matching hexagons with smooth fade-in
+                    hexagon.classList.remove('domain-filtered-out');
+                    hexagon.classList.add('domain-filtered-in');
+                    hexagon.style.display = 'block';
+                    hexagon.style.visibility = 'visible';
+                    hexagon.style.position = 'relative';
+                    visibleCount++;
 
-                // Highlight matching text in hexagon
-                if (query) {
-                    highlightHexagonText(hexagon, query, displayName);
+                    // Highlight matching text in hexagon
+                    if (query) {
+                        highlightHexagonText(hexagon, query, serviceName);
+                    } else {
+                        clearHexagonHighlight(hexagon);
+                    }
                 } else {
+                    // Smoothly hide non-matching hexagons
+                    hexagon.classList.remove('domain-filtered-in');
+                    hexagon.classList.add('domain-filtered-out');
+                    
+                    // Delay hiding to allow animation
+                    setTimeout(() => {
+                        if (hexagon.classList.contains('domain-filtered-out')) {
+                            hexagon.style.display = 'none';
+                            hexagon.style.visibility = 'hidden';
+                        }
+                    }, 300);
+                    
                     clearHexagonHighlight(hexagon);
                 }
+            });
+
+            // Update counter
+            if (query && activeDomains.size > 0) {
+                const domainList = Array.from(activeDomains).join(', ');
+                apiCounter.innerHTML = `<span class="count">${visibleCount}</span> of ${allApis.length} APIs match "${query}" in ${domainList}`;
+            } else if (query) {
+                apiCounter.innerHTML = `<span class="count">${visibleCount}</span> of ${allApis.length} APIs match "${query}"`;
+            } else if (activeDomains.size > 0) {
+                const domainList = Array.from(activeDomains).join(', ');
+                apiCounter.innerHTML = `<span class="count">${visibleCount}</span> of ${allApis.length} APIs in ${domainList}`;
             } else {
-                // Completely hide non-matching hexagons
-                hexagon.style.opacity = '0';
-                hexagon.style.transform = 'scale(0.8)';
-                setTimeout(() => {
-                    if (hexagon.style.opacity === '0') {
-                        hexagon.style.display = 'none';
-                        hexagon.style.visibility = 'hidden';
-                    }
-                }, 200); // Allow fade-out animation to complete
-                clearHexagonHighlight(hexagon);
+                apiCounter.innerHTML = `<span class="count">${allApis.length}</span> APIs Available`;
             }
+
+            // Show "no results" message if needed
+            showNoResultsMessage(visibleCount === 0 && (query || activeDomains.size > 0));
         });
-
-        // Update counter
-        if (query) {
-            apiCounter.innerHTML = `<span class="count">${visibleCount}</span> of ${allApis.length} APIs match "${query}"`;
-        } else {
-            apiCounter.innerHTML = `<span class="count">${allApis.length}</span> APIs Available`;
-        }
-
-        // Show "no results" message if needed
-        showNoResultsMessage(visibleCount === 0 && query);
     }
 
     function highlightHexagonText(hexagon, query, displayName) {
@@ -1996,21 +2646,39 @@ function setupAutocomplete() {
 
     function clearSearch() {
         if (isLandingPage) {
-            // Show all hexagons immediately
-            const hexagons = document.querySelectorAll('.hexagon-item');
-            hexagons.forEach(hexagon => {
-                hexagon.style.display = 'block';
-                hexagon.style.visibility = 'visible';
-                hexagon.style.opacity = '1';
-                hexagon.style.transform = 'scale(1)';
-                hexagon.style.filter = 'none';
-                clearHexagonHighlight(hexagon);
-            });
+            // Reapply domain filter without search query
+            if (activeDomains.size > 0) {
+                applyDomainFilter();
+            } else {
+                // Use RAF for smooth rendering
+                requestAnimationFrame(() => {
+                    const hexagons = document.querySelectorAll('.hexagon-item');
+                    let visibleIndex = 0;
+                    
+                    hexagons.forEach(hexagon => {
+                        hexagon.classList.remove('domain-filtered-out');
+                        hexagon.classList.add('domain-filtered-in');
+                        hexagon.style.display = 'block';
+                        hexagon.style.visibility = 'visible';
+                        hexagon.style.position = 'relative';
+                        hexagon.style.transitionDelay = `${visibleIndex * 0.02}s`;
+                        visibleIndex++;
+                        clearHexagonHighlight(hexagon);
+                    });
+                    
+                    // Reset transition delays
+                    setTimeout(() => {
+                        hexagons.forEach(hexagon => {
+                            hexagon.style.transitionDelay = '0s';
+                        });
+                    }, visibleIndex * 20 + 400);
 
-            // Reset counter
-            const apiCounter = document.getElementById('apiCount');
-            if (apiCounter && allApis) {
-                apiCounter.innerHTML = `<span class="count">${allApis.length}</span> APIs Available`;
+                    // Reset counter
+                    const apiCounter = document.getElementById('apiCount');
+                    if (apiCounter && allApis) {
+                        apiCounter.innerHTML = `<span class="count">${allApis.length}</span> APIs Available`;
+                    }
+                });
             }
 
             hideNoResultsMessage();
@@ -2151,8 +2819,11 @@ window.onload = function () {
     // Load APIs and show landing page
     loadApis();
 
-    // Ensure landing page is shown initially
-    showLandingPage();
+    // Show landing page only if no saved state exists
+    const savedViewState = sessionStorage.getItem('viewState');
+    if (savedViewState !== 'api-documentation') {
+        showLandingPage();
+    }
 };
 document.addEventListener('DOMContentLoaded', function () {
     document.documentElement.style.scrollBehavior = 'smooth';
@@ -2188,6 +2859,39 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     }, 1000);
+
+    // Header morph on scroll
+    let lastScrollTop = 0;
+    let scrollThreshold = 80;
+    let ticking = false;
+
+    function handleHeaderScroll() {
+        const header = document.querySelector('header');
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Calculate scroll progress
+        const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrollProgress = (scrollTop / windowHeight) * 100;
+        
+        // Update CSS variable for progress bar
+        header.style.setProperty('--scroll-progress', `${scrollProgress}%`);
+        
+        if (scrollTop > scrollThreshold) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+        
+        lastScrollTop = scrollTop;
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            window.requestAnimationFrame(handleHeaderScroll);
+            ticking = true;
+        }
+    }, { passive: true });
 
     // Add resize handler to regenerate grid
     let resizeTimeout;
