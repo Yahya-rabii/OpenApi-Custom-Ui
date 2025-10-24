@@ -5756,6 +5756,41 @@
                 }
             });
 
+            // Disable browser find entirely in the app tab: intercept Ctrl/Cmd+F and F3
+            // WARNING: This will prevent the browser's native Find dialog from opening
+            // while the app tab has focus. This is intentionally aggressive per request.
+            document.addEventListener('keydown', function (ev) {
+                try {
+                    const isFindCombo = ((ev.ctrlKey || ev.metaKey) && (ev.key === 'f' || ev.key === 'F')) || ev.key === 'F3';
+                    if (!isFindCombo) return;
+
+                    // Prevent the browser's find UI
+                    ev.preventDefault();
+                    ev.stopPropagation();
+
+                    // Still focus the app's search so users can search within the app
+                    let target = null;
+                    const swaggerEl = document.getElementById('swagger-ui');
+                    const swaggerVisible = swaggerEl && swaggerEl.classList.contains('show');
+
+                    if (swaggerVisible) {
+                        target = document.getElementById('endpointSearch') || (window.filterNotchInstance && window.filterNotchInstance.panel && window.filterNotchInstance.panel.querySelector('.panel-search-row input'));
+                        if (!document.getElementById('endpointSearch') && window.filterNotchInstance) {
+                            try { window.filterNotchInstance.open(); } catch (e) { /* ignore */ }
+                        }
+                    } else {
+                        target = document.getElementById('apiSearch') || (window.filterNotchInstance && window.filterNotchInstance.panel && window.filterNotchInstance.panel.querySelector('.panel-search-row input'));
+                        if (window.filterNotchInstance) {
+                            try { window.filterNotchInstance.open(); } catch (e) { /* ignore */ }
+                        }
+                    }
+
+                    if (target) {
+                        try { target.focus(); if (typeof target.select === 'function') target.select(); } catch (e) { /* ignore */ }
+                    }
+                } catch (e) { /* defensive: never break other key handlers */ }
+            }, { capture: true });
+
             // Make hexagons focusable and add keyboard support
             setTimeout(() => {
                 document.querySelectorAll('.hexagon-item').forEach((hexagon, index) => {
