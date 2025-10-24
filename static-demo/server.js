@@ -161,26 +161,386 @@ app.get('/api/*/api-docs', (req, res) => {
             description: `Documentation for ${apiPath}`
         },
         paths: {
-            "/example": {
+            "/users": {
                 get: {
-                    summary: "Example endpoint",
-                    description: `Example endpoint for ${apiPath}`,
+                    summary: "Get all users",
+                    description: "Retrieve a list of all users",
                     responses: {
                         "200": {
                             description: "Successful response",
                             content: {
                                 "application/json": {
                                     schema: {
-                                        type: "object",
-                                        properties: {
-                                            message: {
-                                                type: "string",
-                                                example: "Hello from API"
+                                        type: "array",
+                                        items: {
+                                            type: "object",
+                                            properties: {
+                                                id: { type: "integer", example: 1 },
+                                                name: { type: "string", example: "John Doe" },
+                                                email: { type: "string", example: "john@example.com" }
                                             }
                                         }
                                     }
                                 }
                             }
+                        }
+                    }
+                },
+                post: {
+                    summary: "Create a new user",
+                    description: "Create a new user account",
+                    requestBody: {
+                        required: true,
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    type: "object",
+                                    properties: {
+                                        name: { type: "string", example: "Jane Doe" },
+                                        email: { type: "string", example: "jane@example.com" }
+                                    },
+                                    required: ["name", "email"]
+                                }
+                            }
+                        }
+                    },
+                    responses: {
+                        "201": {
+                            description: "User created successfully"
+                        }
+                    }
+                }
+            },
+            "/users/{id}": {
+                get: {
+                    summary: "Get user by ID",
+                    description: "Retrieve a specific user by their ID",
+                    parameters: [
+                        {
+                            name: "id",
+                            in: "path",
+                            required: true,
+                            schema: { type: "integer" },
+                            example: 1
+                        }
+                    ],
+                    responses: {
+                        "200": {
+                            description: "User found"
+                        },
+                        "404": {
+                            description: "User not found"
+                        }
+                    }
+                },
+                put: {
+                    summary: "Update user",
+                    description: "Update an existing user's information",
+                    parameters: [
+                        {
+                            name: "id",
+                            in: "path",
+                            required: true,
+                            schema: { type: "integer" }
+                        }
+                    ],
+                    responses: {
+                        "200": {
+                            description: "User updated successfully"
+                        }
+                    }
+                },
+                delete: {
+                    summary: "Delete user",
+                    description: "Delete a user account",
+                    parameters: [
+                        {
+                            name: "id",
+                            in: "path",
+                            required: true,
+                            schema: { type: "integer" }
+                        }
+                    ],
+                    responses: {
+                        "204": {
+                            description: "User deleted successfully"
+                        }
+                    }
+                }
+            },
+            "/products": {
+                get: {
+                    summary: "Get all products",
+                    description: "Retrieve a list of all products",
+                    parameters: [
+                        {
+                            name: "limit",
+                            in: "query",
+                            schema: { type: "integer", default: 10 }
+                        },
+                        {
+                            name: "category",
+                            in: "query",
+                            schema: { type: "string" }
+                        }
+                    ],
+                    responses: {
+                        "200": {
+                            description: "Products retrieved successfully"
+                        }
+                    }
+                },
+                post: {
+                    summary: "Create product",
+                    description: "Create a new product",
+                    responses: {
+                        "201": {
+                            description: "Product created successfully"
+                        }
+                    }
+                }
+            },
+            "/products/{id}": {
+                get: {
+                    summary: "Get product by ID",
+                    parameters: [
+                        {
+                            name: "id",
+                            in: "path",
+                            required: true,
+                            schema: { type: "integer" }
+                        }
+                    ],
+                    responses: {
+                        "200": {
+                            description: "Product found"
+                        }
+                    }
+                },
+                put: {
+                    summary: "Update product",
+                    parameters: [
+                        {
+                            name: "id",
+                            in: "path",
+                            required: true,
+                            schema: { type: "integer" }
+                        }
+                    ],
+                    responses: {
+                        "200": {
+                            description: "Product updated"
+                        }
+                    }
+                }
+            },
+            "/orders": {
+                get: {
+                    summary: "Get all orders",
+                    description: "Retrieve a list of orders",
+                    parameters: [
+                        {
+                            name: "status",
+                            in: "query",
+                            schema: { type: "string", enum: ["pending", "completed", "cancelled"] }
+                        }
+                    ],
+                    responses: {
+                        "200": {
+                            description: "Orders retrieved"
+                        }
+                    }
+                },
+                post: {
+                    summary: "Create order",
+                    description: "Place a new order",
+                    responses: {
+                        "201": {
+                            description: "Order created"
+                        }
+                    }
+                }
+            },
+            "/orders/{id}": {
+                get: {
+                    summary: "Get order by ID",
+                    parameters: [
+                        {
+                            name: "id",
+                            in: "path",
+                            required: true,
+                            schema: { type: "string" }
+                        }
+                    ],
+                    responses: {
+                        "200": {
+                            description: "Order found"
+                        }
+                    }
+                },
+                patch: {
+                    summary: "Update order status",
+                    parameters: [
+                        {
+                            name: "id",
+                            in: "path",
+                            required: true,
+                            schema: { type: "string" }
+                        }
+                    ],
+                    responses: {
+                        "200": {
+                            description: "Order status updated"
+                        }
+                    }
+                }
+            },
+            "/categories": {
+                get: {
+                    summary: "Get all categories",
+                    responses: {
+                        "200": {
+                            description: "Categories retrieved"
+                        }
+                    }
+                },
+                post: {
+                    summary: "Create category",
+                    responses: {
+                        "201": {
+                            description: "Category created"
+                        }
+                    }
+                }
+            },
+            "/categories/{id}": {
+                get: {
+                    summary: "Get category by ID",
+                    parameters: [
+                        {
+                            name: "id",
+                            in: "path",
+                            required: true,
+                            schema: { type: "integer" }
+                        }
+                    ],
+                    responses: {
+                        "200": {
+                            description: "Category found"
+                        }
+                    }
+                },
+                delete: {
+                    summary: "Delete category",
+                    parameters: [
+                        {
+                            name: "id",
+                            in: "path",
+                            required: true,
+                            schema: { type: "integer" }
+                        }
+                    ],
+                    responses: {
+                        "204": {
+                            description: "Category deleted"
+                        }
+                    }
+                }
+            },
+            "/auth/login": {
+                post: {
+                    summary: "User login",
+                    description: "Authenticate user credentials",
+                    responses: {
+                        "200": {
+                            description: "Login successful"
+                        },
+                        "401": {
+                            description: "Invalid credentials"
+                        }
+                    }
+                }
+            },
+            "/auth/logout": {
+                post: {
+                    summary: "User logout",
+                    description: "Logout current user",
+                    responses: {
+                        "200": {
+                            description: "Logout successful"
+                        }
+                    }
+                }
+            },
+            "/auth/register": {
+                post: {
+                    summary: "User registration",
+                    description: "Register a new user account",
+                    responses: {
+                        "201": {
+                            description: "Registration successful"
+                        }
+                    }
+                }
+            },
+            "/reports/sales": {
+                get: {
+                    summary: "Get sales report",
+                    parameters: [
+                        {
+                            name: "start_date",
+                            in: "query",
+                            schema: { type: "string", format: "date" }
+                        },
+                        {
+                            name: "end_date",
+                            in: "query",
+                            schema: { type: "string", format: "date" }
+                        }
+                    ],
+                    responses: {
+                        "200": {
+                            description: "Sales report generated"
+                        }
+                    }
+                }
+            },
+            "/notifications": {
+                get: {
+                    summary: "Get notifications",
+                    parameters: [
+                        {
+                            name: "unread_only",
+                            in: "query",
+                            schema: { type: "boolean", default: false }
+                        }
+                    ],
+                    responses: {
+                        "200": {
+                            description: "Notifications retrieved"
+                        }
+                    }
+                }
+            },
+            "/search": {
+                get: {
+                    summary: "Search across resources",
+                    parameters: [
+                        {
+                            name: "q",
+                            in: "query",
+                            required: true,
+                            schema: { type: "string" }
+                        },
+                        {
+                            name: "type",
+                            in: "query",
+                            schema: { type: "string", enum: ["users", "products", "orders"] }
+                        }
+                    ],
+                    responses: {
+                        "200": {
+                            description: "Search results"
                         }
                     }
                 }

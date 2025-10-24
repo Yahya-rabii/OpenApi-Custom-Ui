@@ -1,212 +1,210 @@
 [
-
         {
-            "url": "/api/cloud/audit/v1/api-docs",
-            "name": "cloud/audit/v1"
+                "url": "/api/cloud/audit/v1/api-docs",
+                "name": "cloud/audit/v1"
         },
         {
-            "url": "/api/contract/bancassurance/v1/api-docs",
-            "name": "contract/bancassurance/v1"
+                "url": "/api/contract/bancassurance/v1/api-docs",
+                "name": "contract/bancassurance/v1"
         },
         {
-            "url": "/api/data/customer-data/v1/api-docs",
-            "name": "data/customer-data/v1"
+                "url": "/api/data/customer-data/v1/api-docs",
+                "name": "data/customer-data/v1"
         },
         {
-            "url": "/api/distribution/appointment-back/v1/api-docs",
-            "name": "distribution/appointment-back/v1"
+                "url": "/api/distribution/appointment-back/v1/api-docs",
+                "name": "distribution/appointment-back/v1"
         },
         {
-            "url": "/api/distribution/card-holder-back/v1/api-docs",
-            "name": "distribution/card-holder-back/v1"
+                "url": "/api/distribution/card-holder-back/v1/api-docs",
+                "name": "distribution/card-holder-back/v1"
         },
         {
-            "url": "/api/distribution/ldg-back/v1/api-docs",
-            "name": "distribution/ldg-back/v1"
+                "url": "/api/distribution/ldg-back/v1/api-docs",
+                "name": "distribution/ldg-back/v1"
         },
         {
-            "url": "/api/distribution/operationaltask-back/v1/api-docs",
-            "name": "distribution/operationaltask-back/v1"
+                "url": "/api/distribution/operationaltask-back/v1/api-docs",
+                "name": "distribution/operationaltask-back/v1"
         },
         {
-            "url": "/api/garantie/caution/v1/api-docs",
-            "name": "garantie/caution/v1"
+                "url": "/api/garantie/caution/v1/api-docs",
+                "name": "garantie/caution/v1"
         },
         {
-            "url": "/api/product/loan/v1/api-docs",
-            "name": "product/loan/v1"
+                "url": "/api/product/loan/v1/api-docs",
+                "name": "product/loan/v1"
         },
         {
-            "url": "/api/product/offer/v1/api-docs",
-            "name": "product/offer/v1"
+                "url": "/api/product/offer/v1/api-docs",
+                "name": "product/offer/v1"
         },
         {
-            "url": "/api/product/term-deposit/v1/api-docs",
-            "name": "product/term-deposit/v1"
+                "url": "/api/product/term-deposit/v1/api-docs",
+                "name": "product/term-deposit/v1"
         },
         {
-            "url": "/api/product/titre/v1/api-docs",
-            "name": "product/titre/v1"
+                "url": "/api/product/titre/v1/api-docs",
+                "name": "product/titre/v1"
         },
         {
-            "url": "/api/riskandcompliance/compliance/v1/api-docs",
-            "name": "riskandcompliance/compliance/v1"
+                "url": "/api/riskandcompliance/compliance/v1/api-docs",
+                "name": "riskandcompliance/compliance/v1"
         },
         {
-            "url": "/api/sales/advice/v1/api-docs",
-            "name": "sales/advice/v1"
+                "url": "/api/sales/advice/v1/api-docs",
+                "name": "sales/advice/v1"
         },
         {
-            "url": "/api/sales/after-sale/v1/api-docs",
-            "name": "sales/after-sale/v1"
+                "url": "/api/sales/after-sale/v1/api-docs",
+                "name": "sales/after-sale/v1"
         },
         {
-            "url": "/api/sales/feasibility/v1/api-docs",
-            "name": "sales/feasibility/v1"
+                "url": "/api/sales/feasibility/v1/api-docs",
+                "name": "sales/feasibility/v1"
         },
         {
-            "url": "/api/sales/opportunity/v1/api-docs",
-            "name": "sales/opportunity/v1"
+                "url": "/api/sales/opportunity/v1/api-docs",
+                "name": "sales/opportunity/v1"
         },
         {
-            "url": "/api/sales/sale/v1/api-docs",
-            "name": "sales/sale/v1"
+                "url": "/api/sales/sale/v1/api-docs",
+                "name": "sales/sale/v1"
         },
         {
-            "url": "/api/soge/soge/v1/api-docs",
-            "name": "soge/soge/v1"
+                "url": "/api/soge/soge/v1/api-docs",
+                "name": "soge/soge/v1"
         },
         {
-            "url": "/api/support/appointment/v1/api-docs",
-            "name": "support/appointment/v1"
+                "url": "/api/support/appointment/v1/api-docs",
+                "name": "support/appointment/v1"
         },
         {
-            "url": "/api/support/av-scanner/v1/api-docs",
-            "name": "support/av-scanner/v1"
+                "url": "/api/support/av-scanner/v1/api-docs",
+                "name": "support/av-scanner/v1"
         },
         {
-            "url": "/api/support/biochecker/v1/api-docs",
-            "name": "support/biochecker/v1"
+                "url": "/api/support/biochecker/v1/api-docs",
+                "name": "support/biochecker/v1"
         },
         {
-            "url": "/api/support/chatbot/v1/api-docs",
-            "name": "support/chatbot/v1"
+                "url": "/api/support/chatbot/v1/api-docs",
+                "name": "support/chatbot/v1"
         },
         {
-            "url": "/api/support/document/v1/api-docs",
-            "name": "support/document/v1"
+                "url": "/api/support/document/v1/api-docs",
+                "name": "support/document/v1"
         },
         {
-            "url": "/api/support/exchangerate/v1/api-docs",
-            "name": "support/exchangerate/v1"
+                "url": "/api/support/exchangerate/v1/api-docs",
+                "name": "support/exchangerate/v1"
         },
         {
-            "url": "/api/support/featuretoggles/v1/api-docs",
-            "name": "support/featuretoggles/v1"
+                "url": "/api/support/featuretoggles/v1/api-docs",
+                "name": "support/featuretoggles/v1"
         },
         {
-            "url": "/api/support/geoloc/v1/api-docs",
-            "name": "support/geoloc/v1"
+                "url": "/api/support/geoloc/v1/api-docs",
+                "name": "support/geoloc/v1"
         },
         {
-            "url": "/api/support/ladrad/v1/api-docs",
-            "name": "support/ladrad/v1"
+                "url": "/api/support/ladrad/v1/api-docs",
+                "name": "support/ladrad/v1"
         },
         {
-            "url": "/api/support/notification/v1/api-docs",
-            "name": "support/notification/v1"
+                "url": "/api/support/notification/v1/api-docs",
+                "name": "support/notification/v1"
         },
         {
-            "url": "/api/support/otp/v1/api-docs",
-            "name": "support/otp/v1"
+                "url": "/api/support/otp/v1/api-docs",
+                "name": "support/otp/v1"
         },
         {
-            "url": "/api/support/parcours/v1/api-docs",
-            "name": "support/parcours/v1"
+                "url": "/api/support/parcours/v1/api-docs",
+                "name": "support/parcours/v1"
         },
         {
-            "url": "/api/support/pilotage/v1/api-docs",
-            "name": "support/pilotage/v1"
+                "url": "/api/support/pilotage/v1/api-docs",
+                "name": "support/pilotage/v1"
         },
         {
-            "url": "/api/support/reclamation/v1/api-docs",
-            "name": "support/reclamation/v1"
+                "url": "/api/support/reclamation/v1/api-docs",
+                "name": "support/reclamation/v1"
         },
         {
-            "url": "/api/support/rh/v1/api-docs",
-            "name": "support/rh/v1"
+                "url": "/api/support/rh/v1/api-docs",
+                "name": "support/rh/v1"
         },
         {
-            "url": "/api/support/task-management/v1/api-docs",
-            "name": "support/task-management/v1"
+                "url": "/api/support/task-management/v1/api-docs",
+                "name": "support/task-management/v1"
         },
         {
-            "url": "/api/template/template-contract/v1/api-docs",
-            "name": "template/template-contract/v1"
+                "url": "/api/template/template-contract/v1/api-docs",
+                "name": "template/template-contract/v1"
         },
         {
-            "url": "/api/tiers/account/v1/api-docs",
-            "name": "tiers/account/v1"
+                "url": "/api/tiers/account/v1/api-docs",
+                "name": "tiers/account/v1"
         },
         {
-            "url": "/api/tiers/customer/v1/api-docs",
-            "name": "tiers/customer/v1"
+                "url": "/api/tiers/customer/v1/api-docs",
+                "name": "tiers/customer/v1"
         },
         {
-            "url": "/api/tiers/favorite/v1/api-docs",
-            "name": "tiers/favorite/v1"
+                "url": "/api/tiers/favorite/v1/api-docs",
+                "name": "tiers/favorite/v1"
         },
         {
-            "url": "/api/tiers/prospect/v1/api-docs",
-            "name": "tiers/prospect/v1"
+                "url": "/api/tiers/prospect/v1/api-docs",
+                "name": "tiers/prospect/v1"
         },
         {
-            "url": "/api/transaction/cagnotte/v1/api-docs",
-            "name": "transaction/cagnotte/v1"
+                "url": "/api/transaction/cagnotte/v1/api-docs",
+                "name": "transaction/cagnotte/v1"
         },
         {
-            "url": "/api/transaction/card/v1/api-docs",
-            "name": "transaction/card/v1"
+                "url": "/api/transaction/card/v1/api-docs",
+                "name": "transaction/card/v1"
         },
         {
-            "url": "/api/transaction/cheque-book/v1/api-docs",
-            "name": "transaction/cheque-book/v1"
+                "url": "/api/transaction/cheque-book/v1/api-docs",
+                "name": "transaction/cheque-book/v1"
         },
         {
-            "url": "/api/transaction/instant-transfer/v1/api-docs",
-            "name": "transaction/instant-transfer/v1"
+                "url": "/api/transaction/instant-transfer/v1/api-docs",
+                "name": "transaction/instant-transfer/v1"
         },
         {
-            "url": "/api/transaction/lcn/v1/api-docs",
-            "name": "transaction/lcn/v1"
+                "url": "/api/transaction/lcn/v1/api-docs",
+                "name": "transaction/lcn/v1"
         },
         {
-            "url": "/api/transaction/operation-core/v1/api-docs",
-            "name": "transaction/operation-core/v1"
+                "url": "/api/transaction/operation-core/v1/api-docs",
+                "name": "transaction/operation-core/v1"
         },
         {
-            "url": "/api/transaction/payment/v1/api-docs",
-            "name": "transaction/payment/v1"
+                "url": "/api/transaction/payment/v1/api-docs",
+                "name": "transaction/payment/v1"
         },
         {
-            "url": "/api/transaction/provision/v1/api-docs",
-            "name": "transaction/provision/v1"
+                "url": "/api/transaction/provision/v1/api-docs",
+                "name": "transaction/provision/v1"
         },
         {
-            "url": "/api/transaction/token-core/v1/api-docs",
-            "name": "transaction/token-core/v1"
+                "url": "/api/transaction/token-core/v1/api-docs",
+                "name": "transaction/token-core/v1"
         },
         {
-            "url": "/api/transaction/trade/v1/api-docs",
-            "name": "transaction/trade/v1"
+                "url": "/api/transaction/trade/v1/api-docs",
+                "name": "transaction/trade/v1"
         },
         {
-            "url": "/api/transaction/transfer/v1/api-docs",
-            "name": "transaction/transfer/v1"
+                "url": "/api/transaction/transfer/v1/api-docs",
+                "name": "transaction/transfer/v1"
         },
         {
-            "url": "/api/transaction/wallet-core/v1/api-docs",
-            "name": "transaction/wallet-core/v1"
+                "url": "/api/transaction/wallet-core/v1/api-docs",
+                "name": "transaction/wallet-core/v1"
         }
-
 ]
