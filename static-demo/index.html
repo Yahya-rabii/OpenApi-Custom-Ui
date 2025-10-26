@@ -3777,9 +3777,27 @@
 
                 // bind events
                 this._bindDrag();
+                // Prevent rapid toggles and rely on class-based state rather than inline styles
+                this._lastToggleMs = 0;
                 this.notch.addEventListener('click', (e) => {
                     if (this.isDragging) return;
-                    if (this.panel.style.display === 'flex' || this.panel.style.display === 'block') this.close(); else this.open();
+                    const now = Date.now();
+                    if (now - this._lastToggleMs < 250) return; // debounce rapid toggles
+
+                    // If panel has explicit 'open' class, close it. If it's currently 'closing', ignore the click.
+                    if (this.panel.classList.contains('open')) {
+                        this.close();
+                        this._lastToggleMs = now;
+                        return;
+                    }
+                    if (this.panel.classList.contains('closing')) {
+                        // Ignore clicks while closing animation is in progress
+                        return;
+                    }
+
+                    // Otherwise open the panel
+                    this.open();
+                    this._lastToggleMs = now;
                 });
 
                 // close button inside panel
@@ -3990,6 +4008,9 @@
             }
 
             open() {
+                // Clear any pending close fallback to avoid race between open/close
+                if (this._closeFallbackTimer) { clearTimeout(this._closeFallbackTimer); this._closeFallbackTimer = null; }
+
                 const rect = this.notch.getBoundingClientRect();
                 const panelW = Math.min(420, window.innerWidth - 40);
                 const panelH = 260;
@@ -4039,16 +4060,40 @@
                 this.panel.style.clipPath = `circle(0px at ${localX}px ${localY}px)`;
                 this.panel.style.transform = 'scale(0.96)';
                 this.panel.style.opacity = '0';
+                // Finalize close helper (ensures we don't get stuck in 'closing' state)
+                let cleaned = false;
+                const finalizeClose = () => {
+                    if (cleaned) return;
+                    cleaned = true;
+                    try { this.panel.removeEventListener('transitionend', onEndClose); } catch (e) { }
+                    try { this.panel.style.display = 'none'; } catch (e) { }
+                    try { this.panel.setAttribute('aria-hidden', 'true'); } catch (e) { }
+                    try { this.panel.classList.remove('closing'); } catch (e) { }
+                    if (this._closeFallbackTimer) { clearTimeout(this._closeFallbackTimer); this._closeFallbackTimer = null; }
+                };
 
                 const onEndClose = (e) => {
                     if (e.propertyName === 'clip-path' || e.propertyName === 'opacity') {
-                        this.panel.removeEventListener('transitionend', onEndClose);
-                        this.panel.style.display = 'none';
-                        this.panel.setAttribute('aria-hidden', 'true');
-                        this.panel.classList.remove('closing');
+                        finalizeClose();
                     }
                 };
+
                 this.panel.addEventListener('transitionend', onEndClose);
+
+                // If there is no transition (0s) the transitionend may never fire; use computed style or fallback timeout
+                try {
+                    const cs = window.getComputedStyle(this.panel);
+                    const dur = cs && cs.transitionDuration ? cs.transitionDuration : '';
+                    const seconds = parseFloat(dur) || 0;
+                    if (!seconds) {
+                        // finalize immediately
+                        finalizeClose();
+                        return;
+                    }
+                } catch (e) { /* ignore */ }
+
+                // Safety fallback: finalize after 600ms in case transitionend doesn't fire
+                this._closeFallbackTimer = setTimeout(() => { finalizeClose(); }, 600);
             }
         }
 
