@@ -182,6 +182,10 @@
                 transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
                 opacity 220ms ease;
             will-change: clip-path, transform, opacity;
+            /* Allow the panel to grow and be scrollable when content is large */
+            max-height: 75vh; /* keep it bounded to viewport */
+            overflow: auto; /* enable scrolling for many tags */
+            box-sizing: border-box;
         }
 
         .filter-panel .panel-header {
@@ -1195,25 +1199,37 @@
             animation-delay: 0.1s;
         }
 
-        .hexagon-item:nth-child(2) {
-            animation-delay: 0.2s;
-        }
+            .domain-chip .chip-count {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                margin-left: 8px;
+                /* Force a perfect circular badge */
+                width: 20px;
+                height: 20px;
+                padding: 0;
+                /* Requested color + opacity */
+                background: #0f766d48;
+                color: #0f766e;
+                opacity: 0.9;
+                border-radius: 50%;
+                font-size: 0.65rem;
+                font-weight: 800;
+                box-shadow: 0 2px 6px rgba(2, 6, 23, 0.06);
+                border: 1px solid rgba(15, 118, 110, 0.08);
+                line-height: 1;
+                text-align: center;
+                box-sizing: border-box;
+                overflow: hidden;
+            }
 
-        .hexagon-item:nth-child(3) {
-            animation-delay: 0.3s;
-        }
-
-        .hexagon-item:nth-child(4) {
-            animation-delay: 0.4s;
-        }
-
-        .hexagon-item:nth-child(5) {
-            animation-delay: 0.5s;
-        }
-
-        .hexagon-item:nth-child(6) {
-            animation-delay: 0.6s;
-        }
+            .domain-chip.active .chip-count {
+                /* Keep same requested look when the chip is active */
+                background: #0f766d48;
+                color: #0f766e;
+                opacity: 0.9;
+                border-color: rgba(15, 118, 110, 0.06);
+            }
 
         .hexagon-item:nth-child(7) {
             animation-delay: 0.7s;
@@ -1681,22 +1697,59 @@
             align-items: center;
             justify-content: center;
             margin-left: 8px;
-            min-width: 20px;
+            /* Force a perfect circular badge */
+            width: 20px;
             height: 20px;
-            padding: 0 6px;
-            background: rgba(255, 255, 255, 0.95);
+            padding: 0;
+            background:  #0f766d48;
             color: #0f766e;
-            border-radius: 999px;
+            border-radius: 50%;
             font-size: 0.65rem;
             font-weight: 800;
             box-shadow: 0 2px 6px rgba(2, 6, 23, 0.06);
             border: 1px solid rgba(15, 118, 110, 0.08);
+            line-height: 1;
+            text-align: center;
+            box-sizing: border-box;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            opacity: 0.9;
         }
 
         .domain-chip.active .chip-count {
-            background: rgba(255, 255, 255, 0.14);
-            color: white;
-            border-color: rgba(255, 255, 255, 0.06);
+            /* Match the endpoint tag chip count color when active */
+            background: #0f766d48;
+            color: #0f766e;
+            opacity: 0.9;
+            border-color: rgba(15, 118, 110, 0.06);
+        }
+
+        /* Higher-specificity override: ensure domain and endpoint-tag chip counts
+           always use the requested teal styling even if external/injected styles
+           (e.g., Swagger UI or inline rules) try to override them. This is a
+           minimal, targeted fallback and uses !important to guarantee application. */
+        .filter-panel .panel-filters .domain-chip .chip-count,
+        #panelDomainFilters .domain-chip .chip-count,
+        .endpoint-tag-chip.domain-chip .chip-count,
+        #endpointTagFilters .endpoint-tag-chip .chip-count,
+        .domain-chip .chip-count {
+            background: #0f766d48 !important;
+            color: #0f766e !important;
+            opacity: 0.9 !important;
+            border-color: rgba(15, 118, 110, 0.06) !important;
+        }
+
+        /* When a chip is active/selected, make the number text white for contrast.
+           Apply to domain chips, endpoint tag chips, and method chips. Use
+           !important to guarantee the visual change overrides prior rules. */
+        .filter-panel .panel-filters .domain-chip.active .chip-count,
+        #panelDomainFilters .domain-chip.active .chip-count,
+        .endpoint-tag-chip.domain-chip.active .chip-count,
+        #endpointTagFilters .endpoint-tag-chip.active .chip-count,
+        .domain-chip.active .chip-count,
+        .method-chip.active .chip-count,
+        .endpoint-method-chip.active .chip-count {
+            color: #ffffff !important;
         }
 
         /* HTTP Method Chips - Floating Style */
@@ -1857,21 +1910,91 @@
             box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4);
         }
 
+        /* Base styling for method / HTTP count badges.
+           We provide a dedicated selector `.http-chip-count` so these
+           badges do not get affected by domain tag styles. */
         .method-chip .chip-count,
-        .endpoint-method-chip .chip-count {
-            display: inline-block;
+        .endpoint-method-chip .chip-count,
+        .method-chip .http-chip-count,
+        .endpoint-method-chip .http-chip-count,
+        .http-chip-count {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             margin-left: 5px;
-            padding: 1px 5px;
+            /* Make method/count badges circular to match domain style */
+            width: 18px;
+            height: 18px;
+            padding: 0;
             background: rgba(255, 255, 255, 0.3);
-            border-radius: 8px;
-            font-size: 0.65rem;
+            border-radius: 50%;
+            font-size: 0.62rem;
             font-weight: 700;
             pointer-events: none;
+            line-height: 1;
+            text-align: center;
+            box-sizing: border-box;
+            overflow: hidden;
         }
 
         .method-chip.active .chip-count,
-        .endpoint-method-chip.active .chip-count {
+        .endpoint-method-chip.active .chip-count,
+        .method-chip.active .http-chip-count,
+        .endpoint-method-chip.active .http-chip-count,
+        .http-chip-count.active {
             background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Per-method colored variants for the http-chip-count (and legacy
+           chip-count selectors for backward compatibility). */
+        .method-chip[data-method="get"] .chip-count,
+        .endpoint-method-chip[data-method="get"] .chip-count,
+        .method-chip[data-method="get"] .http-chip-count,
+        .endpoint-method-chip[data-method="get"] .http-chip-count,
+        .http-chip-count[data-method="get"] {
+            background: rgba(34, 197, 94, 0.35) !important;
+            color: #ffffff !important;
+            border-color: rgba(34, 197, 94, 0.35) !important;
+        }
+
+        .method-chip[data-method="post"] .chip-count,
+        .endpoint-method-chip[data-method="post"] .chip-count,
+        .method-chip[data-method="post"] .http-chip-count,
+        .endpoint-method-chip[data-method="post"] .http-chip-count,
+        .http-chip-count[data-method="post"] {
+            background: rgba(59, 130, 246, 0.35) !important;
+            color: #ffffff !important;
+            border-color: rgba(59, 130, 246, 0.35) !important;
+        }
+
+        .method-chip[data-method="put"] .chip-count,
+        .endpoint-method-chip[data-method="put"] .chip-count,
+        .method-chip[data-method="put"] .http-chip-count,
+        .endpoint-method-chip[data-method="put"] .http-chip-count,
+        .http-chip-count[data-method="put"] {
+            background: rgba(245, 158, 11, 0.35) !important;
+            color: #ffffff !important;
+            border-color: rgba(245, 158, 11, 0.35) !important;
+        }
+
+        .method-chip[data-method="patch"] .chip-count,
+        .endpoint-method-chip[data-method="patch"] .chip-count,
+        .method-chip[data-method="patch"] .http-chip-count,
+        .endpoint-method-chip[data-method="patch"] .http-chip-count,
+        .http-chip-count[data-method="patch"] {
+            background: rgba(168, 85, 247, 0.35) !important;
+            color: #ffffff !important;
+            border-color: rgba(168, 85, 247, 0.35) !important;
+        }
+
+        .method-chip[data-method="delete"] .chip-count,
+        .endpoint-method-chip[data-method="delete"] .chip-count,
+        .method-chip[data-method="delete"] .http-chip-count,
+        .endpoint-method-chip[data-method="delete"] .http-chip-count,
+        .http-chip-count[data-method="delete"] {
+            background: rgba(239, 68, 68, 0.35) !important;
+            color: #ffffff !important;
+            border-color: rgba(239, 68, 68, 0.35) !important;
         }
 
         /* Smooth transitions for filtered hexagons */
@@ -3332,11 +3455,36 @@
                 const swaggerElEarly = document.getElementById('swagger-ui');
                 const swaggerVisibleEarly = swaggerElEarly && swaggerElEarly.classList.contains('show');
                 if (window.filterNotchInstance && swaggerVisibleEarly) {
+                    // Build method items and tag items so the floating panel can show both groups
+                    const methodItems = Object.keys(methodCounts).sort().map(m => ({ key: m, count: methodCounts[m], kind: 'method' }));
+                    const tagCounts = {};
+                    // Build tagCounts from currentApiEndpoints
+                    currentApiEndpoints.forEach(ep => {
+                        if (Array.isArray(ep.tags)) {
+                            ep.tags.forEach(t => {
+                                const tg = String(t || '').trim();
+                                if (!tg) return;
+                                tagCounts[tg] = (tagCounts[tg] || 0) + 1;
+                            });
+                        }
+                    });
+                    const tagItems = Object.keys(tagCounts).sort().map(t => ({ key: t, count: tagCounts[t], kind: 'tag' }));
+
+                    // Also populate legacy tag filters UI if present
+                    try { if (Object.keys(tagCounts).length > 0) generateEndpointTagFilters(tagCounts); } catch (e) { }
+
                     window.filterNotchInstance.setMode('endpoint', {
-                        getItems: () => Object.keys(methodCounts).sort().map(m => ({ key: m, count: methodCounts[m] })),
-                        onToggle: (methodKey) => {
-                            const normalized = methodKey.toLowerCase();
-                            toggleEndpointMethodFilter(normalized);
+                        getItems: () => ([...methodItems, ...tagItems]),
+                        // onToggle will receive (key, kind) from the panel click handler
+                        onToggle: (key, kind) => {
+                            try {
+                                if (kind === 'tag') {
+                                    toggleEndpointTagFilter(key);
+                                } else {
+                                    const normalized = String(key || '').toLowerCase();
+                                    toggleEndpointMethodFilter(normalized);
+                                }
+                            } catch (e) { /* ignore */ }
                         },
                         onSearch: (query) => {
                             const searchInput = document.getElementById('endpointSearch');
@@ -3348,14 +3496,20 @@
                             applyEndpointFilters();
                         },
                         clearCallback: () => {
+                            // Clear both HTTP method filters and tag filters, plus the search input.
                             activeEndpointMethods.clear();
+                            activeEndpointTags.clear();
                             updateEndpointMethodFilterUI();
+                            updateEndpointTagFilterUI();
+
                             const si = document.getElementById('endpointSearch');
                             if (si) si.value = '';
                             const panelInput = window.filterNotchInstance && window.filterNotchInstance.panel
                                 ? window.filterNotchInstance.panel.querySelector('.panel-search-row input')
                                 : null;
                             if (panelInput) panelInput.value = '';
+
+                            // Re-apply endpoint filters to update the UI and counters
                             applyEndpointFilters();
                         }
                     });
@@ -3404,7 +3558,9 @@
                 const chip = document.createElement('div');
                 chip.className = 'endpoint-method-chip';
                 chip.dataset.method = method;
-                chip.innerHTML = `${method.toUpperCase()} <span class="chip-count">${count}</span>`;
+                // Use dedicated class for HTTP method count so it doesn't inherit
+                // domain tag styles. We avoid reusing the generic 'chip-count'.
+                chip.innerHTML = `${method.toUpperCase()} <span class="http-chip-count" data-method="${method}">${count}</span>`;
 
                 // Use a more robust click handler
                 chip.onclick = function (event) {
@@ -3419,6 +3575,47 @@
             });
 
 
+        }
+
+        // Generate endpoint tag filters for legacy container (if present)
+        function generateEndpointTagFilters(tagCounts) {
+            const filterContainer = document.getElementById('endpointTagFilters');
+            if (!filterContainer) return;
+
+            filterContainer.innerHTML = '';
+
+            Object.keys(tagCounts).sort().forEach(tag => {
+                const count = tagCounts[tag];
+                const chip = document.createElement('div');
+                chip.className = 'endpoint-tag-chip domain-chip';
+                chip.dataset.tag = tag;
+                chip.innerHTML = `${tag} <span class="chip-count">${count}</span>`;
+
+                chip.onclick = function (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    toggleEndpointTagFilter(tag);
+                };
+
+                chip.title = `Filter by tag: ${tag} (${count})`;
+                filterContainer.appendChild(chip);
+            });
+        }
+
+        // Toggle endpoint tag filtering (keeps a separate set on activeEndpointTags)
+        const activeEndpointTags = new Set();
+        function toggleEndpointTagFilter(tag) {
+            if (activeEndpointTags.has(tag)) activeEndpointTags.delete(tag); else activeEndpointTags.add(tag);
+            updateEndpointTagFilterUI();
+            applyEndpointFilters();
+        }
+
+        function updateEndpointTagFilterUI() {
+            const chips = document.querySelectorAll('.endpoint-tag-chip, .endpoint-chip[data-kind="tag"]');
+            chips.forEach(chip => {
+                const tag = chip.dataset.tag || chip.dataset.value;
+                if (tag && activeEndpointTags.has(tag)) chip.classList.add('active'); else chip.classList.remove('active');
+            });
         }
 
         function setupEndpointSearch() {
@@ -3909,16 +4106,63 @@
 
                 container.innerHTML = '';
 
-                // If endpoint mode, show a search input at top
+                // populate chips using getItems
+                const items = (this.config.getItems && typeof this.config.getItems === 'function') ? this.config.getItems() : [];
+                // items can be array of strings or objects { key, count, kind }
                 if (this.mode === 'endpoint') {
-                    // create search field inside panel
+                    // Group items by kind for explicit ordering: methods -> search -> tags
+                    const methodItems = items.filter(it => (typeof it === 'object' && it && it.kind === 'method') || (typeof it === 'string' && String(it).match(/^(get|post|put|patch|delete|options|head)$/i)));
+                    const tagItems = items.filter(it => (typeof it === 'object' && it && it.kind === 'tag'));
+
+                    // Render Methods section
+                    if (methodItems.length > 0) {
+                        const header = document.createElement('div');
+                        header.className = 'panel-section-header';
+                        header.textContent = 'Methods';
+                        header.style.fontSize = '0.8rem';
+                        header.style.fontWeight = '700';
+                        header.style.margin = '8px 4px 4px 4px';
+                        header.style.color = '#374151';
+                        container.appendChild(header);
+
+                        methodItems.forEach(it => {
+                            const key = typeof it === 'string' ? it : it.key;
+                            const count = (typeof it === 'string') ? null : (Object.prototype.hasOwnProperty.call(it, 'count') ? it.count : null);
+                            const kind = 'method';
+
+                            const chip = document.createElement('div');
+                            chip.className = 'domain-chip endpoint-chip endpoint-method-chip';
+                            chip.dataset.value = key;
+                            chip.dataset.kind = kind;
+                            chip.dataset.method = (typeof key === 'string') ? key.toLowerCase() : '';
+                            chip.setAttribute('role', 'button');
+                            chip.tabIndex = 0;
+                            chip.appendChild(document.createTextNode((typeof key === 'string') ? key.toUpperCase() : String(key)));
+                            if (count !== null) {
+                                const span = document.createElement('span');
+                                // mark method counts with http-chip-count so they get
+                                // method-specific colors and don't pick up domain rules
+                                span.className = 'http-chip-count';
+                                span.dataset.method = chip.dataset.method || '';
+                                span.textContent = count;
+                                chip.appendChild(document.createTextNode(' '));
+                                chip.appendChild(span);
+                            }
+                            chip.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); chip.click(); } });
+                            chip.addEventListener('click', (e) => { e.stopPropagation(); try { if (this.config.onToggle) this.config.onToggle(key, kind); } catch (err) { } });
+                            try { if (activeEndpointMethods && activeEndpointMethods.has && activeEndpointMethods.has((key || '').toLowerCase())) chip.classList.add('active'); } catch (e) { }
+                            container.appendChild(chip);
+                        });
+                    }
+
+                    // Insert search input between methods and tags
                     let searchRow = this.panel.querySelector('.panel-search-row');
                     if (!searchRow) {
                         searchRow = document.createElement('div');
                         searchRow.className = 'panel-search-row';
                         searchRow.style.display = 'flex';
                         searchRow.style.width = '100%';
-                        searchRow.style.marginBottom = '8px';
+                        searchRow.style.margin = '8px 0';
                         const input = document.createElement('input');
                         input.type = 'search';
                         input.placeholder = 'Search endpoints...';
@@ -3926,85 +4170,95 @@
                         input.style.padding = '8px 10px';
                         input.style.borderRadius = '8px';
                         input.style.border = '1px solid rgba(226,232,240,0.8)';
-                        input.addEventListener('input', (e) => {
-                            if (this.config.onSearch) this.config.onSearch(e.target.value);
-                        });
+                        input.addEventListener('input', (e) => { if (this.config.onSearch) this.config.onSearch(e.target.value); });
                         searchRow.appendChild(input);
-                        this.panel.insertBefore(searchRow, container);
+                    }
+                    container.appendChild(searchRow);
+
+                    // Render Tags section
+                    if (tagItems.length > 0) {
+                        const header2 = document.createElement('div');
+                        header2.className = 'panel-section-header';
+                        header2.textContent = 'Tags';
+                        header2.style.fontSize = '0.8rem';
+                        header2.style.fontWeight = '700';
+                        header2.style.margin = '8px 4px 4px 4px';
+                        header2.style.color = '#374151';
+                        container.appendChild(header2);
+
+                        tagItems.forEach(it => {
+                            const key = typeof it === 'string' ? it : it.key;
+                            const count = (typeof it === 'string') ? null : (Object.prototype.hasOwnProperty.call(it, 'count') ? it.count : null);
+                            const kind = 'tag';
+
+                            const chip = document.createElement('div');
+                            chip.className = 'domain-chip endpoint-chip endpoint-tag-chip';
+                            chip.dataset.value = key;
+                            chip.dataset.kind = kind;
+                            chip.setAttribute('role', 'button');
+                            chip.tabIndex = 0;
+                            chip.appendChild(document.createTextNode(String(key)));
+                            if (count !== null) {
+                                const span = document.createElement('span');
+                                span.className = 'chip-count';
+                                span.textContent = count;
+                                chip.appendChild(document.createTextNode(' '));
+                                chip.appendChild(span);
+                            }
+                            chip.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); chip.click(); } });
+                            chip.addEventListener('click', (e) => { e.stopPropagation(); try { if (this.config.onToggle) this.config.onToggle(key, kind); } catch (err) { } });
+                            try { if (activeEndpointTags && activeEndpointTags.has && activeEndpointTags.has(key)) chip.classList.add('active'); } catch (e) { }
+                            container.appendChild(chip);
+                        });
                     }
                 } else {
-                    // remove any existing panel-search-row
-                    const old = this.panel.querySelector('.panel-search-row');
-                    if (old) old.remove();
-                }
+                    // Domain mode (unchanged)
+                    // items can be array of strings or objects { key, count }
+                    items.forEach(it => {
+                        const key = typeof it === 'string' ? it : it.key;
+                        const count = (typeof it === 'string') ? null : (Object.prototype.hasOwnProperty.call(it, 'count') ? it.count : null);
 
-                // populate chips using getItems
-                const items = (this.config.getItems && typeof this.config.getItems === 'function') ? this.config.getItems() : [];
-                // items can be array of strings or objects { key, count }
-                items.forEach(it => {
-                    const key = typeof it === 'string' ? it : it.key;
-                    const count = (typeof it === 'string') ? null : (Object.prototype.hasOwnProperty.call(it, 'count') ? it.count : null);
-
-                    const chip = document.createElement('div');
-                    chip.className = this.mode === 'endpoint' ? 'domain-chip endpoint-chip' : 'domain-chip';
-                    // Keep a generic value attribute and a semantic one for domain mode
-                    chip.dataset.value = key;
-                    chip.setAttribute('role', 'button');
-                    chip.tabIndex = 0;
-
-                    if (this.mode === 'endpoint') {
-                        // for endpoints: expose method in dataset.method (lowercase) and show uppercase label
-                        chip.dataset.method = (typeof key === 'string') ? key.toLowerCase() : '';
-                        const label = (typeof key === 'string') ? key.toUpperCase() : key;
-                        const textNode = document.createTextNode(label);
-                        chip.appendChild(textNode);
-                        if (count !== null) {
-                            const span = document.createElement('span');
-                            span.className = 'chip-count';
-                            span.textContent = count;
-                            chip.appendChild(document.createTextNode(' '));
-                            chip.appendChild(span);
-                        }
-                    } else {
-                        // for domains: keep dataset.domain so other code can find it
+                        const chip = document.createElement('div');
+                        chip.className = 'domain-chip';
                         chip.dataset.domain = key;
-                        const textNode = document.createTextNode(key);
-                        chip.appendChild(textNode);
-                        if (count !== null) {
-                            const span = document.createElement('span');
-                            span.className = 'chip-count';
-                            span.textContent = count;
-                            // Ensure visible spacing
-                            span.style.marginLeft = '8px';
-                            chip.appendChild(span);
-                        }
-                    }
+                        const labelSpan = document.createElement('span');
+                        labelSpan.style.display = 'inline-block';
+                        labelSpan.style.verticalAlign = 'middle';
+                        labelSpan.textContent = key;
 
-                    // Keyboard activation
-                    chip.addEventListener('keydown', (e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault();
-                            chip.click();
-                        }
+                        const countSpan = document.createElement('span');
+                        countSpan.className = 'chip-count';
+                        countSpan.style.minWidth = '20px';
+                        countSpan.style.height = '20px';
+                        countSpan.style.padding = '0 7px';
+                        countSpan.style.lineHeight = '20px';
+                        countSpan.style.display = 'inline-flex';
+                        countSpan.style.alignItems = 'center';
+                        countSpan.style.justifyContent = 'center';
+                        countSpan.style.borderRadius = '50%';
+                        countSpan.style.background = '#fff';
+                        countSpan.style.color = '#0f766e';
+                        countSpan.style.fontSize = '0.75rem';
+                        countSpan.style.fontWeight = '800';
+                        countSpan.style.boxShadow = '0 2px 6px rgba(2,6,23,0.12)';
+                        countSpan.style.marginLeft = '8px';
+                        countSpan.style.border = '2px solid #0f766e';
+                        countSpan.textContent = count;
+
+                        chip.appendChild(labelSpan);
+                        chip.appendChild(countSpan);
+
+                        chip.setAttribute('role', 'button');
+                        chip.tabIndex = 0;
+                        chip.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.click(); } });
+
+                        chip.addEventListener('click', function () { toggleDomainFilter(key); });
+
+                        try { if (activeDomains && activeDomains.has && activeDomains.has(key)) chip.classList.add('active'); } catch (e) { }
+
+                        container.appendChild(chip);
                     });
-
-                    chip.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        if (this.config.onToggle) this.config.onToggle(key);
-                    });
-
-                    // Apply active state immediately if the domain/method is currently active
-                    try {
-                        if (this.mode === 'domain' && activeDomains && activeDomains.has && activeDomains.has(key)) {
-                            chip.classList.add('active');
-                        }
-                        if (this.mode === 'endpoint' && activeEndpointMethods && activeEndpointMethods.has && activeEndpointMethods.has((key || '').toLowerCase())) {
-                            chip.classList.add('active');
-                        }
-                    } catch (e) { /* ignore */ }
-
-                    container.appendChild(chip);
-                });
+                }
             }
 
             open() {
@@ -4045,10 +4299,52 @@
                     this.panel.style.clipPath = `circle(${diag}px at ${localX}px ${localY}px)`;
                     this.panel.style.transform = 'scale(1)';
                     this.panel.style.opacity = '1';
+                    // After the opening transition completes, remove the clip-path so
+                    // the panel can expand/scroll freely without being visually clipped
+                    // by the reveal circle. Use a transitionend handler with a
+                    // fallback timeout to ensure it always runs.
+                    try {
+                        // remove any previous open handler/fallback
+                        if (this._onOpenEndListener) {
+                            this.panel.removeEventListener('transitionend', this._onOpenEndListener);
+                            this._onOpenEndListener = null;
+                        }
+                        if (this._openFinalizeTimer) { clearTimeout(this._openFinalizeTimer); this._openFinalizeTimer = null; }
+
+                        const onEndOpen = (e) => {
+                            if (e.propertyName === 'clip-path' || e.propertyName === 'opacity') {
+                                try { this.panel.style.clipPath = 'none'; } catch (err) { }
+                                try { this.panel.removeEventListener('transitionend', onEndOpen); } catch (err) { }
+                                this._onOpenEndListener = null;
+                                if (this._openFinalizeTimer) { clearTimeout(this._openFinalizeTimer); this._openFinalizeTimer = null; }
+                            }
+                        };
+
+                        this._onOpenEndListener = onEndOpen;
+                        this.panel.addEventListener('transitionend', onEndOpen);
+
+                        // safety fallback in case transitionend doesn't fire
+                        this._openFinalizeTimer = setTimeout(() => {
+                            try { this.panel.style.clipPath = 'none'; } catch (err) { }
+                            try { if (this._onOpenEndListener) this.panel.removeEventListener('transitionend', this._onOpenEndListener); } catch (err) { }
+                            this._onOpenEndListener = null;
+                            if (this._openFinalizeTimer) { clearTimeout(this._openFinalizeTimer); this._openFinalizeTimer = null; }
+                        }, 700);
+                    } catch (err) { /* ignore */ }
                 });
             }
 
             close() {
+                // If we had an open finalize pending, cancel it so we don't remove
+                // the clip-path unexpectedly while closing.
+                try {
+                    if (this._onOpenEndListener) {
+                        try { this.panel.removeEventListener('transitionend', this._onOpenEndListener); } catch (e) { }
+                        this._onOpenEndListener = null;
+                    }
+                    if (this._openFinalizeTimer) { clearTimeout(this._openFinalizeTimer); this._openFinalizeTimer = null; }
+                } catch (e) { }
+
                 const rect = this.notch.getBoundingClientRect();
                 const panelRect = this.panel.getBoundingClientRect();
                 const localX = Math.round(rect.left + rect.width / 2 - panelRect.left);
@@ -4180,8 +4476,8 @@
 
 
         function updateEndpointMethodFilterUI() {
-            // Toggle active state for both legacy method chips and floating panel chips
-            const chips = document.querySelectorAll('.endpoint-method-chip, .endpoint-chip');
+            // Toggle active state for both legacy method chips and floating panel method chips
+            const chips = document.querySelectorAll('.endpoint-method-chip, .endpoint-chip[data-kind="method"]');
 
             chips.forEach(chip => {
                 const method = (chip.dataset.method || chip.dataset.value || '').toLowerCase();
@@ -4246,14 +4542,29 @@
                 // Check method filter
                 const matchesMethod = activeEndpointMethods.size === 0 || activeEndpointMethods.has(method);
 
+                // Check tag filter: try to resolve tags from currentApiEndpoints by matching method+path
+                let matchesTag = true;
+                try {
+                    if (activeEndpointTags.size > 0 && Array.isArray(currentApiEndpoints)) {
+                        const opPathText = pathElement ? pathElement.textContent.trim().toLowerCase() : '';
+                        const epObj = currentApiEndpoints.find(ep => (ep.method || '').toLowerCase() === method && (String(ep.path || '').trim().toLowerCase() === opPathText));
+                        if (epObj && Array.isArray(epObj.tags) && epObj.tags.length > 0) {
+                            matchesTag = epObj.tags.some(t => activeEndpointTags.has(String(t)));
+                        } else {
+                            // If we can't determine tags for this op, be permissive and allow it
+                            matchesTag = true;
+                        }
+                    }
+                } catch (e) { matchesTag = true; }
+
                 // Check search filter
                 const matchesSearch = !searchQuery ||
                     path.includes(searchQuery) ||
                     summary.includes(searchQuery) ||
                     method.includes(searchQuery);
 
-                // Show/hide operation
-                const shouldShow = matchesMethod && matchesSearch;
+                // Show/hide operation (also honor tag filters)
+                const shouldShow = matchesMethod && matchesSearch && matchesTag;
                 operation.style.display = shouldShow ? 'block' : 'none';
 
                 // Add visual feedback for filtered state
@@ -4269,6 +4580,32 @@
             // Update results count
             const visibleCount = document.querySelectorAll('.swagger-ui .opblock[style*="display: block"], .swagger-ui .opblock:not([style*="display: none"])').length;
             updateEndpointCounter(visibleCount);
+
+            // If user filtered by tag or performed a search, scroll to the first
+            // visible operation so the user sees the matched result immediately.
+            try {
+                const shouldScroll = Boolean(searchQuery && searchQuery.length) || (activeEndpointTags && activeEndpointTags.size > 0);
+                if (shouldScroll) {
+                    // Delay slightly to ensure layout updates are applied
+                    setTimeout(() => {
+                        const ops = document.querySelectorAll('.swagger-ui .opblock');
+                        for (let i = 0; i < ops.length; i++) {
+                            const op = ops[i];
+                            // check visibility
+                            const cs = window.getComputedStyle(op);
+                            if (cs.display !== 'none' && cs.visibility !== 'hidden' && op.offsetParent !== null) {
+                                try {
+                                    op.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                    // focus the op summary for keyboard users (don't force scroll)
+                                    const summ = op.querySelector('.opblock-summary');
+                                    if (summ && summ.focus) summ.focus({ preventScroll: true });
+                                } catch (e) { /* ignore scrolling errors */ }
+                                break;
+                            }
+                        }
+                    }, 80);
+                }
+            } catch (e) { /* ignore scroll helper errors */ }
         }
 
         function updateEndpointCounter(visibleCount) {
