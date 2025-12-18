@@ -406,15 +406,17 @@
             box-shadow: var(--shadow-elevated);
         }
 
-        /* Header styles */
+        /* Header styles - Enhanced Liquid Glass Effect */
         header {
-            background: var(--primary-gradient);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: linear-gradient(135deg, rgba(15, 118, 110, 0.75) 0%, rgba(17, 94, 89, 0.75) 100%);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.18);
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 8px 32px rgba(15, 118, 110, 0.2);
+            box-shadow: 0 8px 32px rgba(15, 118, 110, 0.3), 
+                        0 2px 8px rgba(255, 255, 255, 0.1) inset;
             animation: slideInDown 0.8s ease-out;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: visible;
@@ -439,12 +441,14 @@
             opacity: 1;
         }
 
-        /* Scrolled state - compact and elevated */
+        /* Scrolled state - Enhanced liquid glass with more blur */
         header.scrolled {
-            background: linear-gradient(135deg, rgba(15, 118, 110, 0.98) 0%, rgba(17, 94, 89, 0.98) 100%);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            box-shadow: 0 12px 40px rgba(15, 118, 110, 0.35);
+            background: linear-gradient(135deg, rgba(15, 118, 110, 0.85) 0%, rgba(17, 94, 89, 0.85) 100%);
+            backdrop-filter: blur(30px) saturate(200%);
+            -webkit-backdrop-filter: blur(30px) saturate(200%);
+            box-shadow: 0 12px 40px rgba(15, 118, 110, 0.4), 
+                        0 2px 12px rgba(255, 255, 255, 0.15) inset,
+                        0 -1px 0 rgba(255, 255, 255, 0.1) inset;
         }
 
         .header-content {
@@ -1115,48 +1119,45 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 40px 20px;
+            padding: 10px 40px 40px 40px;
             background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             min-height: calc(100vh - 120px);
         }
 
         .hexagon-grid {
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
-            gap: 20px;
             width: 100%;
             max-width: 100vw;
             margin: 0 auto;
-            position: relative;
-            padding: 0 40px;
+            padding: 40px;
+            min-height: 500px;
         }
 
         .hexagon-row {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            width: 100%;
-            flex-wrap: wrap;
+            align-items: center;
+            gap: 14px; /* Horizontal gap between hexagons */
+            margin-bottom: -45px; /* Vertical overlap for perfect honeycomb */
+            position: relative; /* Allow margin-left to work with centering */
         }
 
-        .hexagon-row:nth-child(even) {
-            margin-left: 110px;
+        .hexagon-row:last-child {
+            margin-bottom: 0; /* No overlap on last row */
         }
 
         .hexagon-item {
             position: relative;
-            width: 200px;
-            height: 173.2px;
-            margin: 20px 0;
+            width: 220px;
+            height: 253px; /* Proper height for larger hexagon */
             cursor: pointer;
-            transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-                transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-                filter 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-                box-shadow 0.3s ease;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             animation: fadeInScale 0.6s ease-out;
             animation-fill-mode: both;
-            will-change: opacity, transform, filter;
+            transform-origin: center center; /* Scale from center for equal growth */
         }
 
         /* Search filtering animations */
@@ -1249,112 +1250,131 @@
 
         .hexagon-shape {
             position: relative;
-            width: 200px;
-            height: 173.2px;
+            width: 220px;
+            height: 253px;
             background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-            transform: rotate(30deg);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            overflow: hidden;
-        }
-
-        .hexagon-shape::before,
-        .hexagon-shape::after {
-            content: '';
-            position: absolute;
-            width: 200px;
-            height: 173.2px;
-            background: inherit;
-            border-radius: inherit;
-            box-shadow: inherit;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08),
+                        0 2px 8px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: visible;
+            transform-origin: center center;
         }
 
         .hexagon-shape::before {
-            transform: rotate(60deg);
-        }
-
-        .hexagon-shape::after {
-            transform: rotate(-60deg);
+            content: '';
+            position: absolute;
+            inset: 3px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            z-index: 1;
         }
 
         .hexagon-content {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) rotate(-30deg);
+            transform: translate(-50%, -50%);
             text-align: center;
             z-index: 10;
-            width: 160px;
-            height: 160px;
+            width: 180px;
+            height: 200px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 30px 20px;
         }
 
         .hexagon-icon {
-            font-size: 2.5rem;
-            margin-bottom: 12px;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            transition: all 0.3s ease;
+            font-size: 2rem;
+            color: #0f766e;
+            opacity: 0.6;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+        }
+
+        .hexagon-icon i {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .hexagon-title {
-            font-size: 0.9rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: #1e293b;
-            margin-bottom: 4px;
-            line-height: 1.2;
-            max-height: 2.4em;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            line-clamp: 2;
-            -webkit-box-orient: vertical;
+            line-height: 1.3;
+            white-space: nowrap;
+            max-width: 100%;
+            overflow: visible;
+            transform-origin: center;
+            text-align: center;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .domain-badge {
             position: absolute;
-            top: 11px;
-            right: -8px;
-            padding: 6px 12px 6px 10px;
+            top: 12.5%;
+            left: 75%;
+            transform: translate(-50%, -50%) rotate(30deg);
+            padding: 5px 10px;
             font-size: 0.65rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.8px;
-            border: none;
+            border-radius: 4px 8px 8px 4px;
             transition: all 0.3s ease;
             z-index: 15;
-            /* reduced shadow for crisper appearance */
-            box-shadow: 0 8px 20px rgba(2, 6, 23, 0.09);
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 8px 100%, 0 calc(100% - 8px));
-            transform: rotate(30deg);
-            transform-origin: center;
-            /* reduce the blur effect for crisper text */
-            backdrop-filter: blur(2px);
-            -webkit-backdrop-filter: blur(2px);
-            min-width: 60px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), inset -1px 0 2px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             text-align: center;
-            text-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+            white-space: nowrap;
+            width: 70px;
+            max-width: 70px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            opacity: 0.85;
+        }
+
+        .hexagon-item:hover .hexagon-shape {
+            transform: scale(1.05);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15),
+                        0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .hexagon-item.active .hexagon-shape {
+            background: linear-gradient(135deg, #d1fae5 0%, #dcfce7 100%);
+            filter: drop-shadow(0 0 0 rgba(16, 185, 129, 0.8)) 
+                    drop-shadow(0 0 8px rgba(16, 185, 129, 0.6))
+                    drop-shadow(0 0 12px rgba(16, 185, 129, 0.4));
+            box-shadow: none !important;
+        }
+
+        .hexagon-item.active .hexagon-shape::before {
+            background: linear-gradient(135deg, #d1fae5 0%, #dcfce7 100%);
         }
 
         .domain-badge::before {
             content: '';
             position: absolute;
-            bottom: -6px;
-            left: 0;
+            top: 50%;
+            left: -6px;
+            transform: translateY(-50%);
             width: 0;
             height: 0;
-            border-left: 8px solid transparent;
-            border-top: 6px solid currentColor;
-            opacity: 0.7;
-            filter: brightness(0.7);
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-right: 6px solid currentColor;
+            opacity: 0.8;
+            filter: brightness(0.8);
         }
 
         .domain-badge::after {
@@ -1374,8 +1394,9 @@
                 0 12px 35px rgba(0, 0, 0, 0.25),
                 0 8px 20px rgba(0, 0, 0, 0.15),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
-            transform: rotate(30deg) scale(1.08);
+            transform: translate(-50%, -50%) rotate(30deg) scale(1.15);
             filter: brightness(1.1) saturate(1.1);
+            opacity: 1;
         }
 
         .hexagon-item.active .domain-badge {
@@ -2024,19 +2045,22 @@
 
 
 
-        .hexagon-item:hover {
-            transform: translateY(-10px) scale(1.05);
+        .hexagon-item:hover,
+        .hexagon-item.hexagon-hovered {
+            transform: translate(0, 0) scale(1.05) !important;
+            transform-origin: center center !important;
+            z-index: 100 !important;
+            position: relative;
         }
 
         .hexagon-item:hover .hexagon-shape {
             background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
             box-shadow: 0 20px 40px rgba(15, 118, 110, 0.2);
-            transform: rotate(30deg) scale(1.02);
         }
 
         .hexagon-item:hover .hexagon-icon {
-            transform: scale(1.1);
-            filter: drop-shadow(0 4px 8px rgba(15, 118, 110, 0.3));
+            opacity: 1;
+            transform: translateY(-3px) scale(1.1);
         }
 
         .hexagon-item:hover .hexagon-title {
@@ -2045,21 +2069,23 @@
 
         /* Active state for selected hexagon */
         .hexagon-item.active .hexagon-shape {
-            background: var(--primary-gradient);
-            box-shadow: 0 15px 35px rgba(15, 118, 110, 0.4);
+            background: linear-gradient(135deg, #d1fae5 0%, #dcfce7 100%);
+            filter: drop-shadow(0 0 0 rgba(16, 185, 129, 0.8)) 
+                    drop-shadow(0 0 8px rgba(16, 185, 129, 0.6))
+                    drop-shadow(0 0 12px rgba(16, 185, 129, 0.4));
         }
 
         .hexagon-item.active .hexagon-content {
-            color: white;
+            color: #1e293b;
         }
 
         .hexagon-item.active .hexagon-title {
-            color: white;
+            color: #1e293b;
         }
 
         .hexagon-item.active .hexagon-icon {
-            -webkit-text-fill-color: white;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+            opacity: 1;
+            color: #0f766e;
         }
 
         /* Landing page title */
@@ -2201,86 +2227,69 @@
 
         /* Responsive hexagon layout */
         @media (max-width: 1600px) and (min-width: 1201px) {
-            .hexagon-row:nth-child(even) {
-                margin-left: 90px;
-            }
+            /* Use computed transform via variables; no margin-left */
+            .hexagon-grid { --hex-width: 200px; --hex-gap: 5px; --offset-tweak: 4px; }
         }
 
         @media (max-width: 1200px) {
-            .hexagon-row:nth-child(even) {
-                margin-left: 80px;
-            }
+            /* 180px hex, 10px gap */
+            .hexagon-grid { --hex-width: 180px; --hex-gap: 10px; --offset-tweak: 4px; }
 
             .hexagon-item {
                 width: 180px;
-                height: 155.9px;
+                height: 207px;
             }
 
             .hexagon-shape {
                 width: 180px;
-                height: 155.9px;
-            }
-
-            .hexagon-shape::before,
-            .hexagon-shape::after {
-                width: 180px;
-                height: 155.9px;
+                height: 207px;
             }
 
             .hexagon-content {
                 width: 140px;
-                height: 140px;
+                height: 160px;
+            }
+
+            .hexagon-title {
+                font-size: 0.9rem;
             }
 
             .hexagon-grid {
-                padding: 0 20px;
+                padding: 30px 20px;
             }
         }
 
         @media (max-width: 768px) {
             .hexagon-grid {
-                padding: 0 10px;
+                padding: 20px 10px;
+                /* 160px hex, 10px gap */
+                --hex-width: 160px; --hex-gap: 10px; --offset-tweak: 4px;
             }
 
             .hexagon-row {
                 justify-content: center;
-                gap: 15px;
-            }
-
-            .hexagon-row:nth-child(even) {
-                margin-left: 50px;
+                gap: 10px;
+                margin: -12px 0; /* Reduced overlap */
             }
 
             .hexagon-item {
                 width: 160px;
-                height: 138.6px;
-                margin: 10px 0;
+                height: 184px;
             }
 
             .hexagon-shape {
                 width: 160px;
-                height: 138.6px;
-            }
-
-            .hexagon-shape::before,
-            .hexagon-shape::after {
-                width: 160px;
-                height: 138.6px;
+                height: 184px;
             }
 
             .hexagon-content {
                 width: 120px;
-                height: 120px;
+                height: 140px;
                 padding: 15px;
             }
 
-            .hexagon-icon {
-                font-size: 2rem;
-                margin-bottom: 8px;
-            }
-
             .hexagon-title {
-                font-size: 0.8rem;
+                font-size: 0.85rem;
             }
 
             .domain-badge {
@@ -2302,31 +2311,24 @@
 
         @media (max-width: 480px) {
             .hexagon-grid {
-                padding: 0 5px;
+                padding: 20px 5px;
+                /* 140px hex, 8px gap */
+                --hex-width: 140px; --hex-gap: 8px; --offset-tweak: 4px;
             }
 
             .hexagon-row {
-                gap: 10px;
-            }
-
-            .hexagon-row:nth-child(even) {
-                margin-left: 30px;
+                gap: 8px;
+                margin: -10px 0; /* Reduced overlap */
             }
 
             .hexagon-item {
                 width: 140px;
-                height: 121.2px;
+                height: 161px;
             }
 
             .hexagon-shape {
                 width: 140px;
-                height: 121.2px;
-            }
-
-            .hexagon-shape::before,
-            .hexagon-shape::after {
-                width: 140px;
-                height: 121.2px;
+                height: 161px;
             }
 
             .hexagon-content {
@@ -2377,30 +2379,30 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 24px;
+            gap: 10px;
             width: 100%;
-            max-width: 1400px;
+            max-width: 100%;
             margin: 0 auto;
             position: relative;
-            padding: 0 32px;
+            padding: 0px 40px 0px 40px;
+            row-gap: 4px;
         }
 
         .api-card {
-            background: linear-gradient(145deg, #ffffff 0%, #fafbfc 50%, #f8fafc 100%);
-            border: 1px solid rgba(226, 232, 240, 0.5);
-            border-radius: 24px;
-            padding: 24px 18px;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.9) 0%, rgba(250, 251, 252, 0.9) 50%, rgba(248, 250, 252, 0.9) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 20px;
+            padding: 16px 12px;
             box-shadow:
                 0 4px 6px -1px rgba(0, 0, 0, 0.1),
                 0 2px 4px -1px rgba(0, 0, 0, 0.06),
-                0 0 0 1px rgba(255, 255, 255, 0.7) inset;
+                0 2px 8px rgba(255, 255, 255, 0.15) inset;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             position: relative;
-            /* allow badges to sit on the card edge (overflow visible) */
             overflow: visible;
-            width: 200px;
-            height: 200px;
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -2408,6 +2410,7 @@
             -webkit-backdrop-filter: blur(12px);
             backdrop-filter: blur(12px);
             margin: 0px 1px;
+            flex-shrink: 0;
             /* Remove animation for instant appearance when filtering */
             opacity: 1;
             transform: scale(1) translateY(0);
@@ -2441,7 +2444,7 @@
         }
 
         .api-card:hover {
-            transform: translateY(-8px) scale(1.02);
+            transform: translateY(-8px) scale(1.08);
             box-shadow:
                 0 20px 25px -5px rgba(0, 0, 0, 0.12),
                 0 10px 10px -5px rgba(0, 0, 0, 0.04),
@@ -2467,50 +2470,61 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 16px;
+            gap: 8px;
             position: relative;
             z-index: 1;
             text-align: center;
             width: 100%;
-            height: 100%;
-            padding: 4px;
+            flex: 1;
+            padding: 8px 4px 4px 4px;
         }
 
         .card-icon {
             width: 72px;
             height: 72px;
-            font-size: 2.2rem;
-            background: var(--primary-gradient);
+            font-size: 2.4rem;
+            background: transparent;
             border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            color: #0f766e;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow:
-                0 8px 16px rgba(15, 118, 110, 0.3),
-                0 0 0 1px rgba(255, 255, 255, 0.1) inset;
             position: relative;
-            overflow: hidden;
-            margin-bottom: 6px;
+            margin: 0;
+            opacity: 0.6;
+            flex-shrink: 0;
+        }
+
+        .card-icon i {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .card-icon::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
-            border-radius: 20px;
+            content: none;
         }
 
         .api-card:hover .card-icon {
-            transform: scale(1.08) rotate(-3deg);
+            opacity: 1;
+            transform: translateY(-4px) scale(1.15);
+        }
+
+        .api-card.active {
+            background: linear-gradient(135deg, #d1fae5 0%, #dcfce7 100%);
             box-shadow:
-                0 16px 32px rgba(15, 118, 110, 0.4),
-                0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+                0 0 0 3px rgba(16, 185, 129, 0.3),
+                0 0 12px rgba(16, 185, 129, 0.4),
+                0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .api-card.active .card-title {
+            color: #1e293b;
+        }
+
+        .api-card.active .card-icon {
+            opacity: 1;
         }
 
         .card-info {
@@ -2524,22 +2538,22 @@
         }
 
         .card-title {
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: #1e293b;
             margin: 0;
-            line-height: 1.2;
-            max-height: 2.4em;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            line-clamp: 2;
-            -webkit-box-orient: vertical;
+            line-height: 1.3;
+            white-space: nowrap;
+            max-width: 100%;
+            overflow: visible;
             text-align: center;
             width: 100%;
             letter-spacing: -0.025em;
             transition: color 0.3s ease;
+            transform-origin: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .card-domain {
@@ -2612,10 +2626,11 @@
         .card-row {
             display: flex;
             justify-content: center;
-            gap: 24px;
+            gap: 14px;
             width: 100%;
-            flex-wrap: wrap;
-            margin-bottom: 16px;
+            flex-wrap: nowrap;
+            margin-bottom: 6px;
+            position: relative;
         }
 
         .api-card:hover .card-title {
@@ -2945,19 +2960,58 @@
                     <i class="fas fa-times clear-search-icon" id="clearSearch" style="display: none;"></i>
                     <div id="autocomplete-list" style="display: none;"></div>
                 </div>
+                
+                <!-- Domain Filter Dropdown (new per manager request) -->
                 <div class="dropdown-container">
-                    <i class="fas fa-server dropdown-icon"></i>
-                    <div id="customDropdown" class="dropdown-button focus-ring hover-lift" tabindex="0">
-                        <span id="dropdownText">Select an API...</span>
+                    <i class="fas fa-layer-group dropdown-icon"></i>
+                    <div id="domainDropdown" class="dropdown-button focus-ring hover-lift" tabindex="0">
+                        <span id="domainDropdownText">All Domains</span>
                     </div>
                     <i class="fas fa-chevron-down dropdown-arrow"></i>
-                    <div id="dropdownList" class="dropdown-list">
-                        <!-- Options will be populated here -->
+                    <div id="domainDropdownList" class="dropdown-list">
+                        <!-- Domain options will be populated here -->
                     </div>
-                    <select id="apiDropdown" style="display: none;">
-                        <option value="">Select an API...</option>
-                    </select>
                 </div>
+                
+                <!-- Domain Filter Chips Container (new per manager request) -->
+                <div id="navbarDomainFilters" style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                    <!-- Domain chips will be added here dynamically -->
+                </div>
+                
+                <!-- Filter Settings Dropdown -->
+                <div class="dropdown-container" style="position: relative;">
+                    <button class="hexagonal-home-btn" id="filterSettingsBtn" title="Filter Settings">
+                        <i class="fas fa-filter"></i>
+                    </button>
+                    <div id="filterSettingsDropdown" class="dropdown-list" style="display: none; position: absolute; right: 0; top: 100%; margin-top: 8px; min-width: 280px; max-width: 400px; background: white; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); padding: 12px; z-index: 1000;">
+                        <!-- Action Buttons -->
+                        <button id="navbarClearFilters" style="width: 100%; display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; transition: all 0.2s;" title="Clear all filters">
+                            <i class="fas fa-times"></i>
+                            <span>Clear Filters</span>
+                        </button>
+                        <button id="navbarToggleSaveFilters" style="width: 100%; display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: linear-gradient(135deg, #0f766e 0%, #0d9488 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; margin-bottom: 12px; transition: all 0.2s;" title="Toggle filter saving">
+                            <i class="fas fa-save"></i>
+                            <span id="navbarSaveBtnText">Save: OFF</span>
+                        </button>
+                        
+                        <!-- Filters Section -->
+                        <div style="border-top: 1px solid #e5e7eb; padding-top: 12px;">
+                            <div id="filterSection1Title" style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; margin-bottom: 8px; padding-left: 4px;">Filter by Domain</div>
+                            <div id="filterDropdownDomainChips" style="display: flex; flex-wrap: wrap; gap: 6px;">
+                                <!-- Domain/Method chips will be populated here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Tags Section (for endpoint view only) -->
+                        <div id="filterTagsSection" style="display: none; border-top: 1px solid #e5e7eb; padding-top: 12px; margin-top: 12px;">
+                            <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; margin-bottom: 8px; padding-left: 4px;">Filter by Tag</div>
+                            <div id="filterDropdownTagChips" style="display: flex; flex-wrap: wrap; gap: 6px;">
+                                <!-- Tag chips will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- View Switcher -->
                 <div class="view-switcher" id="viewSwitcher">
                     <button class="view-btn active" data-view="hexagon" title="Hexagon Grid View">
@@ -3026,19 +3080,8 @@
 
     <!-- Hexagonal Landing Page -->
     <div id="hexagonContainer" class="hexagon-container">
-        <div class="landing-title">
-            <h1>API Documentation Portal</h1>
-            <p>Explore API-CORE Documentation, learn fast, integrate easily!</p>
-
-
-            <!-- api-counter removed: counter is now shown only inside the floating filter panel -->
-
-            <!-- Domain Filter Bar -->
-            <div id="filterBar" class="filter-bar" style="display: none;">
-                <div id="domainFilters">
-                </div>
-            </div>
-        </div>
+        <!-- Title removed per manager request - more space for APIs -->
+        
         <div id="hexagonGrid" class="hexagon-grid">
             <!-- Hexagons will be dynamically generated here -->
         </div>
@@ -3053,55 +3096,7 @@
 
     </div>
 
-    <!-- Draggable filter notch and floating panel (landing page domain filters) -->
-    <div id="filterNotch" aria-label="Open domain filters" title="Open domain filters">
-        <i class="fas fa-filter"></i>
-    </div>
-
-    <div id="filterPanel" class="filter-panel" role="dialog" aria-hidden="true">
-        <div class="panel-header">
-            <div class="panel-title">Domains</div>
-            <button id="panelClose" class="panel-close" aria-label="Close filters">&times;</button>
-        </div>
-        <div id="panelDomainFilters" class="panel-filters"></div>
-        <div class="panel-footer" style="display:flex; justify-content:center;">
-            <button id="panelClearFilters" class="clear-filters-btn" style="
-                    padding: 8px 16px;
-                    background: rgba(187, 10, 10, 0.404);
-                    border-radius: 12px;
-                    color: rgb(0, 0, 0);
-                    font-size: 0.9rem;
-                    font-weight: 600;
-                    text-align: center;
-                    margin: 8px 12px;
-                    border: 1px solid rgba(153, 153, 153, 0.12);
-                    transition: background 0.2s, box-shadow 0.2s, opacity 0.9s, color 0.2s;
-                "
-                onmouseover="this.style.background='#dc2626';this.style.boxShadow='0 8px 20px rgba(239,68,68,0.4)';this.style.opacity='1';this.style.color='white';"
-                onmouseout="this.style.background='rgba(187, 10, 10, 0.06)';this.style.boxShadow='none';this.style.opacity='1';this.style.color='rgb(0, 0, 0)';">
-                Clear
-            </button>
-            <button id="panelToggleSaveFilters" class="toggle-save-filters-btn" style="
-                    padding: 8px 16px;
-                    background: rgba(15, 118, 110, 0.1);
-                    border-radius: 12px;
-                    color: rgb(15, 118, 110);
-                    font-size: 0.85rem;
-                    font-weight: 600;
-                    text-align: center;
-                    margin: 8px 4px;
-                    border: 1px solid rgba(15, 118, 110, 0.3);
-                    transition: background 0.2s, box-shadow 0.2s, color 0.2s;
-                    cursor: pointer;
-                "
-                onmouseover="this.style.background='rgba(15, 118, 110, 0.2)';this.style.boxShadow='0 4px 12px rgba(15,118,110,0.2)';"
-                onmouseout="this.style.background='rgba(15, 118, 110, 0.1)';this.style.boxShadow='none';">
-                <i class="fas fa-save"></i> <span id="saveBtnText">Save Filters: OFF</span>
-            </button>
-        </div>
-    </div>
-
-
+    <!-- Hover filter removed per manager request - filters moved to navbar -->
 
     <!-- Swagger UI Container -->
     <div id="swagger-ui">
@@ -3109,7 +3104,87 @@
 
     <script src="https://unpkg.com/swagger-ui-dist@5.9.0/swagger-ui-bundle.js" charset="UTF-8"></script>
     <script src="https://unpkg.com/swagger-ui-dist@5.9.0/swagger-ui-standalone-preset.js" charset="UTF-8"></script>
-    <script>    let allApis = [];
+    <script>    
+        // ============================================================
+        // CRITICAL: Preserve hash immediately on script execution
+        // This must be the FIRST thing that runs to prevent hash loss
+        // ============================================================
+        (function() {
+            const initialHash = window.location.hash;
+            console.log('🔐 EARLY HASH CHECK (before anything else):', initialHash);
+            
+            // Store hash in a global variable that won't be cleared
+            window.__INITIAL_HASH__ = initialHash;
+            
+            // If hash exists but will be lost due to redirects, store it
+            if (initialHash && initialHash.startsWith('#/api/')) {
+                console.log('🔒 Preserving hash in sessionStorage:', initialHash);
+                sessionStorage.setItem('__PRESERVED_HASH__', initialHash);
+            }
+        })();
+        
+        // Track if we're handling a popstate event (back/forward navigation)
+        let isHandlingPopstate = false;
+        
+        // Track only the LAST clicked API (persisted in localStorage)
+        let lastClickedApi = null;
+        
+        // Load last clicked API from localStorage
+        function loadLastClickedApi() {
+            try {
+                const stored = localStorage.getItem('lastClickedApi');
+                if (stored) {
+                    lastClickedApi = stored;
+                    console.log('📋 Loaded last clicked API from localStorage:', lastClickedApi);
+                }
+            } catch (e) {
+                console.warn('⚠️ Failed to load last clicked API:', e);
+            }
+        }
+        
+        // Save last clicked API to localStorage
+        function saveLastClickedApi(apiUrl) {
+            try {
+                lastClickedApi = apiUrl;
+                localStorage.setItem('lastClickedApi', apiUrl);
+                console.log('✅ Saved last clicked API:', apiUrl);
+            } catch (e) {
+                console.warn('⚠️ Failed to save last clicked API:', e);
+            }
+        }
+        
+        // URL/View synchronization checker
+        let urlSyncInterval = null;
+        
+        function startUrlViewSync() {
+            // Clear any existing interval
+            if (urlSyncInterval) clearInterval(urlSyncInterval);
+            
+            console.log('▶️ Starting URL/View sync monitor (checking every 50ms)');
+            
+            // Check every 50ms if URL matches view state (very frequent)
+            urlSyncInterval = setInterval(() => {
+                const currentPath = window.location.pathname;
+                const currentHash = window.location.hash;
+                
+                // CASE 1: Landing page shown but URL has hash - CLEAN IT
+                if (isLandingPage && currentHash) {
+                    console.log('⚠️ [SYNC] Landing page + hash detected:', currentHash, '- FORCE CLEANING');
+                    sessionStorage.removeItem('__PRESERVED_HASH__');
+                    sessionStorage.removeItem('currentApiUrl');
+                    sessionStorage.removeItem('currentApiName');
+                    sessionStorage.removeItem('viewState');
+                    window.history.replaceState({ view: 'home' }, 'API Documentation Portal', '/');
+                }
+                // CASE 2: API doc shown but URL is home - should not happen but handle it
+                else if (!isLandingPage && !currentHash && currentPath === '/') {
+                    console.log('⚠️ [SYNC] API doc shown but URL is home - showing landing page');
+                    showLandingPage();
+                }
+            }, 50); // Very fast check - every 50ms
+        }
+        
+        let allApis = [];
         let ui;
         let isLandingPage = true;
         let activeDomains = new Set(); // Track active domain filters
@@ -3198,6 +3273,21 @@
             return filtered;
         }
 
+        // NEW: Unified function to apply filters and render
+        function filterAndRenderAPIs() {
+            switch (currentView) {
+                case 'hexagon':
+                    renderHexagonView();
+                    break;
+                case 'card':
+                    renderCardView();
+                    break;
+                default:
+                    renderHexagonView();
+                    break;
+            }
+        }
+        
         function renderCardView() {
             console.log("🗃️ Rendering card view...");
 
@@ -3210,10 +3300,17 @@
                 const domain = extractDomain(api.name);
                 const serviceName = extractServiceName(api.name);
 
-                // Check domain filter
-                const matchesDomain = activeDomains.size === 0 || activeDomains.has(domain);
+                // NEW: Check domain filter - respect navbar dropdown selection
+                let matchesDomain;
+                if (selectedDomain) {
+                    // If a specific domain is selected in dropdown, only show that domain
+                    matchesDomain = domain === selectedDomain;
+                } else {
+                    // If "All Domains" selected, apply chip filters if any
+                    matchesDomain = activeDomains.size === 0 || activeDomains.has(domain);
+                }
 
-                // Check search filter
+                // Check search filter - searches domain name and API name
                 const matchesSearch = !searchQuery ||
                     serviceName.toLowerCase().includes(searchQuery) ||
                     api.name.toLowerCase().includes(searchQuery) ||
@@ -3222,7 +3319,7 @@
                 return matchesDomain && matchesSearch;
             });
 
-            console.log(`🗃️ Card view: Found ${visibleApis.length} visible APIs (search: "${searchQuery}", domains: ${Array.from(activeDomains).join(', ')})`);
+            console.log(`🗃️ Card view: Found ${visibleApis.length} visible APIs (search: "${searchQuery}", domain: "${selectedDomain || 'All'}", chips: ${Array.from(activeDomains).join(', ')})`);
 
             renderCardViewWithTransitions(visibleApis);
 
@@ -3250,22 +3347,63 @@
             const searchInput = document.getElementById("apiSearch");
             const searchQuery = searchInput ? searchInput.value.toLowerCase().trim() : '';
 
-            // Create all cards at once using document fragment
-            const fragment = document.createDocumentFragment();
+            // COPY HEXAGONAL VIEW LOGIC - Calculate optimal sizing based on number of APIs and screen size
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight - 300;
+            const apiCount = apis.length;
+            
+            let maxItemsPerRow;
+            let cardWidth;
 
-            // Show 6 items per row with optimized card size for better layout
-            const itemsPerRow = 6;
-            const rows = Math.ceil(apis.length / itemsPerRow);
+            // Determine items per row and size based on API count and screen width (SAME AS HEXAGONAL VIEW)
+            if (apiCount <= 12) {
+                maxItemsPerRow = screenWidth >= 1600 ? 5 : screenWidth >= 1200 ? 4 : 3;
+                cardWidth = screenWidth >= 1600 ? 240 : 220;
+            } else if (apiCount <= 24) {
+                maxItemsPerRow = screenWidth >= 1600 ? 6 : screenWidth >= 1200 ? 5 : 4;
+                cardWidth = screenWidth >= 1600 ? 220 : 200;
+            } else if (apiCount <= 48) {
+                maxItemsPerRow = screenWidth >= 1600 ? 7 : screenWidth >= 1200 ? 6 : 5;
+                cardWidth = screenWidth >= 1600 ? 200 : 180;
+            } else {
+                // Lots of APIs - alternating 11 and 10 cards per row (SAME AS HEXAGONAL VIEW)
+                maxItemsPerRow = screenWidth >= 1600 ? 11 : screenWidth >= 1200 ? 9 : 8;
+                cardWidth = screenWidth >= 1600 ? 155 : 135;
+            }
 
-            for (let rowIndex = 0; rowIndex < rows; rowIndex++) {
+            const cardHeight = cardWidth;
+            const horizontalGap = 14;
+            const oddRowOffset = -10;
+
+            // Build rows with alternating pattern (11, 10, 11, 10...) - EXACT COPY OF HEXAGONAL LOGIC
+            let apiIndex = 0;
+            let rowIndex = 0;
+            
+            while (apiIndex < apis.length) {
                 const row = document.createElement('div');
                 row.className = 'card-row';
+                row.style.gap = `${horizontalGap}px`;
+                row.style.display = 'flex';
+                row.style.justifyContent = 'center';
+                row.style.position = 'relative';
+                row.style.marginBottom = '14px';
+                
+                // Alternate between maxItemsPerRow and (maxItemsPerRow - 1)
+                // Even rows (0, 2, 4...) get maxItemsPerRow (11) - no offset
+                // Odd rows (1, 3, 5...) get maxItemsPerRow - 1 (10) - offset for alignment
+                const itemsPerRow = rowIndex % 2 === 0 ? maxItemsPerRow : (maxItemsPerRow - 1);
+                const itemsInRow = Math.min(itemsPerRow, apis.length - apiIndex);
+                
+                // Apply offset to odd rows (SAME AS HEXAGONAL VIEW)
+                if (rowIndex % 2 === 1) {
+                    row.style.transform = `translateX(${oddRowOffset}px)`;
+                } else {
+                    row.style.transform = 'none';
+                }
 
-                const startIndex = rowIndex * itemsPerRow;
-                const endIndex = Math.min(startIndex + itemsPerRow, apis.length);
-
-                for (let i = startIndex; i < endIndex; i++) {
-                    const api = apis[i];
+                // Add cards to this row
+                for (let i = 0; i < itemsInRow; i++) {
+                    const api = apis[apiIndex];
                     const serviceName = extractServiceName(api.name);
                     const domain = extractDomain(api.name);
                     const icon = getApiIcon(api.name);
@@ -3276,6 +3414,8 @@
 
                     const card = document.createElement('div');
                     card.className = 'api-card';
+                    card.style.width = `${cardWidth}px`;
+                    card.style.height = `${cardHeight}px`;
 
                     // Start with hidden state for animation
                     card.style.opacity = '0';
@@ -3288,30 +3428,61 @@
                         <i class="${icon}"></i>
                     </div>
                     <div class="card-info">
-                        <h3 class="card-title">${displayName}</h3>
+                        <h3 class="card-title" data-text="${serviceName}">${displayName}</h3>
                     </div>
                 </div>
                 <div class="card-domain" style="background: ${domainColors.bg}; color: ${domainColors.text};">${domain}</div>
             `;
-                    card.addEventListener('click', () => navigateToApi(api.url));
+                    
+                    // Auto-resize text to fit with better minimum size
+                    setTimeout(() => {
+                        const titleElement = card.querySelector('.card-title');
+                        const cardContent = card.querySelector('.card-content');
+                        if (titleElement && cardContent) {
+                            const maxWidth = cardWidth * 0.88; // 88% of card width for better fit
+                            let fontSize = 1.05; // Start with 1.05rem for more consistent sizing
+                            titleElement.style.fontSize = fontSize + 'rem';
+                            
+                            while (titleElement.scrollWidth > maxWidth && fontSize > 0.9) {
+                                fontSize -= 0.025;
+                                titleElement.style.fontSize = fontSize + 'rem';
+                            }
+                        }
+                    }, 50);
+                    
+                    card.addEventListener('click', () => {
+                        // Remove active class from all cards
+                        document.querySelectorAll('.api-card').forEach(c => {
+                            c.classList.remove('active');
+                        });
+                        // Add active class to clicked card
+                        card.classList.add('active');
+                        // Navigate to API
+                        navigateToApi(api.url);
+                    });
+                    
+                    // Check if this API is the last clicked one and apply the active class
+                    if (lastClickedApi === api.url) {
+                        card.classList.add('active');
+                    }
+                    
                     row.appendChild(card);
+                    apiIndex++;
                 }
 
-                fragment.appendChild(row);
+                cardGrid.appendChild(row);
+                rowIndex++;
             }
-
-            // Add all cards at once
-            cardGrid.appendChild(fragment);
 
             // Trigger fade-in animation with staggered timing
             requestAnimationFrame(() => {
                 const newCards = cardGrid.querySelectorAll('.api-card');
                 newCards.forEach((card, index) => {
-                    card.style.transitionDelay = `${index * 0.1}s`;
+                    card.style.transitionDelay = `${index * 0.05}s`;
                     setTimeout(() => {
                         card.style.opacity = '1';
                         card.style.transform = 'scale(1) translateY(0)';
-                    }, 100); // Small delay to ensure DOM is ready
+                    }, 50);
                 });
             });
 
@@ -3358,11 +3529,16 @@
                 return;
             }
             try {
+                // Get current API URL to make filters API-specific
+                const currentApiUrl = sessionStorage.getItem('currentApiUrl') || 'default';
+                const methodsKey = `activeEndpointMethods_${currentApiUrl}`;
+                const tagsKey = `activeEndpointTags_${currentApiUrl}`;
+                
                 const methodsArray = Array.from(activeEndpointMethods);
                 const tagsArray = Array.from(activeEndpointTags);
-                localStorage.setItem('activeEndpointMethods', JSON.stringify(methodsArray));
-                localStorage.setItem('activeEndpointTags', JSON.stringify(tagsArray));
-                console.log("💾 Saved endpoint filters - methods:", methodsArray, "tags:", tagsArray);
+                localStorage.setItem(methodsKey, JSON.stringify(methodsArray));
+                localStorage.setItem(tagsKey, JSON.stringify(tagsArray));
+                console.log("💾 Saved endpoint filters for API:", currentApiUrl, "- methods:", methodsArray, "tags:", tagsArray);
             } catch (error) {
                 console.warn("⚠️ Failed to save endpoint filters:", error);
             }
@@ -3374,28 +3550,37 @@
                 return false;
             }
             try {
-                const savedMethods = localStorage.getItem('activeEndpointMethods');
-                const savedTags = localStorage.getItem('activeEndpointTags');
+                // Get current API URL to load API-specific filters
+                const currentApiUrl = sessionStorage.getItem('currentApiUrl') || 'default';
+                const methodsKey = `activeEndpointMethods_${currentApiUrl}`;
+                const tagsKey = `activeEndpointTags_${currentApiUrl}`;
+                
+                const savedMethods = localStorage.getItem(methodsKey);
+                const savedTags = localStorage.getItem(tagsKey);
                 let hasFilters = false;
+                
+                // Clear existing filters first
+                activeEndpointMethods.clear();
+                activeEndpointTags.clear();
                 
                 if (savedMethods) {
                     const methodsArray = JSON.parse(savedMethods);
-                    activeEndpointMethods.clear();
                     methodsArray.forEach(m => activeEndpointMethods.add(m));
-                    console.log("📂 Loaded endpoint methods:", methodsArray);
+                    console.log("📂 Loaded endpoint methods for API:", currentApiUrl, methodsArray);
                     hasFilters = true;
                 }
                 
                 if (savedTags) {
                     const tagsArray = JSON.parse(savedTags);
-                    activeEndpointTags.clear();
                     tagsArray.forEach(t => activeEndpointTags.add(t));
-                    console.log("📂 Loaded endpoint tags:", tagsArray);
+                    console.log("📂 Loaded endpoint tags for API:", currentApiUrl, tagsArray);
                     hasFilters = true;
                 }
                 
                 if (hasFilters) {
-                    console.log("✅ Endpoint filters loaded successfully - Methods:", Array.from(activeEndpointMethods), "Tags:", Array.from(activeEndpointTags));
+                    console.log("✅ Endpoint filters loaded successfully for API:", currentApiUrl, "- Methods:", Array.from(activeEndpointMethods), "Tags:", Array.from(activeEndpointTags));
+                } else {
+                    console.log("ℹ️ No saved filters found for API:", currentApiUrl);
                 }
                 
                 return hasFilters;
@@ -3406,9 +3591,14 @@
         }
 
         function clearEndpointFiltersCache() {
-            localStorage.removeItem('activeEndpointMethods');
-            localStorage.removeItem('activeEndpointTags');
-            console.log("🗑️ Cleared endpoint filters cache");
+            // Get current API URL to clear API-specific filters
+            const currentApiUrl = sessionStorage.getItem('currentApiUrl') || 'default';
+            const methodsKey = `activeEndpointMethods_${currentApiUrl}`;
+            const tagsKey = `activeEndpointTags_${currentApiUrl}`;
+            
+            localStorage.removeItem(methodsKey);
+            localStorage.removeItem(tagsKey);
+            console.log("🗑️ Cleared endpoint filters cache for API:", currentApiUrl);
         }
 
         // Toggle filter saving on/off
@@ -3681,6 +3871,9 @@
                 endpointFilteringEnabled = true;
                 console.log("✅ Endpoint filtering enabled (API doc view)");
                 setSwaggerUiPaddingForFilterBar(true);
+                
+                // Update navbar dropdown to show endpoint tags instead of domains
+                populateNavbarEndpointTagsDropdown();
             } else {
                 endpointFilteringEnabled = false;
                 console.log("ℹ️ Endpoint filtering prepared but hidden (not in API doc view)");
@@ -4016,88 +4209,221 @@
         function generateDomainFilters(apis) {
             apisByDomain = groupApisByDomain(apis);
             const domains = Object.keys(apisByDomain).sort();
-            // Populate panel-based domain filters (draggable notch opens this panel)
+            
+            // Populate navbar domain dropdown (new per manager request)
+            populateNavbarDomainDropdown(domains);
+            
+            // OLD PANEL CODE - Keep for API documentation page if needed
             const filterBar = document.getElementById('filterBar');
             const panelContainer = document.getElementById('panelDomainFilters');
             const notch = document.getElementById('filterNotch');
 
-            // Keep the top/legacy filter bar hidden — we only use the floating panel
+            // Hide old components - filters now in navbar
             if (filterBar) filterBar.style.display = 'none';
-
-            if (!panelContainer) return;
-
-            if (domains.length <= 1) {
-                // No need to show a notch if there's only one domain
-                panelContainer.innerHTML = '';
-                if (notch) notch.style.display = 'none';
-                return;
+            if (notch) notch.style.display = 'none';
+            if (panelContainer) panelContainer.style.display = 'none';
+        }
+        
+        // NEW: Populate navbar domain dropdown per manager request
+        function populateNavbarDomainDropdown(domains) {
+            const dropdownList = document.getElementById('domainDropdownList');
+            if (!dropdownList) return;
+            
+            dropdownList.innerHTML = '';
+            
+            // Determine which domains to show based on active filters
+            const domainsToShow = activeDomains.size > 0 ? Array.from(activeDomains).sort() : domains;
+            
+            // Add "All Domains" option only if no filters are active
+            if (activeDomains.size === 0) {
+                const allOption = document.createElement('div');
+                allOption.className = 'dropdown-item';
+                allOption.dataset.value = '';
+                const totalCount = domains.reduce((sum, d) => sum + (apisByDomain[d]?.length || 0), 0);
+                allOption.style.display = 'flex';
+                allOption.style.alignItems = 'center';
+                allOption.style.justifyContent = 'space-between';
+                allOption.style.gap = '12px';
+                allOption.innerHTML = `
+                    <span style="flex: 1; color: #1f2937; font-weight: 500;">All Domains</span>
+                    <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 28px; height: 28px; background: #10b981; color: white; border-radius: 50%; font-size: 0.75rem; font-weight: 700;">${totalCount}</span>
+                `;
+                allOption.addEventListener('click', () => selectDomainFilter(''));
+                dropdownList.appendChild(allOption);
             }
-
-            // Ensure notch is visible
-            if (notch) notch.style.display = 'inline-flex';
-
-            panelContainer.innerHTML = '';
-
-            domains.forEach(domain => {
-                const count = apisByDomain[domain].length;
-                const chip = document.createElement('div');
-                chip.className = 'domain-chip';
-                chip.dataset.domain = domain;
-                // Build inner content with real elements (avoid raw HTML for better styling/behavior)
-                const labelSpan = document.createElement('span');
-                labelSpan.style.display = 'inline-block';
-                labelSpan.style.verticalAlign = 'middle';
-                labelSpan.textContent = domain;
-
-                const countSpan = document.createElement('span');
-                countSpan.className = 'chip-count';
-                countSpan.style.minWidth = '20px';
-                countSpan.style.height = '20px';
-                countSpan.style.padding = '0 7px';
-                countSpan.style.lineHeight = '20px';
-                countSpan.style.display = 'inline-flex';
-                countSpan.style.alignItems = 'center';
-                countSpan.style.justifyContent = 'center';
-                countSpan.style.borderRadius = '50%';
-                countSpan.style.background = '#fff';
-                countSpan.style.color = '#0f766e';
-                countSpan.style.fontSize = '0.75rem';
-                countSpan.style.fontWeight = '800';
-                countSpan.style.boxShadow = '0 2px 6px rgba(2,6,23,0.12)';
-                countSpan.style.marginLeft = '8px';
-                countSpan.style.border = '2px solid #0f766e';
-                countSpan.textContent = count;
-
-                chip.appendChild(labelSpan);
-                chip.appendChild(countSpan);
-
-                // Accessibility and keyboard support
-                chip.setAttribute('role', 'button');
-                chip.tabIndex = 0;
-                chip.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.click(); } });
-
-                chip.addEventListener('click', function () {
-                    toggleDomainFilter(domain);
-                });
-
-                // Double-click to clear all filters (power user feature)
-                chip.addEventListener('dblclick', function (e) {
-                    e.stopPropagation();
-                    console.log("🚀 Double-click detected: Clearing all filters");
-                    clearAllDomainFilters();
-                });
-
-                chip.title = `Click to filter by ${domain}. Double-click to clear all filters.`;
-
-                // Reflect active state visually if this domain is currently selected
-                try {
-                    if (activeDomains && activeDomains.has && activeDomains.has(domain)) {
-                        chip.classList.add('active');
-                    }
-                } catch (e) { /* ignore if activeDomains not ready */ }
-
-                panelContainer.appendChild(chip);
+            
+            // Add each domain with simple text + green circular count
+            domainsToShow.forEach(domain => {
+                const count = apisByDomain[domain]?.length || 0;
+                const option = document.createElement('div');
+                option.className = 'dropdown-item';
+                option.dataset.value = domain;
+                option.style.display = 'flex';
+                option.style.alignItems = 'center';
+                option.style.justifyContent = 'space-between';
+                option.style.gap = '12px';
+                option.innerHTML = `
+                    <span style="flex: 1; color: #1f2937; font-weight: 500;">${domain}</span>
+                    <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 28px; height: 28px; background: #10b981; color: white; border-radius: 50%; font-size: 0.75rem; font-weight: 700;">${count}</span>
+                `;
+                option.addEventListener('click', () => selectDomainFilter(domain));
+                dropdownList.appendChild(option);
             });
+            
+            // Only setup interaction once, not every time we populate
+            if (!dropdownList.dataset.initialized) {
+                setupDomainDropdownInteraction();
+                dropdownList.dataset.initialized = 'true';
+            }
+        }
+        
+        // NEW: Populate endpoint tags in domain dropdown for API documentation view
+        function populateNavbarEndpointTagsDropdown() {
+            const dropdownList = document.getElementById('domainDropdownList');
+            const dropdownText = document.getElementById('domainDropdownText');
+            if (!dropdownList) return;
+            
+            dropdownList.innerHTML = '';
+            
+            // Extract tags from current endpoints
+            const tagCounts = {};
+            if (currentApiEndpoints && currentApiEndpoints.length > 0) {
+                currentApiEndpoints.forEach(endpoint => {
+                    if (Array.isArray(endpoint.tags)) {
+                        endpoint.tags.forEach(tag => {
+                            const tagStr = String(tag || '').trim();
+                            if (tagStr) {
+                                tagCounts[tagStr] = (tagCounts[tagStr] || 0) + 1;
+                            }
+                        });
+                    }
+                });
+            }
+            
+            const tags = Object.keys(tagCounts).sort();
+            
+            // Update dropdown button text
+            if (dropdownText) {
+                dropdownText.textContent = activeEndpointTags.size > 0 
+                    ? `${activeEndpointTags.size} Tag${activeEndpointTags.size > 1 ? 's' : ''} Selected`
+                    : 'All Tags';
+            }
+            
+            // Show all tags or only active tags based on filter state
+            const tagsToShow = activeEndpointTags.size > 0 ? Array.from(activeEndpointTags).sort() : tags;
+            
+            tagsToShow.forEach(tag => {
+                const count = tagCounts[tag] || 0;
+                const option = document.createElement('div');
+                option.className = 'dropdown-item';
+                option.dataset.value = tag;
+                option.style.display = 'flex';
+                option.style.alignItems = 'center';
+                option.style.justifyContent = 'space-between';
+                option.style.gap = '12px';
+                option.style.cursor = 'pointer';
+                option.innerHTML = `
+                    <span style="flex: 1; color: #1f2937; font-weight: 500;">${tag}</span>
+                    <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 28px; height: 28px; background: #10b981; color: white; border-radius: 50%; font-size: 0.75rem; font-weight: 700;">${count}</span>
+                `;
+                option.addEventListener('click', () => {
+                    // Scroll to the tag in the Swagger UI
+                    scrollToTag(tag);
+                    // Close the dropdown
+                    dropdownList.classList.remove('show');
+                });
+                dropdownList.appendChild(option);
+            });
+            
+            // Only setup interaction once, not every time we populate
+            if (!dropdownList.dataset.initialized) {
+                setupDomainDropdownInteraction();
+                dropdownList.dataset.initialized = 'true';
+            }
+        }
+        
+        // Scroll to a specific tag in the Swagger UI
+        function scrollToTag(tag) {
+            try {
+                // Find the tag section in Swagger UI
+                const tagElements = document.querySelectorAll('.opblock-tag-section');
+                for (const element of tagElements) {
+                    const tagTitle = element.querySelector('.opblock-tag');
+                    if (tagTitle && tagTitle.textContent.trim().toLowerCase().includes(tag.toLowerCase())) {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        // Expand the tag if it's collapsed
+                        if (!element.classList.contains('is-open')) {
+                            const expandButton = element.querySelector('.expand-operation');
+                            if (expandButton) {
+                                expandButton.click();
+                            }
+                        }
+                        break;
+                    }
+                }
+            } catch (e) {
+                console.warn('Could not scroll to tag:', e);
+            }
+        }
+        
+        // NEW: Handle domain dropdown interaction
+        function setupDomainDropdownInteraction() {
+            const dropdownButton = document.getElementById('domainDropdown');
+            const dropdownList = document.getElementById('domainDropdownList');
+            
+            if (!dropdownButton || !dropdownList) return;
+            
+            // Prevent adding multiple listeners
+            if (dropdownButton.dataset.listenerAttached) return;
+            dropdownButton.dataset.listenerAttached = 'true';
+            
+            dropdownButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dropdownList.classList.toggle('show');
+            });
+            
+            // Close when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!dropdownButton.contains(e.target) && !dropdownList.contains(e.target)) {
+                    dropdownList.classList.remove('show');
+                }
+            });
+        }
+        
+        // NEW: Select a domain filter from dropdown
+        let selectedDomain = '';
+        function selectDomainFilter(domain) {
+            selectedDomain = domain;
+            const dropdownText = document.getElementById('domainDropdownText');
+            const dropdownList = document.getElementById('domainDropdownList');
+            
+            if (dropdownText) {
+                dropdownText.textContent = domain || 'All Domains';
+            }
+            
+            if (dropdownList) {
+                dropdownList.classList.remove('show');
+            }
+            
+            // Update active filters
+            activeDomains.clear();
+            if (domain) {
+                activeDomains.add(domain);
+            }
+            
+            // Apply filter
+            filterAndRenderAPIs();
+            updateNavbarDomainChips();
+            
+            if (shouldSaveFilters) {
+                saveDomainFilters();
+            }
+        }
+        
+        // NEW: Update domain chips in navbar (DISABLED - removed domain tags from navbar)
+        function updateNavbarDomainChips() {
+            // Function disabled - domain tags no longer displayed in navbar
+            return;
         }
 
         /*
@@ -4597,6 +4923,12 @@
             saveDomainFilters();
 
             updateDomainFilterUI();
+            
+            // Update domain dropdown to show only filtered domains
+            if (apisByDomain) {
+                const allDomains = Object.keys(apisByDomain).sort();
+                populateNavbarDomainDropdown(allDomains);
+            }
 
             // Use RAF for smoother transitions
             requestAnimationFrame(() => {
@@ -4997,31 +5329,33 @@
                 // Update API counter immediately
                 updateApiCounter(filteredUrls.length);
 
-                // Populate custom dropdown
+                // Populate custom dropdown (if it exists)
                 const dropdown = document.getElementById("apiDropdown");
                 const customDropdown = document.getElementById("customDropdown");
                 const dropdownList = document.getElementById("dropdownList");
                 const dropdownText = document.getElementById("dropdownText");
 
-                // Clear old content
-                dropdown.innerHTML = '<option value="">Select an API...</option>';
-                dropdownList.innerHTML = '';
+                // Only populate dropdown if elements exist
+                if (dropdown && dropdownList) {
+                    // Clear old content
+                    dropdown.innerHTML = '<option value="">Select an API...</option>';
+                    dropdownList.innerHTML = '';
 
-                // Add APIs to both hidden select and custom dropdown
-                filteredUrls.forEach((api, index) => {
-                    // Hidden select option
-                    const option = document.createElement("option");
-                    option.value = api.url;
-                    const serviceName = extractServiceName(api.name);
-                    const domain = extractDomain(api.name);
-                    option.text = `${serviceName} (${domain})`;
-                    dropdown.appendChild(option);
+                    // Add APIs to both hidden select and custom dropdown
+                    filteredUrls.forEach((api, index) => {
+                        // Hidden select option
+                        const option = document.createElement("option");
+                        option.value = api.url;
+                        const serviceName = extractServiceName(api.name);
+                        const domain = extractDomain(api.name);
+                        option.text = `${serviceName} (${domain})`;
+                        dropdown.appendChild(option);
 
-                    // Custom dropdown item
-                    const dropdownItem = document.createElement("div");
-                    dropdownItem.className = "dropdown-item";
-                    const domainColors = getDomainColor(domain);
-                    dropdownItem.innerHTML = `
+                        // Custom dropdown item
+                        const dropdownItem = document.createElement("div");
+                        dropdownItem.className = "dropdown-item";
+                        const domainColors = getDomainColor(domain);
+                        dropdownItem.innerHTML = `
                 <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; box-sizing: border-box;">
                     <span style="font-weight: 600; flex: 1; min-width: 0; word-break: break-word; line-height: 1.3;">${serviceName}</span>
                     <span class="domain-tag" style="font-size: 0.75rem; padding: 3px 10px; border-radius: 12px; background: ${domainColors.bg}; color: ${domainColors.text}; border: 1px solid ${domainColors.border}; font-weight: 600; flex-shrink: 0; white-space: nowrap;">
@@ -5029,44 +5363,49 @@
                     </span>
                 </div>
             `;
-                    dropdownItem.dataset.value = api.url;
-                    dropdownItem.dataset.name = `${serviceName} (${domain})`;
+                        dropdownItem.dataset.value = api.url;
+                        dropdownItem.dataset.name = `${serviceName} (${domain})`;
 
-                    // Click selects the API
-                    dropdownItem.addEventListener('click', function () {
-                        selectDropdownItem(this, api);
+                        // Click selects the API
+                        dropdownItem.addEventListener('click', function () {
+                            selectDropdownItem(this, api);
+                        });
+
+                        // Ripple feedback on mousedown
+                        dropdownItem.addEventListener('mousedown', function (e) {
+                            createRippleEffect(this, e);
+                        });
+
+                        dropdownList.appendChild(dropdownItem);
+                    });
+                }
+
+                // Setup custom dropdown behavior (if exists)
+                if (customDropdown && dropdownList) {
+                    setupCustomDropdown();
+                }
+
+                // Original dropdown change handler (for compatibility)
+                if (dropdown) {
+                    dropdown.addEventListener("change", e => {
+                        if (e.target.value) {
+                            navigateToApi(e.target.value);
+                        }
                     });
 
-                    // Ripple feedback on mousedown
-                    dropdownItem.addEventListener('mousedown', function (e) {
+                    // Add click animation for dropdown
+                    dropdown.addEventListener("mousedown", function (e) {
                         createRippleEffect(this, e);
                     });
 
-                    dropdownList.appendChild(dropdownItem);
-                });
-
-                // Setup custom dropdown behavior
-                setupCustomDropdown();
-
-                // Original dropdown change handler (for compatibility)
-                dropdown.addEventListener("change", e => {
-                    if (e.target.value) {
-                        navigateToApi(e.target.value);
-                    }
-                });
-
-                // Add click animation for dropdown
-                dropdown.addEventListener("mousedown", function (e) {
-                    createRippleEffect(this, e);
-                });
-
-                dropdown.addEventListener("focus", function () {
-                    // Add opening animation class
-                    this.classList.add('dropdown-opening');
-                    setTimeout(() => {
-                        this.classList.remove('dropdown-opening');
-                    }, 600);
-                });
+                    dropdown.addEventListener("focus", function () {
+                        // Add opening animation class
+                        this.classList.add('dropdown-opening');
+                        setTimeout(() => {
+                            this.classList.remove('dropdown-opening');
+                        }, 600);
+                    });
+                }
 
                 // Generate hexagonal grid
                 renderHexagonView();
@@ -5152,49 +5491,117 @@
 
         // Restore session state after page refresh
         function restoreSessionState() {
+            // Normalize URL: if we're at /swagger-ui/index.html, clean it up
+            if (window.location.pathname.includes('/swagger-ui/index.html')) {
+                const cleanPath = window.location.hash || '/';
+                const newUrl = window.location.origin + (cleanPath.startsWith('#') ? '/' + cleanPath : cleanPath);
+                window.history.replaceState(null, '', newUrl);
+            }
+
             // First check for deep link in URL hash (e.g., #/api/ServiceName)
-            const hash = window.location.hash;
+            // IMPORTANT: Hash takes priority over sessionStorage
+            
+            // Check preserved hash first (in case current hash was lost or truncated)
+            let hash = window.location.hash;
+            const preservedHash = sessionStorage.getItem('__PRESERVED_HASH__') || window.__INITIAL_HASH__;
+            
+            // Always prefer the preserved hash if it exists and is longer/more complete
+            if (preservedHash && preservedHash.startsWith('#/api/')) {
+                // Check if current hash is missing, truncated, or different
+                if (!hash || hash.length < preservedHash.length || hash !== preservedHash) {
+                    console.log('🔄 Using preserved hash instead of current hash');
+                    console.log('   Current hash:', hash, `(${hash.length} chars)`);
+                    console.log('   Preserved hash:', preservedHash, `(${preservedHash.length} chars)`);
+                    hash = preservedHash;
+                    // Restore it to the URL
+                    window.location.hash = hash;
+                }
+            }
+            
+            console.log('🔍 Checking URL hash on page load:', hash);
+            console.log('📦 Current sessionStorage:', {
+                viewState: sessionStorage.getItem('viewState'),
+                currentApiUrl: sessionStorage.getItem('currentApiUrl'),
+                currentApiName: sessionStorage.getItem('currentApiName'),
+                preservedHash: preservedHash
+            });
+            
             if (hash && hash.startsWith('#/api/')) {
                 try {
                     const apiName = decodeURIComponent(hash.substring(6)); // Remove '#/api/'
                     console.log('🔗 Deep link detected for API:', apiName);
                     
-                    // Find the API by name - try multiple matching strategies
-                    const targetApi = allApis.find(api => {
-                        // Strategy 1: Exact match on full name
-                        if (api.name === apiName) return true;
-                        
-                        // Strategy 2: Match extracted service name
-                        const extractedName = extractServiceName(api.name);
-                        if (extractedName === apiName) return true;
-                        
-                        // Strategy 3: Check if api.name contains the hash name
-                        if (api.name.includes(apiName)) return true;
-                        
-                        // Strategy 4: Check if api.name without /api-docs matches
-                        const nameWithoutApiDocs = api.name.replace('/api-docs', '').replace('/v1', '');
-                        if (nameWithoutApiDocs === apiName || nameWithoutApiDocs.includes(apiName)) return true;
-                        
-                        return false;
-                    });
+                    // Clear any conflicting sessionStorage to prevent override
+                    console.log('🧹 Clearing conflicting sessionStorage entries');
+                    sessionStorage.removeItem('viewState');
+                    sessionStorage.removeItem('currentApiUrl');
+                    sessionStorage.removeItem('currentApiName');
+                    sessionStorage.removeItem('__PRESERVED_HASH__'); // Clear preserved hash after use
                     
+                    // Find the API by name - try multiple matching strategies with detailed logging
+                    console.log('🔎 Searching for API in', allApis.length, 'available APIs');
+                    
+                    let targetApi = null;
+                    
+                    // Strategy 1: Exact match on full name (most precise)
+                    targetApi = allApis.find(api => api.name === apiName);
                     if (targetApi) {
-                        console.log('✅ Found API for deep link:', targetApi.name, 'URL:', targetApi.url);
-                        // Navigate directly to this API
-                        setTimeout(() => {
-                            navigateToApi(targetApi.url);
-                        }, 100);
-                        return; // Skip normal session state restoration
-                    } else {
-                        console.warn('⚠️ API not found for deep link:', apiName);
-                        console.log('Available APIs:', allApis.map(a => a.name));
+                        console.log('✅ Strategy 1 (exact match) found:', targetApi.name);
+                        setTimeout(() => navigateToApi(targetApi.url), 100);
+                        return;
                     }
+                    
+                    // Strategy 2: Exact match with /api-docs suffix removed
+                    targetApi = allApis.find(api => api.name.replace('/api-docs', '') === apiName);
+                    if (targetApi) {
+                        console.log('✅ Strategy 2 (without /api-docs) found:', targetApi.name);
+                        setTimeout(() => navigateToApi(targetApi.url), 100);
+                        return;
+                    }
+                    
+                    // Strategy 3: Match with "product/" prefix added (for URLs like transaction/card/v1 → product/transaction/card/v1)
+                    targetApi = allApis.find(api => api.name === `product/${apiName}` || api.name.replace('/api-docs', '') === `product/${apiName}`);
+                    if (targetApi) {
+                        console.log('✅ Strategy 3 (with product/ prefix) found:', targetApi.name);
+                        setTimeout(() => navigateToApi(targetApi.url), 100);
+                        return;
+                    }
+                    
+                    // Strategy 4: Match extracted service name
+                    targetApi = allApis.find(api => extractServiceName(api.name) === apiName);
+                    if (targetApi) {
+                        console.log('✅ Strategy 4 (extracted name) found:', targetApi.name);
+                        setTimeout(() => navigateToApi(targetApi.url), 100);
+                        return;
+                    }
+                    
+                    // Strategy 5: Contains match (least precise - only use as last resort)
+                    // This is dangerous as it can match the wrong API, so we'll be very careful
+                    const possibleMatches = allApis.filter(api => api.name.includes(apiName));
+                    if (possibleMatches.length === 1) {
+                        targetApi = possibleMatches[0];
+                        console.log('✅ Strategy 5 (contains - single match) found:', targetApi.name);
+                        setTimeout(() => navigateToApi(targetApi.url), 100);
+                        return;
+                    } else if (possibleMatches.length > 1) {
+                        console.warn('⚠️ Strategy 5 found multiple matches:', possibleMatches.map(a => a.name));
+                        console.warn('❌ Cannot determine correct API, showing landing page');
+                    }
+                    
+                    // No match found
+                    console.warn('⚠️ API not found for deep link:', apiName);
+                    console.log('📋 Available API names:', allApis.map(a => a.name));
+                    // Clear the invalid hash and show landing page
+                    window.location.hash = '';
+                    showLandingPage();
                 } catch (e) {
                     console.error('❌ Error processing deep link:', e);
                 }
+                return; // Always return here to prevent sessionStorage fallback
             }
 
-            // Fall back to session storage restoration
+            // Fall back to session storage restoration only if no hash was present
+            console.log('ℹ️ No hash found, checking sessionStorage');
             const savedViewState = sessionStorage.getItem('viewState');
             const savedApiUrl = sessionStorage.getItem('currentApiUrl');
 
@@ -5260,10 +5667,17 @@
                 const domain = extractDomain(api.name);
                 const serviceName = extractServiceName(api.name);
 
-                // Check domain filter
-                const matchesDomain = activeDomains.size === 0 || activeDomains.has(domain);
+                // NEW: Check domain filter - respect navbar dropdown selection
+                let matchesDomain;
+                if (selectedDomain) {
+                    // If a specific domain is selected in dropdown, only show that domain
+                    matchesDomain = domain === selectedDomain;
+                } else {
+                    // If "All Domains" selected, apply chip filters if any
+                    matchesDomain = activeDomains.size === 0 || activeDomains.has(domain);
+                }
 
-                // Check search filter
+                // Check search filter - searches domain name and API name
                 const matchesSearch = !searchQuery ||
                     serviceName.toLowerCase().includes(searchQuery) ||
                     api.name.toLowerCase().includes(searchQuery) ||
@@ -5272,7 +5686,7 @@
                 return matchesDomain && matchesSearch;
             });
 
-            console.log(`🔷 Hexagon view: Found ${visibleApis.length} visible APIs (search: "${searchQuery}", domains: ${Array.from(activeDomains).join(', ')})`);
+            console.log(`🔷 Hexagon view: Found ${visibleApis.length} visible APIs (search: "${searchQuery}", domain: "${selectedDomain || 'All'}", chips: ${Array.from(activeDomains).join(', ')})`);
 
             // Regenerate the grid with filtered APIs
             generateHexagonGrid(visibleApis);
@@ -5285,46 +5699,97 @@
             const grid = document.getElementById('hexagonGrid');
             grid.innerHTML = '';
 
-            // Calculate items per row based on screen width
+            // Calculate optimal sizing based on number of APIs and screen size
             const screenWidth = window.innerWidth;
-            let itemsPerRow;
+            const screenHeight = window.innerHeight - 300; // Reserve space for header and margins
+            const apiCount = apis.length;
+            
+            let maxItemsPerRow; // Maximum items per row (for even rows)
+            let hexagonWidth; // Base width for hexagons
 
-            if (screenWidth >= 1600) {
-                itemsPerRow = 6;
-            } else if (screenWidth >= 1200) {
-                itemsPerRow = 5;
-            } else if (screenWidth >= 900) {
-                itemsPerRow = 4;
-            } else if (screenWidth >= 600) {
-                itemsPerRow = 3;
+            // Determine items per row and size based on API count and screen width
+            if (apiCount <= 12) {
+                // Few APIs - larger hexagons
+                maxItemsPerRow = screenWidth >= 1600 ? 5 : screenWidth >= 1200 ? 4 : 3;
+                hexagonWidth = screenWidth >= 1600 ? 240 : 220;
+            } else if (apiCount <= 24) {
+                // Medium number - medium hexagons
+                maxItemsPerRow = screenWidth >= 1600 ? 6 : screenWidth >= 1200 ? 5 : 4;
+                hexagonWidth = screenWidth >= 1600 ? 220 : 200;
+            } else if (apiCount <= 48) {
+                // Many APIs - smaller hexagons
+                maxItemsPerRow = screenWidth >= 1600 ? 7 : screenWidth >= 1200 ? 6 : 5;
+                hexagonWidth = screenWidth >= 1600 ? 200 : 180;
             } else {
-                itemsPerRow = 2;
+                // Lots of APIs - alternating 11 and 10 hexagons per row for perfect fit with 53 APIs in 5 rows
+                maxItemsPerRow = screenWidth >= 1600 ? 11 : screenWidth >= 1200 ? 9 : 8;
+                hexagonWidth = screenWidth >= 1600 ? 155 : 135;
             }
 
-            const rows = Math.ceil(apis.length / itemsPerRow);
+            // Calculate hexagon height (proper hexagon ratio: height = width * 1.15)
+            const hexagonHeight = hexagonWidth * 1.15;
 
-            for (let rowIndex = 0; rowIndex < rows; rowIndex++) {
+            // Calculate proper beehive offset for honeycomb interlocking pattern
+            const horizontalGap = 14; // Small gap - just enough for scale hover without touching
+            // For proper honeycomb: offset to position hexagons exactly in the gaps
+            // Small negative offset for fine-tuning - slightly more left
+            const oddRowOffset = 0;
+            // Less overlap to create more vertical space - matches side gaps
+            const verticalOverlap = hexagonHeight * 0.18; // Reduced overlap for equal gap on all sides during hover
+
+            // Build rows with alternating pattern (10, 9, 10, 9...)
+            let apiIndex = 0;
+            let rowIndex = 0;
+            
+            while (apiIndex < apis.length) {
                 const row = document.createElement('div');
                 row.className = 'hexagon-row';
+                row.style.gap = `${horizontalGap}px`;
+                
+                // Alternate between maxItemsPerRow and (maxItemsPerRow - 1)
+                // Even rows (0, 2, 4...) get maxItemsPerRow (10) - no offset
+                // Odd rows (1, 3, 5...) get maxItemsPerRow - 1 (9) - offset to create honeycomb
+                const itemsPerRow = rowIndex % 2 === 0 ? maxItemsPerRow : (maxItemsPerRow - 1);
+                const itemsInRow = Math.min(itemsPerRow, apis.length - apiIndex);
+                
+                // Apply proper vertical spacing
+                if (apiIndex + itemsInRow < apis.length) {
+                    row.style.marginBottom = `-${verticalOverlap}px`;
+                }
+                
+                // Apply honeycomb offset and handle incomplete rows
+                if (rowIndex % 2 === 1) {
+                    // Odd rows (10 items) - offset to nestle in gaps with centered layout
+                    row.style.transform = `translateX(${oddRowOffset}px)`;
+                } else {
+                    // Even rows (11 items) - no offset, stays centered
+                    row.style.transform = 'none';
+                }
 
-                const startIndex = rowIndex * itemsPerRow;
-                const endIndex = Math.min(startIndex + itemsPerRow, apis.length);
-
-                for (let i = startIndex; i < endIndex; i++) {
-                    const api = apis[i];
-                    const hexagon = createHexagon(api, i);
+                // Add hexagons to this row
+                for (let i = 0; i < itemsInRow; i++) {
+                    const api = apis[apiIndex];
+                    const hexagon = createHexagon(api, apiIndex, hexagonWidth, hexagonHeight);
                     row.appendChild(hexagon);
+                    apiIndex++;
                 }
 
                 grid.appendChild(row);
+                rowIndex++;
             }
         }
 
-        function createHexagon(api, index) {
+        function createHexagon(api, index, width, height) {
             const hexagonItem = document.createElement('div');
             hexagonItem.className = 'hexagon-item';
-            hexagonItem.style.animationDelay = `${(index + 1) * 0.1}s`;
+            hexagonItem.style.animationDelay = `${(index + 1) * 0.05}s`; // Faster animation for many items
             hexagonItem.setAttribute('data-api-name', api.name);
+            
+            // Apply dynamic sizing if provided
+            if (width && height) {
+                hexagonItem.style.width = `${width}px`;
+                hexagonItem.style.height = `${height}px`;
+            }
 
             const icon = getApiIcon(api.name);
 
@@ -5333,23 +5798,57 @@
             const serviceName = extractServiceName(api.name);
             const domainColors = getDomainColor(domain);
 
+            // Apply sizing to internal elements
+            const shapeStyle = (width && height) ? `width: ${width}px; height: ${height}px;` : '';
+            const contentStyle = (width && height) ? `width: ${width * 0.8}px; height: ${height * 0.78}px;` : '';
+
             hexagonItem.innerHTML = `
-        <div class="hexagon-shape">
-            <div class="hexagon-content">
+        <div class="hexagon-shape" style="${shapeStyle}">
+            <div class="hexagon-content" style="${contentStyle}">
                 <div class="hexagon-icon">
                     <i class="${icon}"></i>
                 </div>
-                <div class="hexagon-title">${serviceName}</div>
+                <div class="hexagon-title" data-text="${serviceName}">${serviceName}</div>
             </div>
         </div>
         <div class="domain-badge" style="background: ${domainColors.bg}; color: ${domainColors.text};">
             ${domain}
         </div>
     `;
+    
+            // Auto-resize text to fit
+            setTimeout(() => {
+                const titleElement = hexagonItem.querySelector('.hexagon-title');
+                const contentElement = hexagonItem.querySelector('.hexagon-content');
+                if (titleElement && contentElement) {
+                    const maxWidth = contentElement.offsetWidth * 0.9; // 90% of content width
+                    let fontSize = 1.1; // Start with 1.1rem
+                    titleElement.style.fontSize = fontSize + 'rem';
+                    
+                    while (titleElement.scrollWidth > maxWidth && fontSize > 0.6) {
+                        fontSize -= 0.05;
+                        titleElement.style.fontSize = fontSize + 'rem';
+                    }
+                }
+            }, 50);
+
+            // Simple hover effect - no push away, just scale and z-index
+            hexagonItem.addEventListener('mouseenter', function(e) {
+                this.classList.add('hexagon-hovered');
+            });
+            
+            hexagonItem.addEventListener('mouseleave', function(e) {
+                this.classList.remove('hexagon-hovered');
+            });
 
             hexagonItem.addEventListener('click', () => {
                 selectHexagon(hexagonItem, api);
             });
+            
+            // Check if this API is the last clicked one and apply the active class
+            if (lastClickedApi === api.url) {
+                hexagonItem.classList.add('active');
+            }
 
             return hexagonItem;
         }
@@ -5363,21 +5862,9 @@
             });
             hexagonElement.classList.add('active');
 
-            // Add loading state
-            const iconElement = hexagonElement.querySelector('.hexagon-icon i');
-            const originalIcon = iconElement.className;
-            iconElement.className = 'fas fa-spinner fa-spin';
-
-            // Wait for animation, then navigate
-            setTimeout(() => {
-                navigateToApi(api.url);
-                updateDropdownSelection(api.url);
-
-                // Restore original icon
-                setTimeout(() => {
-                    iconElement.className = originalIcon;
-                }, 500);
-            }, 300);
+            // Navigate to API immediately
+            navigateToApi(api.url);
+            updateDropdownSelection(api.url);
         }
 
         function updateDropdownSelection(url) {
@@ -5400,19 +5887,70 @@
         function showLandingPage() {
             isLandingPage = true;
 
-            // Clear saved state when returning to landing page
+            // Clear ALL saved state when returning to landing page
             sessionStorage.removeItem('currentApiUrl');
             sessionStorage.removeItem('currentApiName');
             sessionStorage.removeItem('viewState');
+            sessionStorage.removeItem('__PRESERVED_HASH__'); // Clear preserved hash
+
+            // Update URL to clean root path - use only History API for consistency
+            const cleanUrlIfNeeded = () => {
+                const currentPath = window.location.pathname;
+                const currentHash = window.location.hash;
+                
+                if (currentPath !== '/' || currentHash) {
+                    console.log('🧹 Cleaning URL on landing page:', currentPath + currentHash, '→ /');
+                    // Use replaceState to clean URL - this handles both path and hash
+                    window.history.replaceState({ view: 'home' }, 'API Documentation Portal', window.location.origin + '/');
+                }
+            };
+            
+            // Clean URL immediately
+            cleanUrlIfNeeded();
+            
+            // Also clean URL after a brief delay to handle race conditions
+            setTimeout(cleanUrlIfNeeded, 50);
+            
+            // Final verification after 150ms
+            setTimeout(() => {
+                if (isLandingPage && (window.location.pathname !== '/' || window.location.hash)) {
+                    console.log('🔧 Final cleanup - forcing URL to clean state');
+                    window.history.replaceState({ view: 'home' }, 'API Documentation Portal', window.location.origin + '/');
+                }
+            }, 150);
+            
+            // Start continuous URL/view synchronization
+            startUrlViewSync();
 
             document.getElementById('hexagonContainer').style.display = 'flex';
             document.getElementById('swagger-ui').classList.remove('show');
             document.getElementById('hexagonalHomeButton').style.display = 'none';
-            document.getElementById('apiDropdown').value = '';
+            
+            const apiDropdown = document.getElementById('apiDropdown');
+            if (apiDropdown) {
+                apiDropdown.value = '';
+            }
 
             // Ensure endpoint filtering is disabled when returning to landing page
             endpointFilteringEnabled = false;
             setSwaggerUiPaddingForFilterBar(false);
+            
+            // Restore domain dropdown instead of tags
+            const domainDropdownText = document.getElementById('domainDropdownText');
+            if (domainDropdownText) {
+                domainDropdownText.textContent = 'All Domains';
+            }
+            
+            if (apisByDomain) {
+                const allDomains = Object.keys(apisByDomain).sort();
+                populateNavbarDomainDropdown(allDomains);
+            }
+            
+            // Reset search placeholder to 'Search APIs...'
+            const searchInput = document.getElementById('apiSearch');
+            if (searchInput) {
+                searchInput.placeholder = 'Search APIs...';
+            }
 
             // Hide/remove endpoint counter when on landing page to avoid message overlap
             try {
@@ -5461,10 +5999,11 @@
                 closeCustomDropdown();
             }
 
-            // Clear search input and reset filtering
-            const searchInput = document.getElementById('apiSearch');
-            if (searchInput) {
-                searchInput.value = '';
+            // Clear search input and restore placeholder for API searching
+            const searchInputClear = document.getElementById('apiSearch');
+            if (searchInputClear) {
+                searchInputClear.value = '';
+                searchInputClear.placeholder = 'Search APIs...';
             }
 
             // Clear any active hexagons but maintain domain filtering state
@@ -5473,7 +6012,7 @@
             });
 
             // Reapply domain filters if they were active
-            if (activeDomains.size > 0 || searchInput.value.trim()) {
+            if (activeDomains.size > 0 || (searchInputClear && searchInputClear.value.trim())) {
                 // Apply both domain and search filters
                 switch (currentView) {
                     case 'hexagon':
@@ -5523,6 +6062,13 @@
 
         function showSwaggerUI() {
             isLandingPage = false;
+            
+            // Stop URL sync when viewing API docs
+            if (urlSyncInterval) {
+                clearInterval(urlSyncInterval);
+                urlSyncInterval = null;
+            }
+            
             document.getElementById('hexagonContainer').style.display = 'none';
             document.getElementById('swagger-ui').classList.add('show');
             document.getElementById('hexagonalHomeButton').style.display = 'flex';
@@ -5530,6 +6076,12 @@
             // Enable endpoint filtering UI via floating FilterNotch when viewing API docs
             endpointFilteringEnabled = true;
             setSwaggerUiPaddingForFilterBar(true);
+
+            // Update search placeholder for endpoint searching
+            const searchInput = document.getElementById('apiSearch');
+            if (searchInput) {
+                searchInput.placeholder = 'Search endpoints...';
+            }
 
             // Try to initialize endpoint filtering if not already done
             setTimeout(() => {
@@ -5565,23 +6117,99 @@
                 });
             }
 
+            // CRITICAL: Handle URL hash changes to keep view and URL in sync
+            window.addEventListener('hashchange', (event) => {
+                console.log('🔗 Hash changed:', event.oldURL, '→', event.newURL);
+                const currentHash = window.location.hash;
+                
+                // If we're on landing page but hash exists, clean it immediately
+                if (isLandingPage && currentHash) {
+                    console.log('⚠️ Landing page with hash detected in hashchange - cleaning');
+                    sessionStorage.removeItem('__PRESERVED_HASH__');
+                    window.history.replaceState({ view: 'home' }, 'API Documentation Portal', '/');
+                }
+                // If hash was removed but we're showing API doc, show landing page
+                else if (!isLandingPage && !currentHash) {
+                    console.log('🏠 Hash removed but showing API doc - showing landing page');
+                    showLandingPage();
+                }
+            });
+            
             // Handle browser back/forward navigation
             window.addEventListener('popstate', (event) => {
+                console.log('⬅️ Popstate event fired, state:', event.state);
+                isHandlingPopstate = true;
+                
                 if (event.state) {
                     if (event.state.view === 'home') {
+                        // Going back to home
+                        if (window.location.pathname !== '/' || window.location.hash) {
+                            window.history.replaceState({ view: 'home' }, 'API Documentation Portal', '/');
+                        }
                         showLandingPage();
                     } else if (event.state.view === 'api-documentation' && event.state.apiUrl) {
                         loadApiDocumentation(event.state.apiUrl, false); // false to not push to history again
                     }
                 } else {
-                    // Default state - show landing page
-                    showLandingPage();
+                    // No state found - this happens after a page refresh when user clicks back
+                    console.log('⚠️ Popstate with no state, checking URL...');
+                    
+                    // Check the current URL to determine what to do
+                    const currentPath = window.location.pathname;
+                    const currentHash = window.location.hash;
+                    
+                    console.log('   Current view: isLandingPage =', isLandingPage);
+                    console.log('   Current URL:', window.location.href);
+                    
+                    // CRITICAL FIX: If we're showing landing page but URL has hash, clean it
+                    // This happens when back button is clicked after refresh (no history to go back to)
+                    if (isLandingPage && currentHash) {
+                        console.log('🧹 Landing page shown but URL has hash - cleaning immediately');
+                        sessionStorage.removeItem('__PRESERVED_HASH__');
+                        window.history.replaceState({ view: 'home' }, 'API Documentation Portal', '/');
+                        return;
+                    }
+                    
+                    // If URL is home (/ with no hash) but we're showing API doc, navigate to home
+                    if ((currentPath === '/' || currentPath === '') && !currentHash && !isLandingPage) {
+                        console.log('🏠 Back button pressed - URL is home but showing API doc, navigating to home');
+                        
+                        // Clear stored state
+                        sessionStorage.removeItem('__PRESERVED_HASH__');
+                        sessionStorage.removeItem('currentApiUrl');
+                        sessionStorage.removeItem('currentApiName');
+                        sessionStorage.removeItem('viewState');
+                        
+                        // Show landing page
+                        showLandingPage();
+                        
+                        // Ensure URL stays clean
+                        window.history.replaceState({ view: 'home' }, 'API Documentation Portal', '/');
+                    }
+                    // If URL still has API hash and we're NOT on landing page, let page load normally
+                    else if (currentHash && currentHash.startsWith('#/api/') && !isLandingPage) {
+                        console.log('📄 URL has API hash and showing API doc - normal state');
+                        // Don't do anything - let the page load normally
+                    }
+                    // If on landing page and URL is wrong, clean it
+                    else if (isLandingPage && (currentPath !== '/' || currentHash)) {
+                        console.log('🧹 Cleaning URL on landing page');
+                        sessionStorage.removeItem('__PRESERVED_HASH__');
+                        window.history.replaceState({ view: 'home' }, 'API Documentation Portal', '/');
+                    }
                 }
+                
+                setTimeout(() => {
+                    isHandlingPopstate = false;
+                }, 200);
             });
         }
 
         function navigateToApi(url) {
             if (!url) return;
+            
+            // Save this as the last clicked API
+            saveLastClickedApi(url);
 
             // Save current state to sessionStorage for restoration after page refresh
             const currentApi = allApis.find(api => api.url === url);
@@ -5845,6 +6473,11 @@
                     rafId = requestAnimationFrame(() => {
                         performRealTimeFiltering(query);
                     });
+                } else if (endpointFilteringEnabled) {
+                    // Apply endpoint filtering in real-time when in API docs mode
+                    rafId = requestAnimationFrame(() => {
+                        applyEndpointFilters();
+                    });
                 }
 
                 // Autocomplete suggestions with minimal delay
@@ -5892,58 +6525,140 @@
 
                 // Use RAF for smoother rendering
                 requestAnimationFrame(() => {
-                    const matches = allApis.filter(api => {
-                        const serviceName = extractServiceName(api.name);
-                        const domain = extractDomain(api.name);
-                        return serviceName.toLowerCase().includes(query) ||
-                            api.name.toLowerCase().includes(query) ||
-                            domain.toLowerCase().includes(query);
-                    });
-
-                    if (matches.length > 0) {
-                        // Create a document fragment for better performance
-                        const fragment = document.createDocumentFragment();
-
-                        matches.slice(0, 8).forEach((api, index) => {
-                            const item = document.createElement("div");
-                            item.classList.add("autocomplete-item");
-                            const serviceName = extractServiceName(api.name);
-                            const domain = extractDomain(api.name);
-                            const nameHighlighted = highlightMatch(serviceName, query);
-                            const domainColors = getDomainColor(domain);
-                            item.innerHTML = `
-                        <div style="font-weight: 600; margin-bottom: 2px;">${nameHighlighted}</div>
-                        <div style="font-size: 0.75rem; color: ${domainColors.text}; font-weight: 500;">
-                            <i class="fas fa-tag" style="margin-right: 4px; font-size: 0.7rem;"></i>${domain}
-                        </div>
-                    `;
-                            item.onclick = () => {
-                                selectApi(api);
-                            };
-                            item.style.opacity = "0";
-                            item.style.transform = "translateY(10px)";
-                            item.style.transition = "opacity 0.2s ease, transform 0.2s ease";
-
-                            fragment.appendChild(item);
-
-                            // Stagger animations with RAF
-                            requestAnimationFrame(() => {
-                                setTimeout(() => {
-                                    item.style.opacity = "1";
-                                    item.style.transform = "translateY(0)";
-                                }, index * 30);
-                            });
+                    // If in API documentation view, search endpoints instead of APIs
+                    if (endpointFilteringEnabled && !isLandingPage && Array.isArray(currentApiEndpoints)) {
+                        const matches = currentApiEndpoints.filter(endpoint => {
+                            const path = (endpoint.path || '').toLowerCase();
+                            const method = (endpoint.method || '').toLowerCase();
+                            const summary = (endpoint.summary || '').toLowerCase();
+                            const description = (endpoint.description || '').toLowerCase();
+                            const tags = Array.isArray(endpoint.tags) ? endpoint.tags.map(t => String(t).toLowerCase()).join(' ') : '';
+                            
+                            return path.includes(query) ||
+                                method.includes(query) ||
+                                summary.includes(query) ||
+                                description.includes(query) ||
+                                tags.includes(query);
                         });
 
-                        list.appendChild(fragment);
-                        showAutocomplete();
+                        if (matches.length > 0) {
+                            const fragment = document.createDocumentFragment();
+
+                            matches.slice(0, 8).forEach((endpoint, index) => {
+                                const item = document.createElement("div");
+                                item.classList.add("autocomplete-item");
+                                
+                                const methodColors = {
+                                    'get': '#0284c7',
+                                    'post': '#16a34a',
+                                    'put': '#ca8a04',
+                                    'patch': '#ea580c',
+                                    'delete': '#dc2626',
+                                    'options': '#9333ea',
+                                    'head': '#64748b'
+                                };
+                                
+                                const method = (endpoint.method || '').toUpperCase();
+                                const methodColor = methodColors[method.toLowerCase()] || '#64748b';
+                                const pathHighlighted = highlightMatch(endpoint.path || '', query);
+                                const summaryHighlighted = endpoint.summary ? highlightMatch(endpoint.summary, query) : '';
+                                const tags = Array.isArray(endpoint.tags) ? endpoint.tags.join(', ') : '';
+                                
+                                item.innerHTML = `
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                                <span style="font-weight: 700; color: ${methodColor}; font-size: 0.7rem; min-width: 50px;">${method}</span>
+                                <span style="font-weight: 600; font-size: 0.85rem;">${pathHighlighted}</span>
+                            </div>
+                            ${summaryHighlighted ? `<div style="font-size: 0.75rem; color: #64748b; margin-bottom: 2px;">${summaryHighlighted}</div>` : ''}
+                            ${tags ? `<div style="font-size: 0.7rem; color: #0f766e;">
+                                <i class="fas fa-tag" style="margin-right: 4px;"></i>${tags}
+                            </div>` : ''}
+                        `;
+                                item.onclick = () => {
+                                    selectEndpoint(endpoint);
+                                };
+                                item.style.opacity = "0";
+                                item.style.transform = "translateY(10px)";
+                                item.style.transition = "opacity 0.2s ease, transform 0.2s ease";
+
+                                fragment.appendChild(item);
+
+                                // Stagger animations with RAF
+                                requestAnimationFrame(() => {
+                                    setTimeout(() => {
+                                        item.style.opacity = "1";
+                                        item.style.transform = "translateY(0)";
+                                    }, index * 30);
+                                });
+                            });
+
+                            list.appendChild(fragment);
+                            showAutocomplete();
+                        } else {
+                            const noResults = document.createElement("div");
+                            noResults.classList.add("autocomplete-item");
+                            noResults.innerHTML = `<div style="color: #64748b; text-align: center; font-style: italic;">
+                                <i class="fas fa-search" style="margin-right: 8px;"></i>No endpoints found matching "${query}"
+                            </div>`;
+                            noResults.style.cursor = "default";
+                            list.appendChild(noResults);
+                            showAutocomplete();
+                        }
                     } else {
-                        const noResults = document.createElement("div");
-                        noResults.classList.add("autocomplete-item");
-                        noResults.innerHTML = `      <div style="color: #64748b; text-align: center; font-style: italic;">        <i class="fas fa-search" style="margin-right: 8px;"></i>        No APIs found matching "${query}"      </div>    `;
-                        noResults.style.cursor = "default";
-                        list.appendChild(noResults);
-                        showAutocomplete();
+                        // Landing page mode: search APIs
+                        const matches = allApis.filter(api => {
+                            const serviceName = extractServiceName(api.name);
+                            const domain = extractDomain(api.name);
+                            return serviceName.toLowerCase().includes(query) ||
+                                api.name.toLowerCase().includes(query) ||
+                                domain.toLowerCase().includes(query);
+                        });
+
+                        if (matches.length > 0) {
+                            // Create a document fragment for better performance
+                            const fragment = document.createDocumentFragment();
+
+                            matches.slice(0, 8).forEach((api, index) => {
+                                const item = document.createElement("div");
+                                item.classList.add("autocomplete-item");
+                                const serviceName = extractServiceName(api.name);
+                                const domain = extractDomain(api.name);
+                                const nameHighlighted = highlightMatch(serviceName, query);
+                                const domainColors = getDomainColor(domain);
+                                item.innerHTML = `
+                            <div style="font-weight: 600; margin-bottom: 2px;">${nameHighlighted}</div>
+                            <div style="font-size: 0.75rem; color: ${domainColors.text}; font-weight: 500;">
+                                <i class="fas fa-tag" style="margin-right: 4px; font-size: 0.7rem;"></i>${domain}
+                            </div>
+                        `;
+                                item.onclick = () => {
+                                    selectApi(api);
+                                };
+                                item.style.opacity = "0";
+                                item.style.transform = "translateY(10px)";
+                                item.style.transition = "opacity 0.2s ease, transform 0.2s ease";
+
+                                fragment.appendChild(item);
+
+                                // Stagger animations with RAF
+                                requestAnimationFrame(() => {
+                                    setTimeout(() => {
+                                        item.style.opacity = "1";
+                                        item.style.transform = "translateY(0)";
+                                    }, index * 30);
+                                });
+                            });
+
+                            list.appendChild(fragment);
+                            showAutocomplete();
+                        } else {
+                            const noResults = document.createElement("div");
+                            noResults.classList.add("autocomplete-item");
+                            noResults.innerHTML = `      <div style="color: #64748b; text-align: center; font-style: italic;">        <i class="fas fa-search" style="margin-right: 8px;"></i>        No APIs found matching "${query}"      </div>    `;
+                            noResults.style.cursor = "default";
+                            list.appendChild(noResults);
+                            showAutocomplete();
+                        }
                     }
                 });
             }
@@ -5976,6 +6691,56 @@
                 } else {
                     navigateToApi(api.url);
                 }
+            }
+
+            function selectEndpoint(endpoint) {
+                input.value = "";
+                hideAutocomplete();
+                
+                input.style.borderColor = "#10b981";
+                setTimeout(() => {
+                    input.style.borderColor = "";
+                }, 1000);
+
+                // Scroll to the endpoint in Swagger UI
+                setTimeout(() => {
+                    const operations = document.querySelectorAll('.swagger-ui .opblock');
+                    const method = (endpoint.method || '').toLowerCase();
+                    const path = (endpoint.path || '').toLowerCase();
+                    
+                    for (const operation of operations) {
+                        const methodElement = operation.querySelector('.opblock-summary-method');
+                        const pathElement = operation.querySelector('.opblock-summary-path');
+                        
+                        if (methodElement && pathElement) {
+                            const opMethod = methodElement.textContent.toLowerCase().trim();
+                            const opPath = pathElement.textContent.toLowerCase().trim();
+                            
+                            if (opMethod === method && opPath === path) {
+                                // Scroll to the operation
+                                operation.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                
+                                // Expand the operation if it's collapsed
+                                const isExpanded = operation.classList.contains('is-open');
+                                if (!isExpanded) {
+                                    const summaryButton = operation.querySelector('.opblock-summary');
+                                    if (summaryButton) {
+                                        summaryButton.click();
+                                    }
+                                }
+                                
+                                // Visual feedback
+                                operation.style.transition = 'background-color 0.3s ease';
+                                operation.style.backgroundColor = 'rgba(16, 185, 129, 0.1)';
+                                setTimeout(() => {
+                                    operation.style.backgroundColor = '';
+                                }, 2000);
+                                
+                                break;
+                            }
+                        }
+                    }
+                }, 100);
             }
 
             // Real-time filtering function that works across all views
@@ -6291,6 +7056,311 @@
             console.log(`✅ View switcher initialized with ${currentView} view`);
         }
 
+        // NEW: Initialize navbar filter controls per manager request
+        function initializeNavbarFilterControls() {
+            // Clear filters button
+            const clearBtn = document.getElementById('navbarClearFilters');
+            if (clearBtn) {
+                clearBtn.addEventListener('click', () => {
+                    // Check if we're in endpoint filtering mode
+                    if (endpointFilteringEnabled && !isLandingPage) {
+                        // Clear endpoint filters
+                        activeEndpointMethods.clear();
+                        activeEndpointTags.clear();
+                        updateEndpointMethodFilterUI();
+                        updateEndpointTagFilterUI();
+                        applyEndpointFilters();
+                        console.log('🧹 Cleared all endpoint filters from navbar');
+                        
+                        // Refresh the filter dropdown chips to show all methods again
+                        populateFilterDropdownEndpointChips();
+                        
+                        // Update dropdown to show all tags
+                        populateNavbarEndpointTagsDropdown();
+                    } else {
+                        // Clear domain filters
+                        activeDomains.clear();
+                        selectedDomain = '';
+                        selectDomainFilter('');
+                        console.log('🧹 Cleared all domain filters from navbar');
+                        
+                        // Refresh the filter dropdown chips to show all domains again
+                        populateFilterDropdownDomainChips();
+                        
+                        // Update domain dropdown to show all domains
+                        if (apisByDomain) {
+                            const allDomains = Object.keys(apisByDomain).sort();
+                            populateNavbarDomainDropdown(allDomains);
+                        }
+                    }
+                    
+                    // Keep the dropdown open so user can continue filtering
+                    // Don't close it
+                });
+            }
+            
+            // Save filters toggle button
+            const saveBtn = document.getElementById('navbarToggleSaveFilters');
+            if (saveBtn) {
+                saveBtn.addEventListener('click', () => {
+                    toggleFilterSaving();
+                    // Update button text
+                    const btnText = document.getElementById('navbarSaveBtnText');
+                    if (btnText) {
+                        btnText.textContent = shouldSaveFilters ? 'Save: ON' : 'Save: OFF';
+                    }
+                    // Update button style
+                    if (shouldSaveFilters) {
+                        saveBtn.style.background = 'var(--primary-gradient)';
+                        saveBtn.style.color = 'white';
+                    } else {
+                        saveBtn.style.background = 'rgba(15, 118, 110, 0.1)';
+                        saveBtn.style.color = '#0f766e';
+                    }
+                    // Don't close dropdown - keep it open for continued filtering
+                });
+                
+                // Initialize button state from localStorage
+                const savedState = localStorage.getItem('shouldSaveFilters');
+                const isEnabled = savedState === '1';
+                shouldSaveFilters = isEnabled; // Update global variable
+                
+                const btnText = document.getElementById('navbarSaveBtnText');
+                if (btnText) {
+                    btnText.textContent = isEnabled ? 'Save: ON' : 'Save: OFF';
+                }
+                if (isEnabled) {
+                    saveBtn.style.background = 'var(--primary-gradient)';
+                    saveBtn.style.color = 'white';
+                } else {
+                    saveBtn.style.background = 'rgba(15, 118, 110, 0.1)';
+                    saveBtn.style.color = '#0f766e';
+                }
+            }
+        }
+        
+        // Setup filter settings dropdown toggle
+        function setupFilterSettingsDropdown() {
+            const settingsBtn = document.getElementById('filterSettingsBtn');
+            const settingsDropdown = document.getElementById('filterSettingsDropdown');
+            
+            if (settingsBtn && settingsDropdown) {
+                settingsBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isVisible = settingsDropdown.style.display === 'block';
+                    settingsDropdown.style.display = isVisible ? 'none' : 'block';
+                    
+                    // Populate appropriate chips based on current view
+                    if (!isVisible) {
+                        if (endpointFilteringEnabled && !isLandingPage) {
+                            populateFilterDropdownEndpointChips();
+                        } else {
+                            populateFilterDropdownDomainChips();
+                        }
+                    }
+                });
+                
+                // Close dropdown when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!settingsBtn.contains(e.target) && !settingsDropdown.contains(e.target)) {
+                        settingsDropdown.style.display = 'none';
+                    }
+                });
+                
+                // Prevent dropdown from closing when clicking inside it
+                settingsDropdown.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                });
+            }
+        }
+        
+        // Populate domain chips in filter dropdown
+        function populateFilterDropdownDomainChips() {
+            const container = document.getElementById('filterDropdownDomainChips');
+            if (!container || !allApis || allApis.length === 0) return;
+            
+            // Update section title and hide tags section
+            const sectionTitle = document.getElementById('filterSection1Title');
+            if (sectionTitle) {
+                sectionTitle.textContent = 'Filter by Domain';
+            }
+            const tagSection = document.getElementById('filterTagsSection');
+            if (tagSection) {
+                tagSection.style.display = 'none';
+            }
+            
+            // Group APIs by domain
+            const domainGroups = groupApisByDomain(allApis);
+            const domains = Object.keys(domainGroups).sort();
+            
+            container.innerHTML = '';
+            
+            domains.forEach(domain => {
+                const count = domainGroups[domain].length;
+                const colors = getDomainColor(domain);
+                const isActive = activeDomains.has(domain);
+                
+                const chip = document.createElement('div');
+                chip.className = 'domain-chip';
+                chip.dataset.domain = domain;
+                chip.style.cssText = `
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                    padding: 6px 12px;
+                    border-radius: 20px;
+                    font-size: 0.8rem;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: all 0.2s;
+                    background: ${isActive ? colors.bg : 'rgba(0,0,0,0.03)'};
+                    color: ${isActive ? colors.text : '#64748b'};
+                    border: 1.5px solid ${isActive ? colors.border : 'rgba(0,0,0,0.08)'};
+                `;
+                
+                chip.innerHTML = `
+                    <span>${domain}</span>
+                    <span style="background: ${isActive ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.1)'}; padding: 2px 6px; border-radius: 10px; font-size: 0.7rem;">${count}</span>
+                `;
+                
+                chip.addEventListener('click', () => {
+                    toggleDomainFilter(domain);
+                    // Update chip appearance
+                    populateFilterDropdownDomainChips();
+                });
+                
+                container.appendChild(chip);
+            });
+        }
+        
+        // Populate endpoint method and tag chips in filter dropdown (for API documentation view)
+        function populateFilterDropdownEndpointChips() {
+            const methodContainer = document.getElementById('filterDropdownDomainChips');
+            const tagContainer = document.getElementById('filterDropdownTagChips');
+            const tagSection = document.getElementById('filterTagsSection');
+            const sectionTitle = document.getElementById('filterSection1Title');
+            
+            if (!methodContainer) return;
+            
+            // Update section title and show tags section
+            if (sectionTitle) {
+                sectionTitle.textContent = 'Filter by HTTP Method';
+            }
+            if (tagSection) {
+                tagSection.style.display = 'block';
+            }
+            
+            methodContainer.innerHTML = '';
+            if (tagContainer) tagContainer.innerHTML = '';
+            
+            // Get HTTP methods and tags from current endpoints
+            const methodCounts = {};
+            const tagCounts = {};
+            if (currentApiEndpoints && currentApiEndpoints.length > 0) {
+                currentApiEndpoints.forEach(endpoint => {
+                    const method = endpoint.method.toLowerCase();
+                    methodCounts[method] = (methodCounts[method] || 0) + 1;
+                    
+                    // Count tags
+                    if (Array.isArray(endpoint.tags)) {
+                        endpoint.tags.forEach(tag => {
+                            const tagStr = String(tag || '').trim();
+                            if (tagStr) {
+                                tagCounts[tagStr] = (tagCounts[tagStr] || 0) + 1;
+                            }
+                        });
+                    }
+                });
+            }
+            
+            const methodColors = {
+                'get': { bg: '#e0f2fe', text: '#0284c7', border: '#7dd3fc' },
+                'post': { bg: '#dcfce7', text: '#16a34a', border: '#86efac' },
+                'put': { bg: '#fef3c7', text: '#ca8a04', border: '#fde047' },
+                'patch': { bg: '#fed7aa', text: '#ea580c', border: '#fdba74' },
+                'delete': { bg: '#fee2e2', text: '#dc2626', border: '#fca5a5' },
+                'options': { bg: '#f3e8ff', text: '#9333ea', border: '#d8b4fe' },
+                'head': { bg: '#e5e7eb', text: '#6b7280', border: '#d1d5db' }
+            };
+            
+            // Populate HTTP methods
+            Object.keys(methodCounts).sort().forEach(method => {
+                const count = methodCounts[method];
+                const colors = methodColors[method] || { bg: '#f3f4f6', text: '#6b7280', border: '#d1d5db' };
+                const isActive = activeEndpointMethods.has(method);
+                
+                const chip = document.createElement('div');
+                chip.className = 'endpoint-method-chip';
+                chip.dataset.method = method;
+                chip.style.cssText = `
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                    padding: 6px 12px;
+                    border-radius: 20px;
+                    font-size: 0.8rem;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: all 0.2s;
+                    background: ${isActive ? colors.bg : 'rgba(0,0,0,0.03)'};
+                    color: ${isActive ? colors.text : '#64748b'};
+                    border: 1.5px solid ${isActive ? colors.border : 'rgba(0,0,0,0.08)'};
+                `;
+                
+                chip.innerHTML = `
+                    <span>${method.toUpperCase()}</span>
+                    <span style="background: ${isActive ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.1)'}; padding: 2px 6px; border-radius: 10px; font-size: 0.7rem;">${count}</span>
+                `;
+                
+                chip.addEventListener('click', () => {
+                    toggleEndpointMethodFilter(method);
+                    populateFilterDropdownEndpointChips();
+                    populateNavbarEndpointTagsDropdown();
+                });
+                
+                methodContainer.appendChild(chip);
+            });
+            
+            // Populate tags
+            if (tagContainer) {
+                Object.keys(tagCounts).sort().forEach(tag => {
+                    const count = tagCounts[tag];
+                    const isActive = activeEndpointTags.has(tag);
+                    
+                    const chip = document.createElement('div');
+                    chip.className = 'endpoint-tag-chip';
+                    chip.dataset.tag = tag;
+                    chip.style.cssText = `
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 6px;
+                        padding: 6px 12px;
+                        border-radius: 20px;
+                        font-size: 0.8rem;
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: all 0.2s;
+                        background: ${isActive ? '#e0f2fe' : 'rgba(0,0,0,0.03)'};
+                        color: ${isActive ? '#0284c7' : '#64748b'};
+                        border: 1.5px solid ${isActive ? '#7dd3fc' : 'rgba(0,0,0,0.08)'};
+                    `;
+                    
+                    chip.innerHTML = `
+                        <span>${tag}</span>
+                        <span style="background: ${isActive ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.1)'}; padding: 2px 6px; border-radius: 10px; font-size: 0.7rem;">${count}</span>
+                    `;
+                    
+                    chip.addEventListener('click', () => {
+                        toggleEndpointTagFilter(tag);
+                        populateFilterDropdownEndpointChips();
+                        populateNavbarEndpointTagsDropdown();
+                    });
+                    
+                    tagContainer.appendChild(chip);
+                });
+            }
+        }
+        
         window.onload = function () {
             console.log("🚀 Page loaded, initializing...");
 
@@ -6361,16 +7431,34 @@
 
             // Initialize view switcher event listeners only
             initializeViewSwitcherEvents();
+            
+            // Initialize navbar filter controls (new per manager request)
+            initializeNavbarFilterControls();
+            
+            // Setup filter settings dropdown
+            setupFilterSettingsDropdown();
 
             // Load APIs and show landing page
             console.log("🔄 Starting API loading...");
             loadApis();
 
-            // Show landing page only if no saved state exists
+            // Show landing page only if no saved state exists AND no hash in URL
+            const hash = window.location.hash;
             const savedViewState = sessionStorage.getItem('viewState');
-            if (savedViewState !== 'api-documentation') {
+            
+            // If there's a hash for deep linking, don't show landing page
+            if (hash && hash.startsWith('#/api/')) {
+                console.log('🔗 Hash detected in URL, skipping landing page');
+            } else if (savedViewState !== 'api-documentation') {
                 showLandingPage();
             }
+            
+            // CRITICAL: Start URL/View sync monitor immediately to catch any mismatches
+            console.log('🚀 Starting global URL/View sync monitor on page load');
+            startUrlViewSync();
+            
+            // Load last clicked API from localStorage
+            loadLastClickedApi();       
         };
         document.addEventListener('DOMContentLoaded', function () {
             console.log("📄 DOM Content Loaded");
@@ -6459,7 +7547,6 @@
                 // Calculate scroll progress
                 const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
                 const scrollProgress = (scrollTop / windowHeight) * 100;
-
                 // Update CSS variable for progress bar
                 header.style.setProperty('--scroll-progress', `${scrollProgress}%`);
 
@@ -6472,14 +7559,12 @@
                 lastScrollTop = scrollTop;
                 ticking = false;
             }
-
             window.addEventListener('scroll', function () {
                 if (!ticking) {
                     window.requestAnimationFrame(handleHeaderScroll);
                     ticking = true;
                 }
             }, { passive: true });
-
             // Add resize handler to regenerate grid
             let resizeTimeout;
             window.addEventListener('resize', function () {
@@ -6493,7 +7578,6 @@
                                 hexagon.setAttribute('tabindex', '0');
                                 hexagon.setAttribute('role', 'button');
                                 hexagon.setAttribute('aria-label', `Navigate to ${allApis[index]?.name || 'API'} documentation`);
-
                                 hexagon.addEventListener('keydown', function (e) {
                                     if (e.key === 'Enter' || e.key === ' ') {
                                         e.preventDefault();
@@ -6514,7 +7598,6 @@
             const header = document.querySelector('header');
             const bar = document.getElementById('endpointFilterBar');
             const toggle = document.getElementById('endpointCollapseToggle');
-
             function updateVars() {
                 if (!header) return;
                 // Use getBoundingClientRect().bottom to compute the exact position
@@ -6534,7 +7617,6 @@
                     }
                 }
             }
-
             // Observe header attribute changes (class toggles when morphing) so the bar stays glued to its bottom.
             try {
                 if (header && window.MutationObserver) {
@@ -6553,7 +7635,6 @@
             } catch (e) {
                 // ignore if observers unavailable
             }
-
             // Also update on scroll using rAF to catch transitions that change header height
             let varTicking = false;
             window.addEventListener('scroll', function () {
@@ -6565,7 +7646,7 @@
                     varTicking = true;
                 }
             }, { passive: true });
-
+            
             function setCollapsed(collapsed) {
                 if (!bar) return;
                 if (collapsed) {
@@ -6588,7 +7669,6 @@
                     try { setSwaggerUiPaddingForFilterBar(true); } catch (e) { }
                 }, 120);
             }
-
             if (toggle) {
                 toggle.addEventListener('click', () => {
                     setCollapsed(!bar.classList.contains('collapsed'));
@@ -6656,7 +7736,6 @@
         (function () {
             const btn = document.getElementById('scrollTopBtn');
             if (!btn) return;
-
             let ticking = false;
 
             function updateVisibility() {
@@ -6678,7 +7757,6 @@
 
             // show immediately if already scrolled
             document.addEventListener('DOMContentLoaded', updateVisibility);
-
             btn.addEventListener('click', function (e) {
                 e.preventDefault();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -6695,7 +7773,5 @@
             });
         })();
     </script>
-
 </body>
-
 </html>
