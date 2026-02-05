@@ -11,6 +11,12 @@ A modern API Documentation Portal with a hexagonal interface design that display
 - **Swagger Integration**: Full Swagger UI integration for API documentation
 - **Responsive Design**: Works on desktop, tablet, and mobile devices
 - **Modern UI**: Glass morphism design with smooth animations
+- **Performance Optimized**: 
+  - Lazy version loading with 5-minute cache
+  - Non-blocking UI rendering
+  - Batched async API spec fetching (10 APIs at a time)
+  - 3-second timeout per API to prevent slowdowns
+  - Instant hexagon display with progressive version updates
 
 
 
@@ -197,6 +203,31 @@ http://localhost:8000/swagger-ui/index.html
 Troubleshooting
 - If `mvn` or `java` are not recognised, ensure Java 17 and Maven are correctly installed and added to your PATH.
 
+## Performance Tips
+
+### Version Caching
+API versions are cached in sessionStorage for 5 minutes to improve performance. To force refresh:
+
+**Option 1: Keyboard Shortcut**
+```
+Ctrl + Shift + R - Clear cache and reload
+```
+
+**Option 2: Browser Console**
+```javascript
+clearVersionCache()  // Then reload page manually
+```
+
+**Option 3: Browser Cache**
+```
+Hard refresh: Ctrl + Shift + Delete (Chrome/Edge)
+```
+
+### Console Warnings
+The Tailwind CSS CDN warning in production is informational only. For production deployment, consider:
+- Installing Tailwind as a PostCSS plugin
+- Using the Tailwind CLI to generate optimized CSS
+- See: https://tailwindcss.com/docs/installation
 
 Notes
 - The demo application was built with Spring Boot 3.4.x and requires Java 17+ at runtime. If you need to change the packaged artifact name, update the `java -jar` command accordingly.

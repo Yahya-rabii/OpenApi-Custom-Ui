@@ -206,5 +206,21 @@
         {
                 "url": "/api/transaction/wallet-core/v1/api-docs",
                 "name": "transaction/wallet-core/v1"
+        },
+        {
+                "url": "/api/test/fake-endpoint/v1/api-docs",
+                "name": "test/fake-endpoint/v1"
+        },
+        {
+                "url": "/api/test/error-api/v1/api-docs",
+                "name": "test/error-api/v1"
+        },
+        {
+                "url": "/api/test/connection-error/v1/api-docs",
+                "name": "test/connection-error/v1"
+        },
+        {
+                "url": "/api/test/timeout-api/v1/api-docs",
+                "name": "test/timeout-api/v1"
         }
 ]
